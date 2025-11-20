@@ -1,0 +1,41 @@
+# Dependencies
+node_modules
+bower_components
+jspm_packages
+
+# Build outputs
+dist
+build
+out
+coverage
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.*.local
+
+# Generated files
+*.min.js
+*.bundle.js
+*.css.map
+*.js.map
+
+# IDE / Editor files
+.vscode
+.idea
+*.sublime-workspace
+*.sublime-project
+
+# Ignore lockfiles (optional, some teams format them)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Ignore prettier config itself? Usually no, but can ignore temp backups
+*.prettierrc.js~
