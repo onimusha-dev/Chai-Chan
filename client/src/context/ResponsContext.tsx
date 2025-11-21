@@ -6,9 +6,15 @@ export interface ResponseItem {
     response: string;
 }
 
+export type Models = "gemma3:270m" | "smollm2:135m" | "granite4:350m" | "qwen2.5:0.5b";
+
 interface IResponses {
-    responses: ResponseItem[];
-    setResponses: (r: ResponseItem[]) => void;
+    responses: ResponseItem[]
+    setResponses: (r: ResponseItem[]) => void
+    isThinking: boolean
+    setIsThinking: (isThinking: boolean) => void
+    model: Models
+    setModel: (model: Models) => void
 }
 
 // null to start, same as you had
@@ -27,11 +33,12 @@ export const useResponseContext = () => {
 };
 
 export const ResponseProvider = ({ children }: { children: ReactNode }) => {
-    // initialize with empty array, because that makes UI logic soooo much simpler
     const [responses, setResponses] = useState<ResponseItem[]>([]);
+    const [isThinking, setIsThinking] = useState(false);
+    const [model, setModel] = useState<Models>("gemma3:270m")
 
     return (
-        <ResponseContext.Provider value={{ responses, setResponses }}>
+        <ResponseContext.Provider value={{ responses, isThinking, model, setResponses, setIsThinking, setModel }}>
             {children}
         </ResponseContext.Provider>
     );

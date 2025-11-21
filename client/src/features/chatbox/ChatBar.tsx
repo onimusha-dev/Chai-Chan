@@ -1,37 +1,40 @@
 import { useState } from "react"
-import { Mic, Plus, Send } from "lucide-react"
+import { Mic, Send } from "lucide-react"
 import { Card, CardContent } from "../../components/ui/card"
 import api from "@/utils/api"
 import { useResponseContext } from "@/context/ResponsContext"
+import ModelToggle from "./ModelToggle"
 
 const ChatBar = () => {
     const [prompt, setPrompt] = useState("");
-    const { responses, setResponses } = useResponseContext();
-    const model = "gemma3:270m"  // "gemma3:270m" | "smollm2:135m" | "granite4:350m"
+    const { responses, model, setResponses, setIsThinking, setModel } = useResponseContext();
 
     const sendPrompt = async () => {
         if (!prompt.trim()) return;
 
         try {
+            setIsThinking(true)
+            
             const res = await api.post("ollama", { model, prompt });
-
-            console.log("Server replied:", res);
-
+            
             const newObject = {
                 id: res.data.response.id,
                 prompt: prompt,
                 response: res.data.response.response
             };
+            
             console.log("newObject =", newObject);
-
+            
             const newResponses = [...responses, newObject];
-
+            
             setResponses(newResponses);
-
+            
         } catch (err) {
             console.error("Error:", err);
+            
         } finally {
             setPrompt("");
+            setIsThinking(false)
         }
     };
 
@@ -40,7 +43,7 @@ const ChatBar = () => {
             <Card className="w-full rounded-full py-2">
                 <CardContent className="flex gap-3 px-3">
                     <div className="cursor-pointer flex size-10 items-center justify-center p-1 rounded-full hover:bg-accent transition-colors duration-150 ease-in-out">
-                        <Plus size={28} />
+                        <ModelToggle setModel={setModel} />
                     </div>
 
                     <input

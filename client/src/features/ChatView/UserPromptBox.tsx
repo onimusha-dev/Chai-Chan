@@ -1,4 +1,5 @@
-import { Card, CardContent } from "./ui/card"
+
+import { Card, CardContent } from "@/components/ui/card";
 import ReactMarkdown from "react-markdown";
 
 const UserPromptBox = ({ prompt }: { prompt: string }) => {

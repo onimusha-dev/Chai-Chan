@@ -12,9 +12,7 @@ export const chatOllama = async (req: Request<{}, {}, requestBody>, res: Respons
     try {
         const { prompt, model } = req.body;
 
-        if (!prompt || !model) {
-            throw Error("Inputs are not provided!")
-        }
+        if (!prompt || !model) throw Error("Inputs are not provided!")
 
         const reply = await askOllama(prompt, model)
 
@@ -26,7 +24,7 @@ export const chatOllama = async (req: Request<{}, {}, requestBody>, res: Respons
                     status: 200,
                     response: reply
                 })
-        }, 1000);
+        }, 10000);
 
     } catch (err) {
         console.error("error in chat controller" + '\n' + err)

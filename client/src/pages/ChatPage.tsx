@@ -1,5 +1,5 @@
 import ChatBar from "@/features/chatbox/ChatBar"
-import ChatView from "@/components/ChatView"
+import ChatView from "@/features/ChatView/ChatView"
 import { ModeToggle } from "@/components/theme/mode-toggle"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 
