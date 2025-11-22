@@ -6,29 +6,11 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useResponseContext } from "@/context/ResponsContext"
+import { modelList } from "@/utils/models"
 
 const ModelToggle = () => {
 
     const { model, setModel } = useResponseContext()
-
-    const modelList = [
-        {
-            model: "gemma3:270m" as const,
-            name: "gemma 3"
-        },
-        {
-            model: "granite4:350m" as const,
-            name: "granite 4"
-        },
-        {
-            model: "qwen2.5:0.5b" as const,
-            name: "qwen 2.5"
-        },
-        {
-            model: "smollm2:135m" as const,
-            name: "smollm 2"
-        },
-    ]
 
     return (
         <DropdownMenu>
@@ -41,14 +23,15 @@ const ModelToggle = () => {
                 className="mb-3 z-60"
             >
                 {
-                    modelList.map(m => (
+                    modelList.map((m, id) => (
                         <DropdownMenuItem
+                            key={id}
                             className="px-5"
                             onClick={() => setModel(m.model)}
                         >
-                                {
-                                    model === m.model && <CornerUpRight size={22} />
-                                }
+                            {
+                                model === m.model && <CornerUpRight size={22} />
+                            }
                             <h2 className="text-lg">{m.name}</h2>
                         </DropdownMenuItem>
                     ))
@@ -57,5 +40,7 @@ const ModelToggle = () => {
         </DropdownMenu>
     )
 }
+
+
 
 export default ModelToggle

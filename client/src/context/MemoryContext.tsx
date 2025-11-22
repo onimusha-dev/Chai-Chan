@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import api from "@/utils/api";
+import api from "@/api/api";
 
 interface MemoryContextType {
     memory: any;

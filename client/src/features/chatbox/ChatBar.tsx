@@ -1,10 +1,10 @@
 import { useState } from "react"
 import { Mic, Send } from "lucide-react"
 import { Card, CardContent } from "../../components/ui/card"
-import api from "@/utils/api"
+import api from "@/api/api"
 import { useResponseContext } from "@/context/ResponsContext"
 import ModelToggle from "./ModelToggle"
-import SchorllToNewChat from "./SchorllToNewChat"
+import SchorllToNewChat  from "./SchorllToNewChat"
 
 const ChatBar = () => {
     const [prompt, setPrompt] = useState("");
@@ -25,8 +25,6 @@ const ChatBar = () => {
                 prompt: prompt,
                 response: res.data.response.response
             };
-            
-            console.log("newObject =", newObject);
             
             const newResponses = [...responses, newObject];
             
@@ -81,9 +79,7 @@ const ChatBar = () => {
             </div>
 
             {/* schroll to new chat */}
-            <div className="-top-12 left-0 absolute w-full flex items-center justify-center">
-                <SchorllToNewChat />
-            </div>
+            <SchorllToNewChat />
         </div>
     )
 }

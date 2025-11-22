@@ -1,8 +1,6 @@
 import ollama from 'ollama'
 import { Chat } from '../models/chats.moel';
-import { Collection } from '../models/collection.model';
-
-export type SelectModel = "gemma3:270m" | "smollm2:135m" | "granite4:350m" | "qwen2.5:0.5b"
+import { SelectModel } from './askGemini.service';
 
 export const askOllama = async (prompt: string, model: SelectModel, collection: string) => {
     try {
@@ -19,6 +17,7 @@ export const askOllama = async (prompt: string, model: SelectModel, collection: 
                 // id: id,
                 model: model,
                 prompt: prompt,
+                response: response.message.content,
                 collection: collection
             }
         )
@@ -37,12 +36,16 @@ export const askOllama = async (prompt: string, model: SelectModel, collection: 
 }
 
 export const getOllamaChats = async () => {
-    const chats = await Chat.find().lean()
+    const chats = await Chat.find().lean();
 
-    if (!chats) throw Error("error finding chats")
+    if (!chats) throw Error("error finding chats");
 
-    return chats
-}
+    return chats.map(({ _id, prompt, response }) => ({
+        id: _id.toString(),
+        prompt,
+        response
+    }));
+};
 
 //  this is storing the memory of the user
 export const createOllamaMemory = async (memory: string, userId?: string) => {

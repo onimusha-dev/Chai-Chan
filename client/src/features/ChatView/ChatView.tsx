@@ -7,10 +7,9 @@ import UserPromptBox from "./UserPromptBox";
 
 const ChatView = () => {
     const { responses, isThinking } = useResponseContext()
-    console.log("newObject =", responses);
 
     return (
-        <div className="flex flex-col overflow-y-auto w-full h-full px-24 pt-15 pb-30 ">
+        <div className="flex flex-col overflow-y-auto w-full h-full px-24 pt-15 pb-48 ">
             {responses.length === 0 && (
                 <EmptyChatPreview />
             )}
@@ -24,7 +23,7 @@ const ChatView = () => {
                         <UserPromptBox prompt={item.prompt} />
                         <CopyChatText text={item.prompt} mode="user" />
                     </div>
-                    <div className="relative flex w-full mb-15">
+                    <div id={item.id} className="relative flex w-full mb-15">
                         <AiResponseBox response={item.response} />
                         <CopyChatText text={item.response} mode="ai" />
                     </div>

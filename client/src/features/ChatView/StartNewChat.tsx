@@ -8,7 +8,7 @@ const StartNewChat = () => {
     const { responses, setResponses } = useResponseContext()
 
     const location = useLocation().pathname
-    console.log(location)
+    
     const clickHandler = () => {
 
         /**

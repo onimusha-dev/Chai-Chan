@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import { createOllamaMemory, getOllamaChats, getOllamaMemory, SelectModel } from "../service/askOllama.service";
+import { createOllamaMemory, getOllamaChats, getOllamaMemory } from "../service/askOllama.service";
 import { askOllama } from "../service/askOllama.service";
+import { SelectModel } from "../service/askGemini.service";
 
 interface ChatRequestBody {
     prompt: string

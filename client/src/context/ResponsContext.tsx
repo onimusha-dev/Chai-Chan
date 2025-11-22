@@ -6,7 +6,13 @@ export interface ResponseItem {
     response: string
 }
 
-export type Models = "gemma3:270m" | "smollm2:135m" | "granite4:350m" | "qwen2.5:0.5b";
+export type Models = "gemma3:270m"
+    | "smollm2:135m" | "smollm2:360m"
+    | "granite4:350m"
+    | "qwen2.5:0.5b" | "qwen2.5-coder:0.5b" | "qwen2.5-coder:1.5b"
+    | "deepseek-r1:1.5b"
+    | "tinyllama:1.1b"
+    |"sailor2:1b"
 
 interface IResponses {
     responses: ResponseItem[]
