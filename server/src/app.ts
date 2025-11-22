@@ -2,7 +2,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from 'cors'
 import { chatResponse } from "./controller/chat.controller";
-import { chatOllama } from "./controller/ollama.controller";
+import { chatOllama, createMemory, getAllChat, getMemory } from "./controller/ollama.controller";
 
 const app = express();
 
@@ -22,5 +22,9 @@ app.get('health', (req, res) => {
 
 app.post('/ask-ai', chatResponse)
 app.post('/ollama', chatOllama)
+app.get('/chats', getAllChat)
+app.get('/memory', getMemory)
+app.post('/memory', createMemory)
+
 
 export default app;

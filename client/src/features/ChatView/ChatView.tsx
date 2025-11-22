@@ -1,6 +1,6 @@
 import { useResponseContext } from "@/context/ResponsContext"
 import AiResponseBox from "./AiResponseBox";
-import CopyChatText from "../../components/CopyChatText";
+import CopyChatText from "./CopyChatText";
 import { Card, CardContent } from "../../components/ui/card";
 import { Brain } from "lucide-react";
 import UserPromptBox from "./UserPromptBox";
@@ -10,7 +10,7 @@ const ChatView = () => {
     console.log("newObject =", responses);
 
     return (
-        <div className="flex flex-col overflow-y-auto w-full h-full px-24 mb-32">
+        <div className="flex flex-col overflow-y-auto w-full h-full px-24 pt-15 pb-30 ">
             {responses.length === 0 && (
                 <EmptyChatPreview />
             )}
@@ -26,7 +26,7 @@ const ChatView = () => {
                     </div>
                     <div className="relative flex w-full mb-15">
                         <AiResponseBox response={item.response} />
-                        <CopyChatText text={item.prompt} mode="ai" />
+                        <CopyChatText text={item.response} mode="ai" />
                     </div>
                 </div>
             ))}
@@ -48,16 +48,23 @@ const ChatView = () => {
 
 const EmptyChatPreview = () => {
     return (
-        <div className="flex flex-col w-full h-full items-center justify-center select-none">
-            <p className="opacity-50 p-4">No chats yet...</p>
-        </div>
+            <div className="h-full w-full flex">
+                <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center select-none">
+                <img
+                    className="size-40"
+                    src="https://res.cloudinary.com/dltj8bim0/image/upload/v1761060580/logo_kukwt0.png"
+                    alt=""
+                    draggable={'false'}
+                />
+                </div>
+            </div>
     )
 }
 
 const IsThinkingNotifier = () => {
     return (
         <div>
-            <Card className="py-3">
+            <Card className="py-3 shadow-none">
                 <CardContent className="tx-3">
                     <div className="flex items-center justify-center gap-5">
                         <Brain size={24} />
@@ -66,7 +73,6 @@ const IsThinkingNotifier = () => {
                 </CardContent>
             </Card>
         </div>
-
     )
 }
 

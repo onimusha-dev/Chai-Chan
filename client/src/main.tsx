@@ -7,14 +7,15 @@ import { SidebarProvider } from './components/ui/sidebar'
 import { ThemeProvider } from './components/theme/theme-provider'
 import { ResponseProvider } from './context/ResponsContext'
 import ChatPage from './pages/ChatPage'
+import { MemoryProvider } from './context/MemoryContext'
+import SettingsPage from './pages/SettingsPage'
 
 const router = createBrowserRouter([
   {
     path: '/', element: <MainLayout />,
     children: [
-      {
-        index: true, element: <ChatPage />
-      },
+      { index: true, element: <ChatPage /> },
+      { path: 'Settings', element: <SettingsPage /> }
     ]
   }
 ])
@@ -24,9 +25,11 @@ createRoot(document.getElementById('root')!).render(
   // <StrictMode>
   <ThemeProvider>
     <SidebarProvider>
-      <ResponseProvider>
-        <RouterProvider router={router} />
-      </ResponseProvider>
+      <MemoryProvider>
+        <ResponseProvider>
+          <RouterProvider router={router} />
+        </ResponseProvider>
+      </MemoryProvider>
     </SidebarProvider>
   </ThemeProvider>
   // </StrictMode>, 
