@@ -2,13 +2,15 @@ import ollama from 'ollama'
 import { Chat } from '../models/chats.moel';
 import { SelectModel } from './askGemini.service';
 
-export const askOllama = async (prompt: string, model: SelectModel, collection: string, reasoning?: boolean,) => {
-    try {console.log(model)
+export const askOllama = async (prompt: string, model: SelectModel, collection: string, reasoning: boolean,) => {
+    try {
         const response = await ollama.chat({
             model: model,
             messages: [{ role: 'user', content: prompt }],
-            think: false
+            think: reasoning
         })
+        console.log(reasoning)
+        console.log(response.eval_duration / 1_000_000_000)
 
         const newChat = new Chat(
             {
@@ -16,20 +18,24 @@ export const askOllama = async (prompt: string, model: SelectModel, collection: 
                 prompt: prompt,
                 response: response.message.content,
                 collection: collection,
-                reasoning: response.message.thinking
+                reasoning: response.message.thinking,
+                timeTaken: response.eval_duration
             }
         )
+
+
+        console.log(newChat.timeTaken / 1_000_000_000)
 
         const chat = await newChat.save()
         if (!chat) {
             throw Error('error storing the chat in db.')
         }
 
-        return { id: newChat._id, response: newChat.response, reasoning: newChat.reasoning }
+        return { id: newChat._id, response: newChat.response, reasoning: newChat.reasoning, timeTaken: newChat.timeTaken }
 
     } catch (err) {
         console.log(err)
-    }  
+    }
 }
 
 export const getOllamaChats = async () => {
@@ -37,30 +43,32 @@ export const getOllamaChats = async () => {
 
     if (!chats) throw Error("error finding chats");
 
-    return chats.map(({ _id, prompt, response, reasoning }) => ({
+    return chats.map(({ _id, prompt, response, reasoning, timeTaken }) => ({
         id: _id.toString(),
         prompt,
         response,
-        reasoning
+        reasoning,
+        timeTaken
+        
     }));
 };
 
-//  this is storing the memory of the user
-export const createOllamaMemory = async (memory: string, userId?: string) => {
-    try {
+// //  this is storing the memory of the user
+// export const createOllamaMemory = async (memory: string, userId?: string) => {
+//     try {
 
-        return "new memory got created."
+//         return "new memory got created."
 
-    } catch (err) {
-        console.log(err)
-    }
-}
-
-
-// this is for getting the memory of the user
-export const getOllamaMemory = async () => {
+//     } catch (err) {
+//         console.log(err)
+//     }
+// }
 
 
-    return 'this is your stored memory!'
+// // this is for getting the memory of the user
+// export const getOllamaMemory = async () => {
 
-}
+
+//     return 'this is your stored memory!'
+
+// }

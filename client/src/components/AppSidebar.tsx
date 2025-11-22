@@ -25,7 +25,6 @@ export const projects = [
 const AppSidebar = () => {
 
     const { responses, setResponses } = useResponseContext();
-    // const [data, setData] = useState<>([]);
     const [loading, setLoading] = useState(false);
 
     const getHistory = async () => {
@@ -35,8 +34,7 @@ const AppSidebar = () => {
 
             if (!res) throw Error("there was an error retreating history.");
 
-            // setData(res.data);
-            setResponses(res.data.data)
+            setResponses(res.data.chats)
         } catch (err) {
             console.error(err);
         } finally {

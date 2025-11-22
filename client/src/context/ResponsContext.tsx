@@ -5,6 +5,7 @@ export interface ResponseItem {
     prompt: string
     reasoning: string
     response: string
+    timeTaken: number
 }
 
 export type Models = "gemma3:270m"

@@ -4,16 +4,16 @@ import { Brain, ChevronDown } from "lucide-react";
 import { useState } from "react";
 
 
-const AiResponseBox = ({ response, reasoning }: { response: string, reasoning: string }) => {
+const AiResponseBox = ({ response, reasoning, timeTaken }: { response: string, reasoning: string, timeTaken: number }) => {
     const [isExpanded, setIsExpanded] = useState(true)
+    const timeTakenInSeconds = timeTaken / 1_000_000_000
 
     const handleExpanded = () => {
-        console.log(isExpanded)
         setIsExpanded(!isExpanded)
     }
     return (
         <div>
-            <Card className="py-3">
+            <Card className="py-3 bg-background border-none shadow-none outline-none ">
                 <CardContent className="tx-3">
                     {
                         reasoning && (
@@ -25,8 +25,8 @@ const AiResponseBox = ({ response, reasoning }: { response: string, reasoning: s
                                     <div className="size-8 text-violet-500 flex justify-center items-center">
                                         <Brain size={18} />
                                     </div>
-                                    <p className={`select-none thinking-text justify-center items-center flex`}>
-                                        Thught for 4 seconds.
+                                    <p className={`text-foreground select-none thinking-text justify-center items-center flex`}>
+                                        Thought for {timeTakenInSeconds.toFixed(2)} seconds
                                     </p>
                                     <div className={`${!isExpanded && '-rotate-90'} size-8  flex justify-center items-center`}>
                                         <ChevronDown size={18} />

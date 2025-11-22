@@ -1,6 +1,5 @@
-import { Request, Response, NextFunction } from "express";
-import { createOllamaMemory, getOllamaChats, getOllamaMemory } from "../service/askOllama.service";
-import { askOllama } from "../service/askOllama.service";
+import { Request, Response, NextFunction, response } from "express";
+import { getOllamaChats, askOllama } from "../service/askOllama.service";
 import { SelectModel } from "../service/askGemini.service";
 
 interface ChatRequestBody {
@@ -14,7 +13,7 @@ export const chatOllama = async (req: Request<{}, {}, ChatRequestBody>, res: Res
     try {
         const { prompt, model, collection, reasoning } = req.body;
 
-        if (!prompt || !model || !collection || reasoning) throw Error("Inputs are not provided!")
+        if (!prompt || !model || !collection || typeof reasoning !== "boolean") throw Error("Inputs are not provided!")
 
         const reply = await askOllama(prompt, model, collection, reasoning)
 
@@ -23,8 +22,7 @@ export const chatOllama = async (req: Request<{}, {}, ChatRequestBody>, res: Res
         return res.status(200)
             .send({
                 status: 200,
-                response: reply,
-                reasoning: reply.reasoning
+                response: reply
             })
 
     } catch (err) {
@@ -38,70 +36,15 @@ export const getAllChat = async (req: Request, res: Response, next: NextFunction
 
         const chats = await getOllamaChats()
 
-        res.status(200)
+        return res.status(200)
             .send(
                 {
                     status: 200,
-                    data: chats
+                    chats: chats
                 }
             )
 
     } catch (err) {
         console.log(err)
-    }
-}
-
-interface MemoryRequestBody {
-    memory: string
-    userId?: string
-}
-export const createMemory = async (req: Request<{}, {}, MemoryRequestBody>, res: Response, next: NextFunction) => {
-    try {
-        const { memory, userId } = req.body
-
-        if (!memory) throw Error("memory is empty")
-
-        const newMemory = await createOllamaMemory(memory)
-
-
-        setTimeout(() => {
-
-
-            return res.status(200)
-                .send(
-                    {
-                        status: 200,
-                        memory: newMemory
-                    }
-                )
-
-        }, 5000);
-
-    } catch (err) {
-        console.log("error in the get memory controller. " + err)
-    }
-}
-
-
-export const getMemory = async (req: Request<{}, {}, MemoryRequestBody>, res: Response, next: NextFunction) => {
-    try {
-
-        const memory = await getOllamaMemory()
-
-        setTimeout(() => {
-
-            return res.status(200)
-                .send(
-                    {
-                        status: 200,
-                        memory: memory
-                    }
-                )
-
-        }, 5000);
-
-
-    } catch (err) {
-        console.log("error in the get memory controller. " + err)
     }
 }

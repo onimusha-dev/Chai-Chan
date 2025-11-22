@@ -18,13 +18,14 @@ const ChatBar = () => {
         try {
             setIsThinking(true)
 
-            const res = await api.post("ollama", { model, prompt, collection });
-// console.log(res.data.response)
+            const res = await api.post("ollama", { model, prompt, collection, reasoning: isReasoning });
+
             const newObject = {
                 id: res.data.response.id,
                 prompt: prompt,
                 response: res.data.response.response,
-                reasoning: res.data.response.reasoning
+                reasoning: res.data.response.reasoning,
+                timeTaken: res.data.response.timeTaken
             };
 
             const newResponses = [...responses, newObject];
@@ -60,18 +61,23 @@ const ChatBar = () => {
 
                     <div className="flex ml-5 gap-3">
 
-                        <div
-                            className={`${isReasoning? "px-4 py-1 border border-violet-500/50 bg-violet-950/50 " : "size-10 p-1 hover:bg-accent "}
+                        {/*  this is the btn for enabling thinking mode only available for specific models */}
+                        {
+                            model === "deepseek-r1:1.5b" && (
+                                <div
+                                    className={`${isReasoning ? "px-4 py-1 border border-violet-500/50 bg-violet-950/50 " : "size-10 p-1 hover:bg-accent "}
                             cursor-pointer flex items-center justify-center text-violet-500 rounded-full transition-colors duration-150 ease-in-out`}
-                            onClick={() => setIsReasoning(!isReasoning)}
-                        >
-                            <div className="flex ">
-                                <Brain size={22} />
-                                {
-                                    isReasoning && <p className="text-sm ml-1 thinking-text">Thinking</p>
-                                }
-                            </div>
-                        </div>
+                                    onClick={() => setIsReasoning(!isReasoning)}
+                                >
+                                    <div className="flex ">
+                                        <Brain size={22} />
+                                        {
+                                            isReasoning && <p className="text-sm ml-1 thinking-text">Thinking</p>
+                                        }
+                                    </div>
+                                </div>
+                            )
+                        }
 
                         <div
                             onClick={sendPrompt}

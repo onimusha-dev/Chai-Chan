@@ -22,6 +22,10 @@ const chatSchema = new Schema({
         type: String,
         require: true
     },
+    timeTaken: {
+        type: Number,
+        required: true
+    },
     collection: {
         type: String,
         require: true

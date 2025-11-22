@@ -7,9 +7,7 @@ import UserPromptBox from "./UserPromptBox";
 
 const ChatView = () => {
     const { responses, isThinking } = useResponseContext()
-    
-    responses.map(item =>
-        console.log(item.reasoning, '   ' + item.response))
+
     return (
         <div className="flex flex-col overflow-y-auto w-full h-full px-24 pt-15 pb-48 ">
             {responses.length === 0 && (
@@ -26,15 +24,15 @@ const ChatView = () => {
                         <CopyChatText text={item.prompt} mode="user" />
                     </div>
                     <div id={item.id} className="relative flex w-full mb-15">
-                        <AiResponseBox reasoning={item.reasoning} response={item.response} />
+                        <AiResponseBox reasoning={item.reasoning} response={item.response} timeTaken={item.timeTaken} />
                         <CopyChatText text={item.response} mode="ai" />
                     </div>
                 </div>
             ))}
-            
+
             {/* thinking motion */}
             {
-                (isThinking ) && (
+                (isThinking) && (
                     <div className="w-full rounded shadow "
                     >
                         <div className="relative flex w-full mb-15">
@@ -49,16 +47,16 @@ const ChatView = () => {
 
 const EmptyChatPreview = () => {
     return (
-            <div className="h-full w-full flex">
-                <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center select-none">
+        <div className="h-full w-full flex">
+            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center select-none">
                 <img
                     className="size-40"
                     src="https://res.cloudinary.com/dltj8bim0/image/upload/v1761060580/logo_kukwt0.png"
                     alt=""
                     draggable={'false'}
                 />
-                </div>
             </div>
+        </div>
     )
 }
 
