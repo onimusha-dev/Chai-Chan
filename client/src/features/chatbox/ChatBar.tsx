@@ -1,14 +1,14 @@
 import { useState } from "react"
-import { Mic, Send } from "lucide-react"
+import { Brain, Send } from "lucide-react"
 import { Card, CardContent } from "../../components/ui/card"
 import api from "@/api/api"
 import { useResponseContext } from "@/context/ResponsContext"
 import ModelToggle from "./ModelToggle"
-import SchorllToNewChat  from "./SchorllToNewChat"
+import SchorllToNewChat from "./SchorllToNewChat"
 
 const ChatBar = () => {
     const [prompt, setPrompt] = useState("");
-    const { responses, model, setResponses, setIsThinking, setLatestResponse } = useResponseContext();
+    const { responses, model, isReasoning, setResponses, setIsThinking, setLatestResponse, setIsReasoning } = useResponseContext();
 
     const sendPrompt = async () => {
         if (!prompt.trim()) return;
@@ -17,23 +17,24 @@ const ChatBar = () => {
 
         try {
             setIsThinking(true)
-            
+
             const res = await api.post("ollama", { model, prompt, collection });
-            
+// console.log(res.data.response)
             const newObject = {
                 id: res.data.response.id,
                 prompt: prompt,
-                response: res.data.response.response
+                response: res.data.response.response,
+                reasoning: res.data.response.reasoning
             };
-            
+
             const newResponses = [...responses, newObject];
-            
+
             setResponses(newResponses);
             setLatestResponse(newObject.id)
-            
+
         } catch (err) {
             console.error("Error:", err);
-            
+
         } finally {
             setPrompt("");
             setIsThinking(false)
@@ -58,8 +59,18 @@ const ChatBar = () => {
                     />
 
                     <div className="flex ml-5 gap-3">
-                        <div className="cursor-pointer flex size-10 items-center justify-center p-1 rounded-full hover:bg-accent transition-colors duration-150 ease-in-out">
-                            <Mic size={22} />
+
+                        <div
+                            className={`${isReasoning? "px-4 py-1 border border-violet-500/50 bg-violet-950/50 " : "size-10 p-1 hover:bg-accent "}
+                            cursor-pointer flex items-center justify-center text-violet-500 rounded-full transition-colors duration-150 ease-in-out`}
+                            onClick={() => setIsReasoning(!isReasoning)}
+                        >
+                            <div className="flex ">
+                                <Brain size={22} />
+                                {
+                                    isReasoning && <p className="text-sm ml-1 thinking-text">Thinking</p>
+                                }
+                            </div>
                         </div>
 
                         <div

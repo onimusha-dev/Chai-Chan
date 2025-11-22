@@ -7,7 +7,9 @@ import UserPromptBox from "./UserPromptBox";
 
 const ChatView = () => {
     const { responses, isThinking } = useResponseContext()
-
+    
+    responses.map(item =>
+        console.log(item.reasoning, '   ' + item.response))
     return (
         <div className="flex flex-col overflow-y-auto w-full h-full px-24 pt-15 pb-48 ">
             {responses.length === 0 && (
@@ -24,7 +26,7 @@ const ChatView = () => {
                         <CopyChatText text={item.prompt} mode="user" />
                     </div>
                     <div id={item.id} className="relative flex w-full mb-15">
-                        <AiResponseBox response={item.response} />
+                        <AiResponseBox reasoning={item.reasoning} response={item.response} />
                         <CopyChatText text={item.response} mode="ai" />
                     </div>
                 </div>
@@ -32,7 +34,7 @@ const ChatView = () => {
             
             {/* thinking motion */}
             {
-                isThinking && (
+                (isThinking ) && (
                     <div className="w-full rounded shadow "
                     >
                         <div className="relative flex w-full mb-15">

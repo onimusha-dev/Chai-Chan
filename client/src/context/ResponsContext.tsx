@@ -3,6 +3,7 @@ import { createContext, useContext, useState, type ReactNode } from "react";
 export interface ResponseItem {
     id: string
     prompt: string
+    reasoning: string
     response: string
 }
 
@@ -12,22 +13,28 @@ export type Models = "gemma3:270m"
     | "qwen2.5:0.5b" | "qwen2.5-coder:0.5b" | "qwen2.5-coder:1.5b"
     | "deepseek-r1:1.5b"
     | "tinyllama:1.1b"
-    |"sailor2:1b"
+    | "sailor2:1b"
 
-interface IResponses {
+interface IChat {
     responses: ResponseItem[]
     setResponses: (r: ResponseItem[]) => void
-    isThinking: boolean
-    setIsThinking: (isThinking: boolean) => void
-    model: Models
-    setModel: (model: Models) => void
+
     latestResponse: string
     setLatestResponse: (latestResponse: string) => void
 
+    isThinking: boolean
+    setIsThinking: (isThinking: boolean) => void
+
+    // setting up models and it state
+    model: Models
+    setModel: (model: Models) => void
+    
+    isReasoning: boolean
+    setIsReasoning: (isReasoning: boolean) => void
 }
 
 // null to start, same as you had
-export const ResponseContext = createContext<IResponses | null>(null);
+export const ResponseContext = createContext<IChat | null>(null);
 
 export const useResponseContext = () => {
     const context = useContext(ResponseContext);
@@ -46,9 +53,10 @@ export const ResponseProvider = ({ children }: { children: ReactNode }) => {
     const [isThinking, setIsThinking] = useState(false);
     const [model, setModel] = useState<Models>("gemma3:270m")
     const [latestResponse, setLatestResponse] = useState('#')
+    const [isReasoning, setIsReasoning] = useState(false)
 
     return (
-        <ResponseContext.Provider value={{ responses, isThinking, model, latestResponse, setResponses, setIsThinking, setModel, setLatestResponse }}>
+        <ResponseContext.Provider value={{ responses, isThinking, model, latestResponse, isReasoning, setResponses, setIsThinking, setModel, setLatestResponse, setIsReasoning }}>
             {children}
         </ResponseContext.Provider>
     );

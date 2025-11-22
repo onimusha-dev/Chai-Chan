@@ -2,37 +2,34 @@ import ollama from 'ollama'
 import { Chat } from '../models/chats.moel';
 import { SelectModel } from './askGemini.service';
 
-export const askOllama = async (prompt: string, model: SelectModel, collection: string) => {
-    try {
+export const askOllama = async (prompt: string, model: SelectModel, collection: string, reasoning?: boolean,) => {
+    try {console.log(model)
         const response = await ollama.chat({
             model: model,
             messages: [{ role: 'user', content: prompt }],
+            think: false
         })
-        console.log(response);
-
-        // const id = crypto.randomUUID();
 
         const newChat = new Chat(
             {
-                // id: id,
                 model: model,
                 prompt: prompt,
                 response: response.message.content,
-                collection: collection
+                collection: collection,
+                reasoning: response.message.thinking
             }
         )
-        console.log(newChat)
 
         const chat = await newChat.save()
         if (!chat) {
             throw Error('error storing the chat in db.')
         }
 
-        return { id: newChat._id, response: response.message.content }
+        return { id: newChat._id, response: newChat.response, reasoning: newChat.reasoning }
 
     } catch (err) {
         console.log(err)
-    }
+    }  
 }
 
 export const getOllamaChats = async () => {
@@ -40,10 +37,11 @@ export const getOllamaChats = async () => {
 
     if (!chats) throw Error("error finding chats");
 
-    return chats.map(({ _id, prompt, response }) => ({
+    return chats.map(({ _id, prompt, response, reasoning }) => ({
         id: _id.toString(),
         prompt,
-        response
+        response,
+        reasoning
     }));
 };
 

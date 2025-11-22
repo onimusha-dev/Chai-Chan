@@ -26,7 +26,7 @@ const ModelToggle = () => {
                     modelList.map((m, id) => (
                         <DropdownMenuItem
                             key={id}
-                            className="px-5"
+                            className={`${model === m.model && 'bg-accent'} px-5`}
                             onClick={() => setModel(m.model)}
                         >
                             {

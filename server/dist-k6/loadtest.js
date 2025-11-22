@@ -43,8 +43,8 @@ const prompts = [
 let i = 0;
 let j = 0;
 export const options = {
-    vus: 3,
-    duration: "30s",
+    vus: 5,
+    duration: "300s",
 };
 function getNextModel() {
     const model = models[i];

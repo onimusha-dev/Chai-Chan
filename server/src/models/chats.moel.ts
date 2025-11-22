@@ -14,9 +14,13 @@ const chatSchema = new Schema({
         type: String,
         required: true
     },
+    reasoning: {
+        type: String,
+        default: ''
+    },
     response: {
         type: String,
-        required: true
+        require: true
     },
     collection: {
         type: String,
