@@ -1,4 +1,4 @@
-import { StrictMode } from 'react'
+// import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './components/theme/index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
