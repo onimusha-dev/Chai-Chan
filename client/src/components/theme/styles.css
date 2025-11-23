@@ -1,0 +1,19 @@
+.thinking-text-dark {
+    font-weight: 600;
+    background: linear-gradient(90deg, #9ca3af63, #ffffff, #9ca3af63);
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: thinkingGlow 2s linear infinite;
+}
+
+@keyframes thinkingGlow {
+    0% {
+        background-position: 0% center;
+    }
+
+    100% {
+        background-position: -200% center;
+    }
+}

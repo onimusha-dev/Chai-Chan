@@ -8,7 +8,7 @@ import SchorllToNewChat from "./SchorllToNewChat"
 
 const ChatBar = () => {
     const [prompt, setPrompt] = useState("");
-    const { responses, model, isReasoning, setResponses, setIsThinking, setLatestResponse, setIsReasoning } = useResponseContext();
+    const { responses, model, isReasoning, isTemporary, setResponses, setIsThinking, setLatestResponse, setIsReasoning } = useResponseContext();
 
     const sendPrompt = async () => {
         if (!prompt.trim()) return;
@@ -18,14 +18,14 @@ const ChatBar = () => {
         try {
             setIsThinking(true)
 
-            const res = await api.post("ollama", { model, prompt, collection, reasoning: isReasoning });
-
+            const res = await api.post("ollama", { model, prompt, collection, reasoning: isReasoning, isTemporary });
+console.log(res.data)
             const newObject = {
                 id: res.data.response.id,
                 prompt: prompt,
                 response: res.data.response.response,
                 reasoning: res.data.response.reasoning,
-                timeTaken: res.data.response.timeTaken
+                timeTaken: res.data.response.timeTaken,
             };
 
             const newResponses = [...responses, newObject];
@@ -63,7 +63,9 @@ const ChatBar = () => {
 
                         {/*  this is the btn for enabling thinking mode only available for specific models */}
                         {
-                            model === "deepseek-r1:1.5b" && (
+                            (
+                                model === "deepseek-r1:1.5b" || model === "qwen3-vl:2b" || model === "qwen3:0.6b"
+                            ) && (
                                 <div
                                     className={`${isReasoning ? "px-4 py-1 border border-violet-500/50 bg-violet-950/50 " : "size-10 p-1 hover:bg-accent "}
                             cursor-pointer flex items-center justify-center text-violet-500 rounded-full transition-colors duration-150 ease-in-out`}

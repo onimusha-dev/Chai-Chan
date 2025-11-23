@@ -8,10 +8,10 @@ export interface ResponseItem {
     timeTaken: number
 }
 
-export type Models = "gemma3:270m"
+export type Models = "gemma3:270m" | "gemma3:1b"
     | "smollm2:135m" | "smollm2:360m"
     | "granite4:350m"
-    | "qwen2.5:0.5b" | "qwen2.5-coder:0.5b" | "qwen2.5-coder:1.5b"
+    | "qwen2.5:0.5b" | "qwen2.5-coder:0.5b" | "qwen2.5-coder:1.5b" | "qwen3:0.6b" |"qwen3-vl:2b"
     | "deepseek-r1:1.5b"
     | "tinyllama:1.1b"
     | "sailor2:1b"
@@ -32,6 +32,10 @@ interface IChat {
     
     isReasoning: boolean
     setIsReasoning: (isReasoning: boolean) => void
+
+    isTemporary: boolean
+    setIsTemporary: (isTemporary: boolean) => void
+
 }
 
 // null to start, same as you had
@@ -55,9 +59,10 @@ export const ResponseProvider = ({ children }: { children: ReactNode }) => {
     const [model, setModel] = useState<Models>("gemma3:270m")
     const [latestResponse, setLatestResponse] = useState('#')
     const [isReasoning, setIsReasoning] = useState(false)
+    const [isTemporary, setIsTemporary] = useState(false)
 
     return (
-        <ResponseContext.Provider value={{ responses, isThinking, model, latestResponse, isReasoning, setResponses, setIsThinking, setModel, setLatestResponse, setIsReasoning }}>
+        <ResponseContext.Provider value={{ responses, isThinking, model, latestResponse, isReasoning, isTemporary, setResponses, setIsThinking, setModel, setLatestResponse, setIsReasoning, setIsTemporary }}>
             {children}
         </ResponseContext.Provider>
     );

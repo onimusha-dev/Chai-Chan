@@ -7,15 +7,16 @@ interface ChatRequestBody {
     model: SelectModel
     collection: string
     reasoning: boolean
+    isTemporary: boolean
 }
 
 export const chatOllama = async (req: Request<{}, {}, ChatRequestBody>, res: Response, next: NextFunction) => {
     try {
-        const { prompt, model, collection, reasoning } = req.body;
+        const { prompt, model, collection, reasoning = false, isTemporary = false } = req.body;
 
         if (!prompt || !model || !collection || typeof reasoning !== "boolean") throw Error("Inputs are not provided!")
 
-        const reply = await askOllama(prompt, model, collection, reasoning)
+        const reply = await askOllama(prompt, model, collection, reasoning, isTemporary)
 
         if (!reply) throw Error("error on ollama controller!")
 

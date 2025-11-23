@@ -1,5 +1,9 @@
 export const modelList = [
     {
+        model: "gemma3:1b" as const,
+        name: "gemma3:1b"
+    },
+    {
         model: "gemma3:270m" as const,
         name: "gemma3:270m",
     },
@@ -18,6 +22,14 @@ export const modelList = [
     {
         model: "deepseek-r1:1.5b" as const,
         name: "deepseek-r1:1.5b",
+    },
+    {
+        model: "qwen3:0.6b" as const,
+        name: "qwen3:0.6b"
+    },
+    {
+        model: "qwen3-vl:2b" as const,
+        name: "qwen3-vl:2b"
     },
     {
         model: "qwen2.5:0.5b" as const,

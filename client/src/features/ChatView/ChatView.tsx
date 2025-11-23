@@ -9,7 +9,7 @@ const ChatView = () => {
     const { responses, isThinking } = useResponseContext()
 
     return (
-        <div className="flex flex-col overflow-y-auto w-full h-full px-24 pt-15 pb-48 ">
+        <div className="flex flex-col overflow-y-auto w-full h-full px-24 pt-20 pb-48 ">
             {responses.length === 0 && (
                 <EmptyChatPreview />
             )}
@@ -46,15 +46,29 @@ const ChatView = () => {
 }
 
 const EmptyChatPreview = () => {
+    const { isTemporary } = useResponseContext()
     return (
         <div className="h-full w-full flex">
             <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center select-none">
-                <img
-                    className="size-40"
-                    src="https://res.cloudinary.com/dltj8bim0/image/upload/v1761060580/logo_kukwt0.png"
-                    alt=""
-                    draggable={'false'}
-                />
+                {
+                    isTemporary ?
+                        (
+                            <div className="flex flex-col items-center gap-3">
+                                <h1 className="text-[28px] leading-[34px] font-normal tracking-[0.38px]">Temporary Chat</h1>
+                                <p className="opacity-50 text-token-text-secondary max-w-[24rem] text-center text-base leading-6 font-normal tracking-[-0.32px] text-balance">
+                                    This chat won't appear in history, use or update ChatGPT's memory, or be used to train our models. For safety purposes, we may keep a copy of this chat for up to 30 days.
+                                </p>
+                            </div>
+                        ) : (
+
+                            <img
+                                className="size-40"
+                                src="https://res.cloudinary.com/dltj8bim0/image/upload/v1761060580/logo_kukwt0.png"
+                                alt=""
+                                draggable={'false'}
+                            />
+                        )
+                }
             </div>
         </div>
     )

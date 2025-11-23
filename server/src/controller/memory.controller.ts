@@ -1,54 +1,57 @@
-// interface MemoryRequestBody {
-//     memory: string
-//     userId?: string
-// }
-// export const createMemory = async (req: Request<{}, {}, MemoryRequestBody>, res: Response, next: NextFunction) => {
-//     try {
-//         const { memory, userId } = req.body
+import { Request, Response, NextFunction } from "express"
+import { createOllamaMemory, getOllamaMemory } from "../service/askOllama.service"
 
-//         if (!memory) throw Error("memory is empty")
+interface MemoryRequestBody {
+    memory: string
+    userId?: string
+}
+export const createMemory = async (req: Request<{}, {}, MemoryRequestBody>, res: Response, next: NextFunction) => {
+    try {
+        const { memory, userId } = req.body
 
-//         const newMemory = await createOllamaMemory(memory)
+        if (!memory) throw Error("memory is empty")
 
-
-//         setTimeout(() => {
-
-
-//             return res.status(200)
-//                 .send(
-//                     {
-//                         status: 200,
-//                         memory: newMemory
-//                     }
-//                 )
-
-//         }, 5000);
-
-//     } catch (err) {
-//         console.log("error in the get memory controller. " + err)
-//     }
-// }
+        const newMemory = await createOllamaMemory(memory)
 
 
-// export const getMemory = async (req: Request<{}, {}, MemoryRequestBody>, res: Response, next: NextFunction) => {
-//     try {
-
-//         const memory = await getOllamaMemory()
-
-//         setTimeout(() => {
-
-//             return res.status(200)
-//                 .send(
-//                     {
-//                         status: 200,
-//                         memory: memory
-//                     }
-//                 )
-
-//         }, 5000);
+        setTimeout(() => {
 
 
-//     } catch (err) {
-//         console.log("error in the get memory controller. " + err)
-//     }
-// }
+            return res.status(200)
+                .send(
+                    {
+                        status: 200,
+                        memory: newMemory
+                    }
+                )
+
+        }, 5000);
+
+    } catch (err) {
+        console.log("error in the get memory controller. " + err)
+    }
+}
+
+
+export const getMemory = async (req: Request<{}, {}, MemoryRequestBody>, res: Response, next: NextFunction) => {
+    try {
+
+        const memory = await getOllamaMemory()
+
+        setTimeout(() => {
+
+            return res.status(200)
+                .send(
+                    {
+                        status: 200,
+                        memory: memory
+                    }
+                )
+
+        }, 5000);
+
+
+    } catch (err) {
+        console.log("error in the get memory controller. " + err)
+    }
+}

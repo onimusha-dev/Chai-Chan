@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
+import './components/theme/index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import MainLayout from './layoutes/MainLayout'
 import { SidebarProvider } from './components/ui/sidebar'

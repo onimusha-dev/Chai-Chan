@@ -25,7 +25,7 @@ const AiResponseBox = ({ response, reasoning, timeTaken }: { response: string, r
                                     <div className="size-8 text-violet-500 flex justify-center items-center">
                                         <Brain size={18} />
                                     </div>
-                                    <p className={`text-foreground select-none thinking-text justify-center items-center flex`}>
+                                    <p className={`text-foreground select-none thinking-text-dark dark:thinking-text-light justify-center items-center flex`}>
                                         Thought for {timeTakenInSeconds.toFixed(2)} seconds
                                     </p>
                                     <div className={`${!isExpanded && '-rotate-90'} size-8  flex justify-center items-center`}>

@@ -1,5 +1,6 @@
 import { useResponseContext } from '@/context/ResponsContext'
 import { SidebarTrigger } from './ui/sidebar'
+import IsTemporaryChat from '@/features/chatbox/IsTemporaryChat'
 
 const AppHeader = () => {
   const { model } = useResponseContext()
@@ -11,6 +12,7 @@ const AppHeader = () => {
       <div className="flex w-full items-center justify-center">
         <p className="">{model}</p>
       </div>
+      <IsTemporaryChat />
     </header>
   )
 }
