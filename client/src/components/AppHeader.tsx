@@ -1,6 +1,7 @@
 import { useResponseContext } from '@/context/ResponsContext'
 import { SidebarTrigger } from './ui/sidebar'
 import IsTemporaryChat from '@/features/chatbox/IsTemporaryChat'
+import { ModeToggle } from './theme/mode-toggle'
 
 const AppHeader = () => {
   const { model } = useResponseContext()
@@ -13,6 +14,7 @@ const AppHeader = () => {
         <p className="">{model}</p>
       </div>
       <IsTemporaryChat />
+      <ModeToggle />
     </header>
   )
 }

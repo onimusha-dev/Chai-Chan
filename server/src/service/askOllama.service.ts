@@ -9,7 +9,8 @@ export const askOllama = async (prompt: string, model: SelectModel, collection: 
             messages: [{ role: 'user', content: prompt }],
             think: reasoning
         })
-
+        
+        console.log(response)
         if (isTemporary) {
             const id = crypto.randomUUID()
             return { id, response: response.message.content, reasoning: response.message.thinking, timeTaken: response.eval_duration }
@@ -26,8 +27,6 @@ export const askOllama = async (prompt: string, model: SelectModel, collection: 
                     timeTaken: response.eval_duration
                 }
             )
-
-            console.log(newChat.timeTaken / 1_000_000_000)
 
             const chat = await newChat.save()
             if (!chat) {

@@ -44,7 +44,7 @@ const AiResponseBox = ({ response, reasoning, timeTaken }: { response: string, r
                         )
                     }
                     <div
-                        className="prose prose-invert max-w-full wrap-break-word overflow-x-hidden prose-pre:overflow-x-auto prose-code:break-words"
+                        className="prose-wrapper prose prose-invert max-w-full wrap-break-word overflow-x-hidden prose-pre:overflow-x-auto prose-code:break-words"
                         dangerouslySetInnerHTML={{ __html: marked(response) }}
                     />
                 </CardContent>

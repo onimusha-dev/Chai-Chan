@@ -1,0 +1,50 @@
+/* Make paragraphs readable but not too shouty */
+.prose-wrapper p {
+  margin: 0.75rem 0;
+  line-height: 1.6;
+}
+
+/* Inline code gets a soft pill look */
+.prose-wrapper code {
+  padding: 0.15rem 0.3rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.95em;
+}
+
+/* Code blocks get breathing room and a dim backdrop */
+.prose-wrapper pre {
+  padding: 1rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow-x: auto; /* backup to your Tailwind class */
+}
+
+/* Headings spaced + slightly bolder since Tailwind’s prose styles get overridden sometimes */
+.prose-wrapper h1,
+.prose-wrapper h2,
+.prose-wrapper h3,
+.prose-wrapper h4 {
+  margin: 1.2rem 0 0.6rem;
+  font-weight: 600;
+}
+
+/* Lists should indent pleasantly */
+.prose-wrapper ul,
+.prose-wrapper ol {
+  margin: 0.75rem 0 0.75rem 1.5rem;
+}
+
+/* Blockquotes: gentle left border + softer tone */
+.prose-wrapper blockquote {
+  padding-left: 1rem;
+  border-left: 3px solid rgba(255, 255, 255, 0.2);
+  opacity: 0.9;
+  margin: 1rem 0;
+}
+
+/* Links: brighten just enough to be obvious */
+.prose-wrapper a {
+  color: #93c5fd; /* Tailwind-ish sky-300 */
+  text-decoration: underline;
+}
