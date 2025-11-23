@@ -64,7 +64,7 @@ console.log(res.data)
                         {/*  this is the btn for enabling thinking mode only available for specific models */}
                         {
                             (
-                                model === "deepseek-r1:1.5b" || model === "qwen3-vl:2b" || model === "qwen3:0.6b"
+                                model === "qwen3-vl:2b" || model === "qwen3:0.6b"
                             ) && (
                                 <div
                                     className={`${isReasoning ? "px-4 py-1 border border-violet-500/50 bg-violet-950/50 " : "size-10 p-1 hover:bg-accent "}

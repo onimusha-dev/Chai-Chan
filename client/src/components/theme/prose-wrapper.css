@@ -48,3 +48,25 @@
   color: #93c5fd; /* Tailwind-ish sky-300 */
   text-decoration: underline;
 }
+/* Universal prose container for sidebars/sheets */
+.prose-fluid {
+  max-width: 100%;
+  width: 100%;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* Prevent child elements from escaping horizontally */
+.prose-fluid pre,
+.prose-fluid code {
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  /* allows wrap when possible */
+}
+
+/* Markdown images also shouldn't overflow */
+.prose-fluid img {
+  max-width: 100%;
+  height: auto;
+}

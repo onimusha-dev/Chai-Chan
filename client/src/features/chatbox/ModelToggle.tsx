@@ -28,8 +28,8 @@ const ModelToggle = () => {
                             key={id}
                             className={`${model === m.model && 'bg-accent'} px-5`}
                             onClick={() => {
-                              setIsReasoning(false)
-                              setModel(m.model)
+                                setModel(m.model)
+                                m.reasoning !== true && setIsReasoning(false)
                             }}
                         >
                             {

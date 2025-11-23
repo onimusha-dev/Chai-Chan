@@ -35,7 +35,7 @@ const AiResponseBox = ({ response, reasoning, timeTaken }: { response: string, r
                                 {
                                     isExpanded && <div
                                         className={`x
-                                        border-l-2 pl-3 opacity-50 prose prose-invert max-w-full wrap-break-word overflow-x-hidden prose-pre:overflow-x-auto prose-code:break-words`
+                                        border-l-2 pl-3  opacity-50 prose prose-invert max-w-full wrap-break-word overflow-x-hidden prose-pre:overflow-x-auto prose-code:break-words`
                                         }
                                         dangerouslySetInnerHTML={{ __html: marked(reasoning) }}
                                     />
@@ -44,7 +44,7 @@ const AiResponseBox = ({ response, reasoning, timeTaken }: { response: string, r
                         )
                     }
                     <div
-                        className="prose-wrapper prose prose-invert max-w-full wrap-break-word overflow-x-hidden prose-pre:overflow-x-auto prose-code:break-words"
+                        className="prose-fluid prose-wrapper prose prose-invert max-w-full wrap-break-word overflow-x-hidden prose-pre:overflow-x-auto prose-code:break-words"
                         dangerouslySetInnerHTML={{ __html: marked(response) }}
                     />
                 </CardContent>
