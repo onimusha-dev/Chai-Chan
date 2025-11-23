@@ -1,36 +1,52 @@
 // import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './components/theme/index.css'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import MainLayout from './layoutes/MainLayout'
-import { SidebarProvider } from './components/ui/sidebar'
-import { ThemeProvider } from './components/theme/theme-provider'
-import { ResponseProvider } from './context/ResponsContext'
-import ChatPage from './pages/ChatPage'
-import { MemoryProvider } from './context/MemoryContext'
-import SettingsPage from './pages/SettingsPage'
+import { createRoot } from 'react-dom/client';
+import './components/theme/index.css';
+import {
+    createBrowserRouter,
+    Navigate,
+    RouterProvider,
+} from 'react-router-dom';
+import MainLayout from './layoutes/MainLayout';
+import { SidebarProvider } from './components/ui/sidebar';
+import { ThemeProvider } from './components/theme/theme-provider';
+import { ResponseProvider } from './context/ResponsContext';
+import ChatPage from './pages/ChatPage';
+import { MemoryProvider } from './context/MemoryContext';
+import SettingsPage from './pages/SettingsPage';
+import AuthLayout from './layoutes/AuthLayout';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 
 const router = createBrowserRouter([
-  {
-    path: '/', element: <MainLayout />,
-    children: [
-      { index: true, element: <ChatPage /> },
-      { path: 'Settings', element: <SettingsPage /> }
-    ]
-  }
-])
-
+    {
+        path: '/',
+        element: <MainLayout />,
+        children: [
+            { index: true, element: <ChatPage /> },
+            { path: 'Settings', element: <SettingsPage /> },
+        ],
+    },
+    {
+        path: '/auth',
+        element: <AuthLayout />,
+        children: [
+            { index: true, element: <Navigate to={'login'} replace /> },
+            { path: 'login', element: <LoginPage /> },
+            { path: 'register', element: <RegisterPage /> },
+        ],
+    },
+]);
 
 createRoot(document.getElementById('root')!).render(
-  // <StrictMode>
-  <ThemeProvider>
-    <SidebarProvider>
-      <MemoryProvider>
-        <ResponseProvider>
-          <RouterProvider router={router} />
-        </ResponseProvider>
-      </MemoryProvider>
-    </SidebarProvider>
-  </ThemeProvider>
-  // </StrictMode>, 
-)
+    // <StrictMode>
+    <ThemeProvider>
+        <SidebarProvider>
+            <MemoryProvider>
+                <ResponseProvider>
+                    <RouterProvider router={router} />
+                </ResponseProvider>
+            </MemoryProvider>
+        </SidebarProvider>
+    </ThemeProvider>,
+    // </StrictMode>,
+);

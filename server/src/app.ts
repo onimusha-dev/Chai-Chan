@@ -4,7 +4,7 @@ import cors from 'cors'
 import { chatResponse } from "./controller/chat.controller";
 import { chatOllama, getAllChat } from "./controller/ollama.controller";
 import { createMemory, getMemory } from "./controller/memory.controller";
-
+import authRoutes from "./router/auth.router"
 const app = express();
 
 app.use(express.json())
@@ -24,8 +24,8 @@ app.get('health', (req, res) => {
 app.post('/ask-ai', chatResponse)
 app.post('/ollama', chatOllama)
 app.get('/chats', getAllChat)
-app.get('/memory', getMemory)
+app.get('/memory/:id', getMemory)
 app.post('/memory', createMemory)
-
+app.use("/auth", authRoutes);
 
 export default app;

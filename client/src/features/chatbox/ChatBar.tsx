@@ -74,7 +74,7 @@ console.log(res.data)
                                     <div className="flex ">
                                         <Brain size={22} />
                                         {
-                                            isReasoning && <p className="text-sm ml-1 thinking-text">Thinking</p>
+                                            isReasoning && <p className="text-sm ml-1 thinking-text-violet-dark">Thinking</p>
                                         }
                                     </div>
                                 </div>

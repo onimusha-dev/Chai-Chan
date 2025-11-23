@@ -5,6 +5,7 @@ export type SelectModel = "gemma3:270m"
     | "deepseek-r1:1.5b"
     | "tinyllama:1.1b"
     | "sailor2:1b"
+    | "internlm2:1m"
 
 
     

@@ -10,7 +10,7 @@ import { modelList } from "@/utils/models"
 
 const ModelToggle = () => {
 
-    const { model, setModel } = useResponseContext()
+    const { model, setModel, setIsReasoning } = useResponseContext()
 
     return (
         <DropdownMenu>
@@ -27,7 +27,10 @@ const ModelToggle = () => {
                         <DropdownMenuItem
                             key={id}
                             className={`${model === m.model && 'bg-accent'} px-5`}
-                            onClick={() => setModel(m.model)}
+                            onClick={() => {
+                              setIsReasoning(false)
+                              setModel(m.model)
+                            }}
                         >
                             {
                                 model === m.model && <CornerUpRight size={22} />

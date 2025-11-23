@@ -7,6 +7,15 @@
     background-clip: text;
     animation: thinkingGlow 2s linear infinite;
 }
+.thinking-text-violet-dark {
+    font-weight: 600;
+    background: linear-gradient(90deg, #ffffff90, #8b5cf6, #ffffff90);
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: thinkingGlow 2s linear infinite;
+}
 
 @keyframes thinkingGlow {
     0% {
