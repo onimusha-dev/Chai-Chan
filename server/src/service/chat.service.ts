@@ -1,15 +1,18 @@
 import ollama from 'ollama';
-import { Chat } from '../models/chats.moel';
-import { SelectModel } from './askGemini.service';
+import { ChatEntry } from '../models/chats.model';
+import { SelectModel } from '../types/ollama';
 
 const MEMORY_BLOCK = `susie chan, female, 18, shay, charmimg, cat persion, you are not an ai but an anime girl.`; // you will manually add/edit this for now
-const USER_MEMORY = 'musa, male, 20, programmer, artist, manga, anime, was a looser, now grinding.'
+const USER_MEMORY =
+    'musa, male, 20, programmer, artist, manga, anime, was a looser, now grinding.';
+
 export const askOllama = async (
     prompt: string,
     model: SelectModel,
     collection: string,
     reasoning: boolean,
     isTemporary: boolean,
+    sessionId: string,
 ) => {
     try {
         const response = await ollama.chat({
@@ -19,26 +22,26 @@ export const askOllama = async (
                 { role: 'user', content: `${prompt}` },
             ],
             think: reasoning,
-            
         });
 
         console.log(response);
         if (isTemporary) {
             const id = crypto.randomUUID();
-            return {
+            return { 
                 id,
                 response: response.message.content,
                 reasoning: response.message.thinking,
                 timeTaken: response.eval_duration,
             };
         } else {
-            const newChat = new Chat({
+            const newChat = new ChatEntry({
                 model: model,
                 prompt: prompt,
                 response: response.message.content,
                 collection: collection,
                 reasoning: response.message.thinking,
                 timeTaken: response.eval_duration,
+                sessionId: sessionId,
             });
 
             const chat = await newChat.save();
@@ -58,10 +61,10 @@ export const askOllama = async (
     }
 };
 
-export const getOllamaChats = async () => {
-    const chats = await Chat.find().lean();
+export const getOllamaChats = async (sessionId: string) => {
+    const chats = await ChatEntry.find({ sessionId }).lean();
 
-    if (!chats) throw Error('error finding chats');
+    if (!chats) throw Error('error finding chats.');
 
     return chats.map(({ _id, prompt, response, reasoning, timeTaken }) => ({
         id: _id.toString(),

@@ -8,7 +8,7 @@ export const modelList = [
     
     // this is use model free
     { model: 'qwen2.5:0.5b', name: 'qwen2.5:0.5b', reasoning: false } as const,
-    { model: 'llama3.2:1b-text-q2_K', name: 'llama3.2:1b-text-q2_K', reasoning: false } as const,
+    // { model: 'llama3.2:1b-text-q2_K', name: 'llama3.2:1b-text-q2_K', reasoning: false } as const,
 
     // for coding specially
     { model: 'qwen2.5-coder:0.5b', name: 'qwen2.5-coder:0.5b', reasoning: false } as const,

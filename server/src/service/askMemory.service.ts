@@ -11,7 +11,7 @@ export const createOllamaMemory = async (
         const isMemoryExits = await Memory.findOne({ user: userId });
 
         const response = await ollama.chat({
-            model: true && 'deepseek-r1:1.5b', //'gemma3:270m' : 'gemma3:1b',
+            model: 'gemma3:270m',
             messages: [
                 {
                     role: 'system',

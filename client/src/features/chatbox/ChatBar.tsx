@@ -15,7 +15,7 @@ const ChatBar = () => {
 
         const collection = 'Collection 1'
 
-        try {
+        try { 
             setIsThinking(true)
 
             const res = await api.post("ollama", { model, prompt, collection, reasoning: isReasoning, isTemporary });
@@ -26,6 +26,7 @@ console.log(res.data)
                 response: res.data.response.response,
                 reasoning: res.data.response.reasoning,
                 timeTaken: res.data.response.timeTaken,
+                sessionId: "69240c77c3883a0eb6e3edd3"
             };
 
             const newResponses = [...responses, newObject];

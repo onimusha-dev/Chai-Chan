@@ -1,10 +1,10 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from 'cors'
-import { chatResponse } from "./controller/chat.controller";
-import { chatOllama, getAllChat } from "./controller/ollama.controller";
+import { chatOllama, getAllChat } from "./controller/chat.controller";
 import { createMemory, getMemory } from "./controller/memory.controller";
 import authRoutes from "./router/auth.router"
+import { createSession, getSession } from "./controller/session.controller";
 const app = express();
 
 app.use(express.json())
@@ -21,11 +21,18 @@ app.get('health', (req, res) => {
         .send("hellow susie!")
 })
 
-app.post('/ask-ai', chatResponse)
-app.post('/ollama', chatOllama)
-app.get('/chats', getAllChat)
-app.get('/memory/:id', getMemory)
+// app.post('/ask-ai', chatResponse)
+app.post('/chat', chatOllama)
+app.get('/chats/:sessionId', getAllChat)
+
+
 app.post('/memory', createMemory)
+app.get('/memory/:userId', getMemory)
+
+app.post('/:userId', createSession);
+app.get('/:userId', getSession)
+
 app.use("/auth", authRoutes);
 
 export default app;
+ 

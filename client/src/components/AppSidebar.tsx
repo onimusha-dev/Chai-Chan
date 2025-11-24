@@ -17,7 +17,7 @@ import { useState } from 'react';
 import api from '@/api/api';
 import { useResponseContext } from '@/context/ResponsContext';
 
-export const projects = [
+const projects = [
     { name: "Projects", url: "#", icon: Folder },
     { name: "Settings", url: "settings", icon: Settings }
 ];
@@ -30,7 +30,7 @@ const AppSidebar = () => {
     const getHistory = async () => {
         try {
             setLoading(true);
-            const res = await api.get('chats');
+            const res = await api.get('chats/69240c77c3883a0eb6e3edd3');
 
             if (!res) throw Error("there was an error retreating history.");
 
