@@ -1,6 +1,6 @@
 
 import { useDataContext } from '@/context/DataContext';
-import { SidebarFooter, SidebarGroupLabel } from '../ui/sidebar'
+import { SidebarFooter } from '../ui/sidebar'
 
 const AppSidebarFooter = () => {
     const { responses } = useDataContext();
@@ -15,7 +15,6 @@ const AppSidebarFooter = () => {
             >
                 load
             </button>
-            <SidebarGroupLabel>Projects</SidebarGroupLabel>
         </SidebarFooter>
     )
 }

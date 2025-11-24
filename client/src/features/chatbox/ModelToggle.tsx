@@ -5,12 +5,12 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useResponseContext } from "@/context/UiContext"
+import { useUiContext } from "@/context/UiContext"
 import { modelList } from "@/utils/models"
 
 const ModelToggle = () => {
 
-    const { model, setModel, setIsReasoning } = useResponseContext()
+    const { model, setModel, setIsReasoning } = useUiContext()
 
     return (
         <DropdownMenu>

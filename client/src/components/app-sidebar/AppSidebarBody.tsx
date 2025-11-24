@@ -1,4 +1,4 @@
-import { SidebarContent, SidebarGroup, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '../ui/sidebar'
+import { SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '../ui/sidebar'
 import { useEffect } from 'react';
 import api from '@/api/api';
 import { useDataContext } from '@/context/DataContext';
@@ -33,13 +33,16 @@ const AppSidebarBody = () => {
     return (
         <SidebarContent className=''>
             <SidebarGroup>
-                <h1 className="w-full px-5 py-3 text-sm opacity-75">Your Chats</h1>
+                <SidebarGroupLabel className=''>
+                <h1 className="w-full px-3 text-sm opacity-75">Your Chats</h1>
+                </SidebarGroupLabel>
+
                 <SidebarMenu>
                     {sessionList?.map((s, id) => (
                         <SidebarMenuItem
                             onClick={() => handleChatLoad(s.id)}
                             className='px-3' key={id}>
-                            <SidebarMenuButton className='bg-red-500'
+                            <SidebarMenuButton className='cursor-pointer py-5'
                             asChild>
                                 <h1 className="py-4 text-nowrap">{s.name}</h1>
                             </SidebarMenuButton>
@@ -47,7 +50,6 @@ const AppSidebarBody = () => {
                     ))}
                 </SidebarMenu>
             </SidebarGroup>
-
         </SidebarContent>
     )
 }

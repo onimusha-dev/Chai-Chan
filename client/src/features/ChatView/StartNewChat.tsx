@@ -19,16 +19,16 @@ const StartNewChat = () => {
         else { setResponses([]) }
     }
     return (
-        <SidebarMenuItem onClick={clickHandler}>
-            <SidebarMenuButton asChild>
-                <NavLink draggable="false" to={location === '/' ? '#' : '/'}
-                    className={'py-5'}
-                >
-                    < SquarePen />
-                    <span>New Chat</span>
-                </NavLink>
-            </SidebarMenuButton>
-        </SidebarMenuItem>
+        <SidebarMenuButton asChild
+            onClick={clickHandler}
+        >
+            <NavLink draggable="false" to={location === '/' ? '#' : '/'}
+                className={'py-5'}
+            >
+                < SquarePen />
+                <span>New Chat</span>
+            </NavLink>
+        </SidebarMenuButton>
     )
 }
 

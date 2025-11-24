@@ -1,9 +1,9 @@
-import { useResponseContext } from "@/context/UiContext"
+import { useDataContext } from "@/context/DataContext";
 import { ArrowDown } from "lucide-react"
 
 const SchorllToNewChat = () => {
   
-  const { latestResponse } = useResponseContext();
+  const { latestResponse } = useDataContext();
   
   // this is for the scroll to view on click
   const handleClick = () => {

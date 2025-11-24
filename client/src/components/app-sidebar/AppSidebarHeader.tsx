@@ -30,7 +30,7 @@ const AppSidebarHeader = () => {
                             <SidebarMenuButton asChild>
                                 <NavLink
                                     draggable="false"
-                                    className={'py-5'}
+                                    className={'py-5 cursor-pointer'}
                                     to={project.url}>
                                     <project.icon />
                                     <span>{project.name}</span>
