@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { getOllamaChats, askOllama } from '../service/chat.service';
+import { getOllamaChatsById, askOllama } from '../service/chat.service';
 import { SelectModel } from '../types/ollama';
 
 interface ChatRequestBody {
@@ -65,13 +65,13 @@ export const getAllChat = async (
         const { sessionId } = req.params;
         if (!sessionId) throw new Error('sessionId is missing!');
 
-        const chats = await getOllamaChats(sessionId);
+        const chats = await getOllamaChatsById(sessionId);
         console.log(chats)
         if (!chats) throw new Error('error retreativing chats!')
 
         return res.status(200).send({
             status: 200,
-            chats: chats,
+            data: chats,
         });
     } catch (err) {
         console.log(err);

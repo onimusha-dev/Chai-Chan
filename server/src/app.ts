@@ -4,7 +4,7 @@ import cors from 'cors'
 import { chatOllama, getAllChat } from "./controller/chat.controller";
 import { createMemory, getMemory } from "./controller/memory.controller";
 import authRoutes from "./router/auth.router"
-import { createSession, getSession } from "./controller/session.controller";
+import { createSession, updateSession, getSession } from "./controller/session.controller";
 const app = express();
 
 app.use(express.json())
@@ -23,14 +23,15 @@ app.get('health', (req, res) => {
 
 // app.post('/ask-ai', chatResponse)
 app.post('/chat', chatOllama)
-app.get('/chats/:sessionId', getAllChat)
+app.get('/chat/:sessionId', getAllChat)
 
 
 app.post('/memory', createMemory)
 app.get('/memory/:userId', getMemory)
 
-app.post('/:userId', createSession);
-app.get('/:userId', getSession)
+app.post('/session/:userId', createSession);
+app.get('/session/:userId', getSession)
+app.put('/session/:sessionId', updateSession)
 
 app.use("/auth", authRoutes);
 

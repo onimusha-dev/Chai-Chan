@@ -1,5 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
-import { createOllamaSession, getSessionByUserId } from '../service/session.service';
+import {
+    createOllamaSession,
+    getSessionByUserId,
+    updateOllamaSession,
+} from '../service/session.service';
+import { ChatSession } from '../models/chats.model';
 
 // interface ChatRequestBody {
 //     name: string
@@ -12,7 +17,7 @@ export const createSession = async (
 ) => {
     try {
         const { userId } = req.params;
-        
+
         if (!userId)
             throw new Error('user id is needed to create a valid session');
         const newSession = await createOllamaSession(userId);
@@ -29,6 +34,25 @@ export const createSession = async (
     }
 };
 
+export const updateSession = async (
+    req: Request<{ sessionId: string }, {}, { name: string }>,
+    res: Response,
+    next: NextFunction,
+) => {
+    try {
+        const { name } = req.body;
+        const { sessionId } = req.params;
+
+        if (!name || !sessionId) throw new Error('fields r empty');
+
+        const session = await updateOllamaSession(sessionId, name);
+
+        res.status(200).send({ status: 200, data: session });
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 export const getSession = async (
     req: Request<{ userId: string }>,
     res: Response,
@@ -39,7 +63,7 @@ export const getSession = async (
         if (!userId) throw new Error('sessionId is missing!');
 
         const session = await getSessionByUserId(userId);
-        
+
         if (!session) throw new Error('error retreativing chats!');
 
         return res.status(200).send({

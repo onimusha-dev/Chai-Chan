@@ -32,7 +32,7 @@ export const createOllamaMemory = async (
          */
         if (isMemoryExits) {
             const newUpdatedMemory = await Memory.findOneAndUpdate(
-                { user: userId },
+                { userId },
                 {
                     $set: {
                         rawMemory: response.message.content,
@@ -49,7 +49,7 @@ export const createOllamaMemory = async (
              * if memory doesnot exists then create and send back to user
              */
             const newMemory = new Memory({
-                user: userId,
+                userId,
                 rawMemory: rowMemory,
                 summarisedMemory: response.message.content,
             });
@@ -72,7 +72,7 @@ export const createOllamaMemory = async (
 // this is for getting the memory of the user
 export const getOllamaMemory = async (userId: string) => {
     try {
-        const memory = await Memory.findOne({ user: userId }).lean();
+        const memory = await Memory.findOne({ userId }).lean();
 
         if (!memory) return '';
 

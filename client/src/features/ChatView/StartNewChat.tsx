@@ -8,7 +8,7 @@ const StartNewChat = () => {
     const { responses, setResponses } = useResponseContext()
 
     const location = useLocation().pathname
-    
+
     const clickHandler = () => {
 
         /**
@@ -21,7 +21,9 @@ const StartNewChat = () => {
     return (
         <SidebarMenuItem onClick={clickHandler}>
             <SidebarMenuButton asChild>
-                <NavLink to={location === '/' ? '#' : '/'}>
+                <NavLink draggable="false" to={location === '/' ? '#' : '/'}
+                    className={'py-5'}
+                >
                     < SquarePen />
                     <span>New Chat</span>
                 </NavLink>

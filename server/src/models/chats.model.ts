@@ -23,7 +23,7 @@ const chatEntrySchema = new Schema({
     },
     model: { type: String, required: true },
     prompt: { type: String, required: true },
-    reasoning: { type: String, default: false },
+    reasoning: { type: String, required: false },
     response: { type: String, required: true },
     timeTaken: { type: Number, required: true },
 });

@@ -61,11 +61,12 @@ export const askOllama = async (
     }
 };
 
-export const getOllamaChats = async (sessionId: string) => {
+export const getOllamaChatsById = async (sessionId: string) => {
     const chats = await ChatEntry.find({ sessionId }).lean();
 
     if (!chats) throw Error('error finding chats.');
 
+    console.log('getollamachatbyid')
     return chats.map(({ _id, prompt, response, reasoning, timeTaken }) => ({
         id: _id.toString(),
         prompt,

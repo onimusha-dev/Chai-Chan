@@ -7,6 +7,13 @@ export interface ResponseItem {
     response: string;
     timeTaken: number;
 }
+
+export interface SessionItem {
+    id: string
+    name: string
+    createdAt: string
+
+}
 /**
  * this is for compresing memory "gemma3:270m" | "granite4:350m" | "granite4:350m"
  *
@@ -51,6 +58,13 @@ interface IChat {
 
     isTemporary: boolean;
     setIsTemporary: (isTemporary: boolean) => void;
+
+    //  this is the whole session data
+    sessionList: SessionItem[]
+    setSessionList: (s: SessionItem[]) => void
+
+    // //  this is the current session selected
+    // setSession: (session:)
 }
 
 // null to start, same as you had
@@ -75,6 +89,7 @@ export const ResponseProvider = ({ children }: { children: ReactNode }) => {
     const [latestResponse, setLatestResponse] = useState('#');
     const [isReasoning, setIsReasoning] = useState(false);
     const [isTemporary, setIsTemporary] = useState(false);
+    const [sessionList, setSessionList] = useState<SessionItem[]>([])
 
     return (
         <ResponseContext.Provider
@@ -85,12 +100,14 @@ export const ResponseProvider = ({ children }: { children: ReactNode }) => {
                 latestResponse,
                 isReasoning,
                 isTemporary,
+                sessionList,
                 setResponses,
                 setIsThinking,
                 setModel,
                 setLatestResponse,
                 setIsReasoning,
                 setIsTemporary,
+                setSessionList
             }}
         >
             {children}

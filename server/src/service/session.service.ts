@@ -10,7 +10,7 @@ export const createOllamaSession = async (userId: string, name?: string) => {
             throw Error('error storing the chat in db.');
         }
 
-        return { id: session._id };
+        return { id: session.id, name: session.name, createdAt: session.createdAt };
     } catch (err) {
         console.log(err);
     }
@@ -27,7 +27,25 @@ export const getSessionByUserId = async (userId: string) => {
 
     if (!session) throw Error('error finding session.');
 
-    const cleaned = session.map(({ user, __v, updatedAt, ...rest }) => rest);
-
+    const cleaned = session.map(({ _id: id, user, __v, updatedAt, ...rest }) => ({
+        id,
+        ...rest,
+    }));
     return cleaned;
+};
+
+export const updateOllamaSession = async (sessionId: string, name: string) => {
+    try {
+        const newSession = await ChatSession.findOneAndUpdate(
+            { sessionId },
+            { $set: { name: name } },
+            { new: true },
+        ).lean();
+
+        if (!newSession) throw new Error('error updating session name');
+
+        return { id: newSession._id, name: newSession.name, createdAt: newSession.createdAt };
+    } catch (err) {
+        console.log(err);
+    }
 };

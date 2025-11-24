@@ -1,45 +1,58 @@
-import { useState } from "react"
-import { Brain, Send } from "lucide-react"
-import { Card, CardContent } from "../../components/ui/card"
-import api from "@/api/api"
-import { useResponseContext } from "@/context/ResponsContext"
-import ModelToggle from "./ModelToggle"
-import SchorllToNewChat from "./SchorllToNewChat"
+import { useState } from 'react';
+import { Brain, Send } from 'lucide-react';
+import { Card, CardContent } from '../../components/ui/card';
+import api from '@/api/api';
+import { useResponseContext } from '@/context/ResponsContext';
+import ModelToggle from './ModelToggle';
+import SchorllToNewChat from './SchorllToNewChat';
 
 const ChatBar = () => {
-    const [prompt, setPrompt] = useState("");
-    const { responses, model, isReasoning, isTemporary, setResponses, setIsThinking, setLatestResponse, setIsReasoning } = useResponseContext();
+    const [prompt, setPrompt] = useState('');
+    const {
+        responses,
+        model,
+        isReasoning,
+        isTemporary,
+        setResponses,
+        setIsThinking,
+        setLatestResponse,
+        setIsReasoning,
+    } = useResponseContext();
 
     const sendPrompt = async () => {
         if (!prompt.trim()) return;
 
-        const collection = 'Collection 1'
+        const collection = 'Collection 1';
 
-        try { 
-            setIsThinking(true)
+        try {
+            setIsThinking(true);
 
-            const res = await api.post("ollama", { model, prompt, collection, reasoning: isReasoning, isTemporary });
-console.log(res.data)
+            const res = await api.post('chat', {
+                model,
+                prompt,
+                collection,
+                reasoning: isReasoning,
+                isTemporary,
+                sessionId: '69240c77c3883a0eb6e3edd3',
+            });
+            console.log(res.data);
             const newObject = {
                 id: res.data.response.id,
                 prompt: prompt,
                 response: res.data.response.response,
                 reasoning: res.data.response.reasoning,
                 timeTaken: res.data.response.timeTaken,
-                sessionId: "69240c77c3883a0eb6e3edd3"
             };
 
             const newResponses = [...responses, newObject];
 
             setResponses(newResponses);
-            setLatestResponse(newObject.id)
-
+            setLatestResponse(newObject.id);
         } catch (err) {
-            console.error("Error:", err);
-
+            console.error('Error:', err);
         } finally {
-            setPrompt("");
-            setIsThinking(false)
+            setPrompt('');
+            setIsThinking(false);
         }
     };
 
@@ -57,30 +70,28 @@ console.log(res.data)
                         placeholder="What's on your mind?"
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
-                        onKeyDown={(e) => e.key === "Enter" && sendPrompt()}
+                        onKeyDown={(e) => e.key === 'Enter' && sendPrompt()}
                     />
 
                     <div className="flex ml-5 gap-3">
-
                         {/*  this is the btn for enabling thinking mode only available for specific models */}
-                        {
-                            (
-                                model === "qwen3-vl:2b" || model === "qwen3:0.6b"
-                            ) && (
-                                <div
-                                    className={`${isReasoning ? "px-4 py-1 border border-violet-500/50 bg-violet-950/50 " : "size-10 p-1 hover:bg-accent "}
+                        {(model === 'qwen3-vl:2b' ||
+                            model === 'qwen3:0.6b') && (
+                            <div
+                                className={`${isReasoning ? 'px-4 py-1 border border-violet-500/50 bg-violet-950/50 ' : 'size-10 p-1 hover:bg-accent '}
                             cursor-pointer flex items-center justify-center text-violet-500 rounded-full transition-colors duration-150 ease-in-out`}
-                                    onClick={() => setIsReasoning(!isReasoning)}
-                                >
-                                    <div className="flex ">
-                                        <Brain size={22} />
-                                        {
-                                            isReasoning && <p className="text-sm ml-1 thinking-text-violet-dark">Thinking</p>
-                                        }
-                                    </div>
+                                onClick={() => setIsReasoning(!isReasoning)}
+                            >
+                                <div className="flex ">
+                                    <Brain size={22} />
+                                    {isReasoning && (
+                                        <p className="text-sm ml-1 thinking-text-violet-dark">
+                                            Thinking
+                                        </p>
+                                    )}
                                 </div>
-                            )
-                        }
+                            </div>
+                        )}
 
                         <div
                             onClick={sendPrompt}
@@ -94,14 +105,19 @@ console.log(res.data)
 
             {/*  */}
             <div className="absolute bottom-0 left-0 w-full h-10 flex items-center justify-center select-none">
-                <h1 className="text-sm h-5">SastaAI can make mistakes. Check important info. See &nbsp;
-                    <button className="w-fit underline cursor-pointer h-5">Cookie Preferences</button>.</h1>
+                <h1 className="text-sm h-5">
+                    SastaAI can make mistakes. Check important info. See &nbsp;
+                    <button className="w-fit underline cursor-pointer h-5">
+                        Cookie Preferences
+                    </button>
+                    .
+                </h1>
             </div>
 
             {/* schroll to new chat */}
             <SchorllToNewChat />
         </div>
-    )
-}
+    );
+};
 
-export default ChatBar
+export default ChatBar;

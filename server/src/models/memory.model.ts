@@ -1,7 +1,7 @@
 import { model, Schema } from 'mongoose';
 
 const memorySchema = new Schema({
-    user: {
+    userId: {
         type: Schema.Types.ObjectId,
         ref: 'User', 
         required: true,
