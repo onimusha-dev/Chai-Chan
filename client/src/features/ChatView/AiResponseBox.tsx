@@ -20,7 +20,7 @@ const AiResponseBox = ({
     };
     return (
         <div>
-            <Card className="py-3 bg-background border-none shadow-none outline-none ">
+            <Card className="py-3 bg-background border-none shadow-none">
                 <CardContent className="tx-3">
                     {reasoning && (
                         <div

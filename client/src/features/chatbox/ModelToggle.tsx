@@ -5,7 +5,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useResponseContext } from "@/context/ResponsContext"
+import { useResponseContext } from "@/context/UiContext"
 import { modelList } from "@/utils/models"
 
 const ModelToggle = () => {

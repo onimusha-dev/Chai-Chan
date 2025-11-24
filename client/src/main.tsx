@@ -9,13 +9,14 @@ import {
 import MainLayout from './layoutes/MainLayout';
 import { SidebarProvider } from './components/ui/sidebar';
 import { ThemeProvider } from './components/theme/theme-provider';
-import { ResponseProvider } from './context/ResponsContext';
+import { UiProvider } from './context/UiContext';
 import ChatPage from './pages/ChatPage';
 import { MemoryProvider } from './context/MemoryContext';
 import SettingsPage from './pages/SettingsPage';
 import AuthLayout from './layoutes/AuthLayout';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import { DataProvider } from './context/DataContext';
 
 const router = createBrowserRouter([
     {
@@ -42,9 +43,11 @@ createRoot(document.getElementById('root')!).render(
     <ThemeProvider>
         <SidebarProvider>
             <MemoryProvider>
-                <ResponseProvider>
+                <DataProvider>
+                <UiProvider>
                     <RouterProvider router={router} />
-                </ResponseProvider>
+                </UiProvider>
+                </DataProvider>
             </MemoryProvider>
         </SidebarProvider>
     </ThemeProvider>,

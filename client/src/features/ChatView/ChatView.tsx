@@ -1,19 +1,20 @@
-import { useResponseContext } from '@/context/ResponsContext';
+import { useUiContext } from '@/context/UiContext';
 import AiResponseBox from './AiResponseBox';
 import CopyChatText from './CopyChatText';
 import { Card, CardContent } from '../../components/ui/card';
 import { Brain } from 'lucide-react';
 import UserPromptBox from './UserPromptBox';
+import { useDataContext } from '@/context/DataContext';
 
 const ChatView = () => {
-    const { responses, isThinking } = useResponseContext();
-
+    const { isThinking } = useUiContext();
+    const { responses } = useDataContext()
     return (
         <div className="flex flex-col overflow-y-auto w-full h-full px-24 pt-20 pb-48 ">
             {responses.length === 0 && <EmptyChatPreview />}
 
             {responses.map((item) => (
-                <div key={item.id} className="w-full rounded shadow ">
+                <div key={item.id} className="w-full">
                     <div className="relative flex justify-end w-full mb-15">
                         <UserPromptBox prompt={item.prompt} />
                         <CopyChatText text={item.prompt} mode="user" />
@@ -42,7 +43,7 @@ const ChatView = () => {
 };
 
 const EmptyChatPreview = () => {
-    const { isTemporary } = useResponseContext();
+    const { isTemporary } = useUiContext();
     return (
         <div className="h-full w-full flex">
             <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center select-none">

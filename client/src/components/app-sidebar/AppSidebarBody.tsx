@@ -1,11 +1,11 @@
-import { useResponseContext } from '@/context/ResponsContext';
 import { SidebarContent, SidebarGroup, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '../ui/sidebar'
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import api from '@/api/api';
+import { useDataContext } from '@/context/DataContext';
 
 const AppSidebarBody = () => {
 
-    const { sessionList, setSessionList, setResponses } = useResponseContext();
+    const { sessionList, setSessionList, setResponses } = useDataContext();
     // const [loading, setLoading] = useState(false);
 
     const fetchSessionList = async (userId: string) => {
@@ -38,8 +38,9 @@ const AppSidebarBody = () => {
                     {sessionList?.map((s, id) => (
                         <SidebarMenuItem
                             onClick={() => handleChatLoad(s.id)}
-                            className='px-3 ' key={id}>
-                            <SidebarMenuButton asChild>
+                            className='px-3' key={id}>
+                            <SidebarMenuButton className='bg-red-500'
+                            asChild>
                                 <h1 className="py-4 text-nowrap">{s.name}</h1>
                             </SidebarMenuButton>
                         </SidebarMenuItem>

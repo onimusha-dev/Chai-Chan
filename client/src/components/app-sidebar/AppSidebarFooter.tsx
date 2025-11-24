@@ -1,8 +1,9 @@
-import { useResponseContext } from '@/context/ResponsContext';
+
+import { useDataContext } from '@/context/DataContext';
 import { SidebarFooter, SidebarGroupLabel } from '../ui/sidebar'
 
 const AppSidebarFooter = () => {
-    const { responses } = useResponseContext();
+    const { responses } = useDataContext();
     const handleLoad = () => {
 
         console.log(responses)

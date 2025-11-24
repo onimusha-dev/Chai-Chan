@@ -1,4 +1,4 @@
-import { useResponseContext } from '@/context/ResponsContext'
+import { useResponseContext } from '@/context/UiContext'
 import { SidebarTrigger } from './ui/sidebar'
 import IsTemporaryChat from '@/features/chatbox/IsTemporaryChat'
 import { ModeToggle } from './theme/mode-toggle'

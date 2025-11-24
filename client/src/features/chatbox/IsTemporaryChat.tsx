@@ -1,16 +1,18 @@
-import { useResponseContext } from '@/context/ResponsContext'
+import { useUiContext } from '@/context/UiContext'
 import { MessageCircle, MessageCircleDashed } from 'lucide-react'
 import {
     Tooltip,
     TooltipContent,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { useDataContext } from '@/context/DataContext'
 
 const IsTemporaryChat = () => {
-    const { isTemporary, setIsTemporary, setResponses } = useResponseContext()
+    const { isTemporary, setIsTemporary } = useUiContext()
+    const { setResponses} = useDataContext()
     const handleClick = () => {
-      setIsTemporary(!isTemporary)
-      setResponses([])
+        setIsTemporary(!isTemporary)
+        setResponses([])
     }
     return (
         <Tooltip>

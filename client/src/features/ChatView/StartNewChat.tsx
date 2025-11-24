@@ -1,11 +1,11 @@
 import { SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar"
-import { useResponseContext } from "@/context/ResponsContext"
+import { useDataContext } from "@/context/DataContext"
 import { SquarePen } from "lucide-react"
 import { NavLink, useLocation } from "react-router-dom"
 
 
 const StartNewChat = () => {
-    const { responses, setResponses } = useResponseContext()
+    const { responses, setResponses } = useDataContext()
 
     const location = useLocation().pathname
 

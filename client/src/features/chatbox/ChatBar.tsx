@@ -2,22 +2,22 @@ import { useState } from 'react';
 import { Brain, Send } from 'lucide-react';
 import { Card, CardContent } from '../../components/ui/card';
 import api from '@/api/api';
-import { useResponseContext } from '@/context/ResponsContext';
+import { useUiContext } from '@/context/UiContext';
+import { useDataContext } from "@/context/DataContext"
 import ModelToggle from './ModelToggle';
 import SchorllToNewChat from './SchorllToNewChat';
 
 const ChatBar = () => {
     const [prompt, setPrompt] = useState('');
     const {
-        responses,
         model,
         isReasoning,
         isTemporary,
-        setResponses,
         setIsThinking,
-        setLatestResponse,
         setIsReasoning,
-    } = useResponseContext();
+    } = useUiContext();
+
+    const { responses, setLatestResponse, setResponses } = useDataContext()
 
     const sendPrompt = async () => {
         if (!prompt.trim()) return;
@@ -77,21 +77,21 @@ const ChatBar = () => {
                         {/*  this is the btn for enabling thinking mode only available for specific models */}
                         {(model === 'qwen3-vl:2b' ||
                             model === 'qwen3:0.6b') && (
-                            <div
-                                className={`${isReasoning ? 'px-4 py-1 border border-violet-500/50 bg-violet-950/50 ' : 'size-10 p-1 hover:bg-accent '}
+                                <div
+                                    className={`${isReasoning ? 'px-4 py-1 border border-violet-500/50 bg-violet-950/50 ' : 'size-10 p-1 hover:bg-accent '}
                             cursor-pointer flex items-center justify-center text-violet-500 rounded-full transition-colors duration-150 ease-in-out`}
-                                onClick={() => setIsReasoning(!isReasoning)}
-                            >
-                                <div className="flex ">
-                                    <Brain size={22} />
-                                    {isReasoning && (
-                                        <p className="text-sm ml-1 thinking-text-violet-dark">
-                                            Thinking
-                                        </p>
-                                    )}
+                                    onClick={() => setIsReasoning(!isReasoning)}
+                                >
+                                    <div className="flex ">
+                                        <Brain size={22} />
+                                        {isReasoning && (
+                                            <p className="text-sm ml-1 thinking-text-violet-dark">
+                                                Thinking
+                                            </p>
+                                        )}
+                                    </div>
                                 </div>
-                            </div>
-                        )}
+                            )}
 
                         <div
                             onClick={sendPrompt}

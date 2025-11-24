@@ -1,4 +1,4 @@
-import { useResponseContext } from "@/context/ResponsContext"
+import { useResponseContext } from "@/context/UiContext"
 import { ArrowDown } from "lucide-react"
 
 const SchorllToNewChat = () => {
