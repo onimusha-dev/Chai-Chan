@@ -23,19 +23,20 @@ const ChatBar = () => {
         if (!prompt.trim()) return;
         const userId = '69244fbc79b4f9eeece3d5b0'
         const collection = 'Collection 1';
+        const latestSession = '69240c4cc3883a0eb6e3edcf'
 
         try {
             setIsThinking(true);
 
-            if (!latestSession || latestSession === '') {
-                const res = await api.post(`/session/${userId}`)
+            // if (!latestSession || latestSession === '') {
+            //     const res = await api.post(`/session/${userId}`)
 
-                if (!res) throw new Error(`error fetching chat session id ${userId} is not valid.`)
+            //     if (!res) throw new Error(`error fetching chat session id ${userId} is not valid.`)
 
-                setResponses(res.data.data)
-                setLatestSession(res.data.data.id)
-                console.log('data loaded, ' + latestSession)
-            }
+            //     setResponses(res.data.data)
+            //     setLatestSession(res.data.data.id)
+            //     console.log('data loaded, ' + latestSession)
+            // }
 
             const res = await api.post('chat', {
                 model,

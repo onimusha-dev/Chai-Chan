@@ -11,10 +11,16 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(cookieParser())
 app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:5174', 'http://172.16.0.6:5173/'],
+    origin: ['http://localhost:5173', 'http://localhost:5174', 'http://0.0.0.0:5173/', 'http://0.0.0.0:5174/'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE']
 }))
+app.use((req, res, next) => {
+    console.log(`${req.method}  ${req.url}  ${req.ip}  `)
+    next()
+})
+
+
 
 app.get('health', (req, res) => {
     res.status(200)
