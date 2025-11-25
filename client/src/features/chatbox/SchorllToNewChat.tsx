@@ -14,7 +14,7 @@ const SchorllToNewChat = () => {
   };
 
   return (
-    <div
+    <button
       onClick={handleClick}
       className={`${ latestResponse === '#' ? 'hidden' : ''}
         -top-12 absolute left-1/2 p-1 z-50 backdrop-blur-sm rounded-full backdrop-opacity-25`}
@@ -22,7 +22,7 @@ const SchorllToNewChat = () => {
       <div className="size-10 flex text-foreground/75 items-center justify-center rounded-full border bg-background dark:bg-sidebar-accent">
         <ArrowDown size={24} />
       </div>
-    </div>
+    </button>
   )
 }
 

@@ -31,7 +31,7 @@ export const StartNewChatBar = () => {
             onClick={() => clickHandler(userId)}
         >
             <NavLink draggable="false" to={location === '/' ? '#' : '/'}
-                className={'py-5'}
+                className={'py-5 focus-visible:bg-accent'}
             >
                 < SquarePen />
                 <span>New Chat</span>

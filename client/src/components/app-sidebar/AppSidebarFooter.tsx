@@ -1,6 +1,7 @@
 import { SidebarFooter, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '../ui/sidebar'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { ChevronUp, User2 } from 'lucide-react';
+import { Card } from '../ui/card';
 
 const AppSidebarFooter = () => {
     
@@ -29,15 +30,9 @@ const AppSidebarFooter = () => {
                             side="top"
                             // className="w-[--radix-popper-anchor-width]"
                         >
-                            <DropdownMenuItem>
-                                <span>Account</span>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <span>Billing</span>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <span>Sign out</span>
-                            </DropdownMenuItem>
+                            <Card>
+
+                            </Card>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </SidebarMenuItem>

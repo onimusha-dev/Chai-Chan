@@ -79,7 +79,7 @@ const EmptyChatPreview = () => {
 const IsThinkingNotifier = () => {
     return (
         <div>
-            <Card className="py-3 shadow-none">
+            <Card className="py-3 shadow-none border-none bg-transparent">
                 <CardContent className="tx-3">
                     <div className="flex items-center justify-center gap-5">
                         <Brain size={24} />

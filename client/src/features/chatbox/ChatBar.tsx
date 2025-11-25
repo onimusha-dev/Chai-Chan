@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Brain, Send } from 'lucide-react';
+import { Brain, MoveUp, Send, Square } from 'lucide-react';
 import { Card, CardContent } from '../../components/ui/card';
 import api from '@/api/api';
 import { useUiContext } from '@/context/UiContext';
@@ -18,6 +18,7 @@ const ChatBar = () => {
     } = useUiContext();
 
     const { responses, latestSession, setLatestSession, setLatestResponse, setResponses } = useDataContext()
+    const { isThinking } = useUiContext()
 
     const sendPrompt = async () => {
         if (!prompt.trim()) return;
@@ -88,7 +89,7 @@ const ChatBar = () => {
                         {/*  this is the btn for enabling thinking mode only available for specific models */}
                         {(model === 'qwen3-vl:2b' ||
                             model === 'qwen3:0.6b') && (
-                                <div
+                                <button
                                     className={`${isReasoning ? 'px-4 py-1 border border-violet-500/50 bg-violet-950/50 ' : 'size-10 p-1 hover:bg-accent '}
                             cursor-pointer flex items-center justify-center text-violet-500 rounded-full transition-colors duration-150 ease-in-out`}
                                     onClick={() => setIsReasoning(!isReasoning)}
@@ -101,15 +102,19 @@ const ChatBar = () => {
                                             </p>
                                         )}
                                     </div>
-                                </div>
+                                </button>
                             )}
 
-                        <div
+                        <button
                             onClick={sendPrompt}
-                            className="cursor-pointer flex size-10 items-center justify-center p-1 rounded-full hover:bg-white hover:text-black transition-colors duration-150 ease-in-out"
+                            className={`${isThinking ? 'opacity-50' : '' }
+                            ${prompt.trim() === '' && 'opacity-25'} bg-white text-background
+                            cursor-pointer flex size-10 items-center justify-center p-1 rounded-full  transition-colors duration-150 ease-in-out`}
                         >
-                            <Send size={22} />
-                        </div>
+                            {
+                                isThinking ? <Square size={20} /> : <MoveUp size={22} />
+                            }
+                        </button>
                     </div>
                 </CardContent>
             </Card>
@@ -120,8 +125,7 @@ const ChatBar = () => {
                     SastaAI can make mistakes. Check important info. See &nbsp;
                     <button className="w-fit underline cursor-pointer h-5">
                         Cookie Preferences
-                    </button>
-                    .
+                    </button>.
                 </h1>
             </div>
 

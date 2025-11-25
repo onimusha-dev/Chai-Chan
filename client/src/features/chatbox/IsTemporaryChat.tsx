@@ -6,27 +6,46 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { useDataContext } from '@/context/DataContext'
+import { useEffect } from 'react'
 
 const IsTemporaryChat = () => {
     const { isTemporary, setIsTemporary } = useUiContext()
-    const { setResponses} = useDataContext()
-    const handleClick = () => {
+    const { setResponses } = useDataContext()
+
+
+    const handleToggle = () => {
         setIsTemporary(!isTemporary)
         setResponses([])
     }
+
+    useEffect(() => {
+        const handleShortcut = (e: KeyboardEvent) => {
+            const isCtrl = e.ctrlKey || e.metaKey   // metaKey = ⌘ on Mac
+            const isShift = e.shiftKey
+            const isC = e.key.toLowerCase() === "c"
+
+            if (isCtrl && isShift && isC) {
+                e.preventDefault()
+                handleToggle()
+            }
+        }
+
+        window.addEventListener("keydown", handleShortcut)
+        return () => window.removeEventListener("keydown", handleShortcut)
+    }, [isTemporary])
+    
     return (
         <Tooltip>
             <TooltipTrigger asChild>
-                <div
+                <button
                     className={`${isTemporary && "text-red-500"}
                                     z-65 cursor-pointer flex items-center hover:bg-accent size-10 justify-center p-1 rounded-full transition-colors duration-150 ease-in-out`}
-                    onClick={handleClick}
+                    onClick={handleToggle}
                 >
                     {
                         isTemporary ? <MessageCircleDashed size={22} /> : <MessageCircle size={22} />
                     }
-
-                </div>
+                </button>
             </TooltipTrigger>
             <TooltipContent className='z-90 mr-5 bg-foreground text-background select-none'>
                 <p>Turn {isTemporary ? 'off' : 'on'} temporary chat</p>

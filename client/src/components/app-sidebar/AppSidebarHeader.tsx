@@ -42,7 +42,7 @@ const AppSidebarHeader = () => {
                             <SidebarMenuButton asChild>
                                 <NavLink
                                     draggable="false"
-                                    className={'py-5 cursor-pointer'}
+                                    className={'py-5 cursor-pointer focus-visible:bg-accent'}
                                     to={project.url}>
                                     <project.icon />
                                     <span>{project.name}</span>
