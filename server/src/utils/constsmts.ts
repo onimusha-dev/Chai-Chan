@@ -1,1 +1,0 @@
-export const SYSTEM_SUMMERISER_PROMPT = `your job is to reduce the input by atleast 50%. never replay anything except the summery of the user prompt.`;

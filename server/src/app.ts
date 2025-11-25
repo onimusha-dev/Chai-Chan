@@ -3,8 +3,9 @@ import cookieParser from "cookie-parser";
 import cors from 'cors'
 import { chatOllama, getAllChat } from "./controller/chat.controller";
 import { createMemory, getMemory } from "./controller/memory.controller";
-import authRoutes from "./router/auth.router"
 import { createSession, updateSession, getSession } from "./controller/session.controller";
+import router from "./router";
+import { authMiddleware } from "./middleware/auth.middleare";
 const app = express();
 
 app.use(express.json())
@@ -22,10 +23,12 @@ app.use((req, res, next) => {
 
 
 
-app.get('health', (req, res) => {
+app.get('/health', authMiddleware, (req, res) => {
     res.status(200)
         .send("hellow susie!")
 })
+
+app.use("/", router);
 
 // app.post('/ask-ai', chatResponse)
 app.post('/chat', chatOllama)
@@ -39,7 +42,6 @@ app.post('/session/:userId', createSession);
 app.get('/session/:userId', getSession)
 app.put('/session/:sessionId', updateSession)
 
-app.use("/auth", authRoutes);
 
 export default app;
  

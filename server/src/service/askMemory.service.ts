@@ -1,6 +1,6 @@
 import ollama from 'ollama';
 import { Memory } from '../models/memory.model';
-import { SYSTEM_SUMMERISER_PROMPT } from '../utils/constsmts';
+import { SYSTEM_SUMMERISER_PROMPT } from '../utils/constants';
 
 //  this is storing the memory of the user
 export const createOllamaMemory = async (
