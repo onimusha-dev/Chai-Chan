@@ -27,7 +27,7 @@ const CopyChatText = ({ text, mode }: { text: string, mode: "ai" | "user" }) => 
                     </div>
                 </TooltipTrigger>
                 <TooltipContent className="px-3">
-                    <p className="text-xs">copy</p>
+                    <p className="text-xs select-none">copy</p>
                 </TooltipContent>
             </Tooltip>
         </div>

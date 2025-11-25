@@ -19,7 +19,7 @@ const IsTemporaryChat = () => {
             <TooltipTrigger asChild>
                 <div
                     className={`${isTemporary && "text-red-500"}
-                                    cursor-pointer flex items-center hover:bg-accent size-10 justify-center p-1 rounded-full transition-colors duration-150 ease-in-out`}
+                                    z-65 cursor-pointer flex items-center hover:bg-accent size-10 justify-center p-1 rounded-full transition-colors duration-150 ease-in-out`}
                     onClick={handleClick}
                 >
                     {
@@ -28,7 +28,7 @@ const IsTemporaryChat = () => {
 
                 </div>
             </TooltipTrigger>
-            <TooltipContent className='z-90 mr-5 bg-foreground text-background'>
+            <TooltipContent className='z-90 mr-5 bg-foreground text-background select-none'>
                 <p>Turn {isTemporary ? 'off' : 'on'} temporary chat</p>
             </TooltipContent>
         </Tooltip>

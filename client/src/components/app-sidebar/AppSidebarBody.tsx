@@ -3,28 +3,30 @@ import { useEffect, useState } from 'react';
 import api from '@/api/api';
 import { useDataContext } from '@/context/DataContext';
 import { ChevronDown, } from 'lucide-react'; //Ellipsis
+import { useUiContext } from '@/context/UiContext';
 
 const AppSidebarBody = () => {
+    const { sessionList, setSessionList, setResponses } = useDataContext();
+    const { setIsTemporary } = useUiContext()
 
     const [isSessionListOpen, setIsSessionListOpen] = useState(true)
-
-    const { sessionList, setSessionList, setResponses } = useDataContext();
     // const [loading, setLoading] = useState(false);
 
     const fetchSessionList = async (userId: string) => {
         const res = await api.get(`session/${userId}`)
         setSessionList(res.data.data)
         console.log(res.data.data)
-
+        
     }
-
+    
     useEffect(() => {
         const userId = false ? '69244fbc79b4f9eeece3d5b0' : '69240455d024275caf22cf3c'
         fetchSessionList(userId)
     }, [])
-
+    
     const handleChatLoad = async (id: string) => {
         console.log(id)
+        setIsTemporary(false)
         const res = await api.get(`/chat/${id}`)
 
         if (!res) throw new Error(`error fetching chat session id ${id} is not valid.`)

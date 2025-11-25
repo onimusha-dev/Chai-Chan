@@ -57,7 +57,7 @@ export const useUiContext = () => {
 
 export const UiProvider = ({ children }: { children: ReactNode }) => {
     const [isThinking, setIsThinking] = useState(false);
-    const [model, setModel] = useState<Models>('gemma3:1b');
+    const [model, setModel] = useState<Models>('qwen3:0.6b');
     const [isReasoning, setIsReasoning] = useState(false);
     const [isTemporary, setIsTemporary] = useState(false);
 
