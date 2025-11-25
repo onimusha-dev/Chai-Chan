@@ -17,15 +17,25 @@ const ChatBar = () => {
         setIsReasoning,
     } = useUiContext();
 
-    const { responses, setLatestResponse, setResponses } = useDataContext()
+    const { responses, latestSession, setLatestSession, setLatestResponse, setResponses } = useDataContext()
 
     const sendPrompt = async () => {
         if (!prompt.trim()) return;
-
+        const userId = '69244fbc79b4f9eeece3d5b0'
         const collection = 'Collection 1';
 
         try {
             setIsThinking(true);
+
+            if (!latestSession || latestSession === '') {
+                const res = await api.post(`/session/${userId}`)
+
+                if (!res) throw new Error(`error fetching chat session id ${userId} is not valid.`)
+
+                setResponses(res.data.data)
+                setLatestSession(res.data.data.id)
+                console.log('data loaded, ' + latestSession)
+            }
 
             const res = await api.post('chat', {
                 model,
@@ -33,7 +43,7 @@ const ChatBar = () => {
                 collection,
                 reasoning: isReasoning,
                 isTemporary,
-                sessionId: '69240c77c3883a0eb6e3edd3',
+                sessionId: latestSession,
             });
             console.log(res.data);
             const newObject = {

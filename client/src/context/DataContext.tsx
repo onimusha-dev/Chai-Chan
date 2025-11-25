@@ -19,6 +19,8 @@ interface IChat {
     responses: ResponseItem[];
     setResponses: (r: ResponseItem[]) => void;
 
+    // this is the most rescent reply from the model
+    // useed to auto scroll to bottom of the page
     latestResponse: string;
     setLatestResponse: (latestResponse: string) => void;
 
@@ -27,7 +29,8 @@ interface IChat {
     setSessionList: (s: SessionItem[]) => void
 
     // //  this is the current session selected
-    // setSession: (session:)
+    latestSession: string 
+    setLatestSession: (session: string) => void
 }
 
 // null to start, same as you had
@@ -49,16 +52,18 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     const [responses, setResponses] = useState<ResponseItem[]>([]);
     const [latestResponse, setLatestResponse] = useState('#');
     const [sessionList, setSessionList] = useState<SessionItem[]>([])
-
+    const [latestSession, setLatestSession] = useState('')
     return (
         <DataContext.Provider
             value={{
                 responses,
                 latestResponse,
                 sessionList,
+                latestSession,
                 setResponses,
                 setLatestResponse,
-                setSessionList
+                setSessionList,
+                setLatestSession
             }}
         >
             {children}

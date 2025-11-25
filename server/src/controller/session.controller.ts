@@ -4,7 +4,6 @@ import {
     getSessionByUserId,
     updateOllamaSession,
 } from '../service/session.service';
-import { ChatSession } from '../models/chats.model';
 
 // interface ChatRequestBody {
 //     name: string
@@ -26,7 +25,7 @@ export const createSession = async (
 
         return res.status(200).send({
             status: 200,
-            response: newSession,
+            data: newSession, 
         });
     } catch (err) {
         console.error('error in chat controller' + '\n' + err);

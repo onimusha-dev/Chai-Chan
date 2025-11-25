@@ -14,7 +14,7 @@ const memorySchema = new Schema({
         type: String, // summarised memory: allow ~200-word summaries
         required: true, // (≈1200–1500 characters depending on language)
         minlength: 3,
-        maxlength: 2000, 
+        maxlength: 2000,  
     },
 });
 

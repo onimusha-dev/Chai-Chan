@@ -1,26 +1,29 @@
-import { SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar"
+import api from "@/api/api"
+import { SidebarMenuButton } from "@/components/ui/sidebar"
 import { useDataContext } from "@/context/DataContext"
 import { SquarePen } from "lucide-react"
 import { NavLink, useLocation } from "react-router-dom"
 
 
 const StartNewChat = () => {
-    const { responses, setResponses } = useDataContext()
-
+    const { responses, setResponses, setLatestSession } = useDataContext()
+    const userId = '69244fbc79b4f9eeece3d5b0'
     const location = useLocation().pathname
 
-    const clickHandler = () => {
-
-        /**
-         *  if on the same page and chat is empty
-         *  it will not do anything if not then rerender the whole as it should be
-         */
+    const clickHandler = async (userId: string) => {
         if (responses.length === 0) return
-        else { setResponses([]) }
+
+        const res = await api.post(`/session/${userId}`, { name: 'i love susie.' })
+
+        if (!res) throw new Error('error crreating new chat.')
+
+        setLatestSession(res.data.data)
+        setResponses([])
+
     }
     return (
         <SidebarMenuButton asChild
-            onClick={clickHandler}
+            onClick={() => clickHandler(userId)}
         >
             <NavLink draggable="false" to={location === '/' ? '#' : '/'}
                 className={'py-5'}
