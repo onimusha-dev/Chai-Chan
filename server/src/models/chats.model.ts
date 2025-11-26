@@ -8,7 +8,7 @@ const chatSessionSchema = new Schema(
             required: true,
             trim: true,
         },
-        user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+        userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
         // collection: { type: String, required: false },
     },
     { timestamps: true },

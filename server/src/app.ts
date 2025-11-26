@@ -17,7 +17,7 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE']
 }))
 app.use((req, res, next) => {
-    console.log(`${req.method}  ${req.url}  ${req.ip}  `)
+    console.log(`▶️  ▶️   ${req.method}  ${req.url}  ${req.ip}  ▶️  ▶️`)
     next()
 })
 
@@ -31,7 +31,7 @@ app.get('/health', authMiddleware, (req, res) => {
 app.use("/", router);
 
 // app.post('/ask-ai', chatResponse)
-app.post('/chat', chatOllama)
+app.post('/chat', authMiddleware, chatOllama)
 app.get('/chat/:sessionId', getAllChat)
 
 

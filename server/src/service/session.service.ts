@@ -3,14 +3,14 @@ import { ChatSession } from '../models/chats.model';
 export const createOllamaSession = async (userId: string, name?: string) => {
     try {
         if (!name) name = 'New Chat';
-        const newSession = new ChatSession({ name, user: userId });
+        const newSession = new ChatSession({ name, userId: userId });
 
         const session = await newSession.save();
         if (!session) {
             throw Error('error storing the chat in db.');
         }
 
-        return { id: session.id, name: session.name, createdAt: session.createdAt };
+        return { sessionId: session.id, name: session.name, createdAt: session.createdAt };
     } catch (err) {
         console.log(err);
     }
@@ -23,12 +23,12 @@ export const createOllamaSession = async (userId: string, name?: string) => {
  * this returns all the available sessions of the user
  */
 export const getSessionByUserId = async (userId: string) => {
-    const session = await ChatSession.find({ user: userId }).lean();
+    const session = await ChatSession.find({ userId: userId }).lean();
 
     if (!session) throw Error('error finding session.');
 
-    const cleaned = session.map(({ _id: id, user, __v, updatedAt, ...rest }) => ({
-        id,
+    const cleaned = session.map(({ _id: sessionId, userId, __v, updatedAt, ...rest }) => ({
+        sessionId,
         ...rest,
     }));
     return cleaned;
@@ -44,7 +44,7 @@ export const updateOllamaSession = async (sessionId: string, name: string) => {
 
         if (!newSession) throw new Error('error updating session name');
 
-        return { id: newSession._id, name: newSession.name, createdAt: newSession.createdAt };
+        return { sessionId: newSession._id, name: newSession.name, createdAt: newSession.createdAt };
     } catch (err) {
         console.log(err);
     }

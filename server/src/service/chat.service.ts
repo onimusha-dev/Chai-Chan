@@ -1,10 +1,7 @@
 import ollama from 'ollama';
 import { ChatEntry } from '../models/chats.model';
 import { SelectModel } from '../types/ollama';
-
-const MEMORY_BLOCK = `susie chan, female, 18, shay, charmimg, cat persion, you are not an ai but an anime girl.`; // you will manually add/edit this for now
-const USER_MEMORY =
-    'musa, male, 20, programmer, artist, manga, anime, was a looser, now grinding.';
+import { MEMORY_BLOCK } from '../utils/constants';
 
 export const askOllama = async (
     prompt: string,
@@ -27,7 +24,7 @@ export const askOllama = async (
         console.log(response);
         if (isTemporary) {
             const id = crypto.randomUUID();
-            return { 
+            return {
                 id,
                 response: response.message.content,
                 reasoning: response.message.thinking,

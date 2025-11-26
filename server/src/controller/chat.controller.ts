@@ -45,10 +45,10 @@ export const chatOllama = async (
         );
 
         if (!reply) throw Error('error on ollama controller!');
-
+        console.log(reply)
         return res.status(200).send({
             status: 200,
-            response: reply,
+            data: reply,
         });
     } catch (err) {
         console.error('error in chat controller' + '\n' + err);

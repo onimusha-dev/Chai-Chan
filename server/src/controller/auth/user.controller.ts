@@ -83,7 +83,7 @@ const authMe = asyncHandler(
         }
 
         return res.status(200).json({
-            id: user._id,
+            userId: user._id,
             username: user.username,
             email: user.email,
             auth: true
