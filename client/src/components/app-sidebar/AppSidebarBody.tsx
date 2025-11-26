@@ -2,39 +2,43 @@ import { SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMe
 import { useEffect, useState } from 'react';
 import api from '@/api/api';
 import { useDataContext } from '@/context/DataContext';
-import { ChevronDown, Ellipsis, } from 'lucide-react'; //Ellipsis
+import { ChevronDown, Ellipsis, } from 'lucide-react';
 import { useUiContext } from '@/context/UiContext';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { Button } from '../ui/button';
 import { useNavigate } from 'react-router-dom';
+import { useUserContext } from '@/context/AuthContext';
 
 const AppSidebarBody = () => {
-    const { sessionList, setSessionList, setResponses } = useDataContext();
+    const { sessionList, latestSession, setSessionList, setLatestSession, setResponses } = useDataContext();
+    const {userData} = useUserContext()
     const { setIsTemporary } = useUiContext()
 
     const [isSessionListOpen, setIsSessionListOpen] = useState(true)
     // const [loading, setLoading] = useState(false);
 
-    const fetchSessionList = async (userId: string) => {
+    const fetchSessionList = async (userId: string | undefined) => {
+        if (userId === undefined) {
+            return console.error('authentication failed')
+        }
         const res = await api.get(`session/${userId}`)
         setSessionList(res.data.data)
     }
 
     useEffect(() => {
-        const userId = false ? '69244fbc79b4f9eeece3d5b0' : '69240455d024275caf22cf3c'
-        fetchSessionList(userId)
+        fetchSessionList(userData?.userId)
     }, [])
 
     const navigator = useNavigate()
-    const handleSessionChatLoad = async (id: string) => {
-        console.log(id)
+    const handleSessionChatLoad = async (sessionId: string) => {
         setIsTemporary(false)
-        const res = await api.get(`/chat/${id}`)
+        setLatestSession(sessionId)
 
-        if (!res) throw new Error(`error fetching chat session id ${id} is not valid.`)
-        navigator('/')
+        const res = await api.get(`/chat/${sessionId}`)
+        if (!res) throw new Error(`error fetching chat session id ${sessionId} is not valid.`)
         setResponses(res.data.data)
-        console.log('data loaded,')
+
+        navigator('/')
     }
 
     return (
@@ -55,16 +59,19 @@ const AppSidebarBody = () => {
                 {/*   Chat sessions   */}
                 {isSessionListOpen &&
                     <SidebarMenu>
-                        {sessionList?.map((s, id) => (
+                        {sessionList?.map((s, index) => (
                             <SidebarMenuItem
-                                key={id}>
-                                <SidebarMenuButton role='button' tabIndex={0} className='cursor-pointer py-5 focus-visible:outline-2 focus:outline-none focus-visible:ring-2 focus-visible:bg-accent'
+                                key={index}>
+                                <SidebarMenuButton role='button' tabIndex={0}
+                                    className={`${s.sessionId === latestSession && 'bg-accent'}
+                                cursor-pointer py-5 focus-visible:outline-2 focus:outline-none focus-visible:ring-2 focus-visible:bg-accent`}
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter' || e.key === ' ') {
-                                            handleSessionChatLoad(s.id)
+                                            console.log(s.sessionId)
+                                            handleSessionChatLoad(s.sessionId)
                                         }
                                     }}
-                                    onClick={() => handleSessionChatLoad(s.id)}
+                                    onClick={() => handleSessionChatLoad(s.sessionId)}
                                     asChild
                                 >
                                     <div className="w-full group/chat">
@@ -74,7 +81,7 @@ const AppSidebarBody = () => {
                                         </span>
 
                                         {/*  calling for option menu */}
-                                        <SessionOptionsMenu id={s.id} />
+                                        <SessionOptionsMenu sessionId={s.sessionId} />
                                     </div>
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
@@ -86,14 +93,14 @@ const AppSidebarBody = () => {
     )
 }
 
-const SessionOptionsMenu = (id: { id: string }) => {
+const SessionOptionsMenu = (sessionId: { sessionId: string }) => {
 
     const handleEditSessionName = () => {
-        console.log(id + "   edit")
+        console.log(sessionId.sessionId + "   edit")
     }
 
     const handleDeleteSessionName = () => {
-        console.log(id + "   delete")
+        console.log(sessionId.sessionId + "   delete")
     }
 
     return (

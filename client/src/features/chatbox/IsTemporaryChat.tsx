@@ -11,12 +11,13 @@ import { useNavigate } from 'react-router-dom'
 
 const IsTemporaryChat = () => {
     const { isTemporary, setIsTemporary } = useUiContext()
-    const { setResponses } = useDataContext()
+    const { setLatestSession, setResponses } = useDataContext()
     const navigator = useNavigate()
 
 
     const handleToggle = () => {
         setIsTemporary(!isTemporary)
+        setLatestSession('')
         setResponses([])
         navigator('/')
     }

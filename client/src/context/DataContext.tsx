@@ -9,7 +9,7 @@ export interface ResponseItem {
 }
 
 export interface SessionItem {
-    id: string
+    sessionId: string
     name: string
     createdAt: string
 
