@@ -11,33 +11,40 @@ import { useUserContext } from '@/context/AuthContext';
 
 const AppSidebarBody = () => {
     const { sessionList, latestSession, setSessionList, setLatestSession, setResponses } = useDataContext();
-    const {userData} = useUserContext()
+    const { userData } = useUserContext()
     const { setIsTemporary } = useUiContext()
-
     const [isSessionListOpen, setIsSessionListOpen] = useState(true)
-    // const [loading, setLoading] = useState(false);
 
+    /**
+     *  this is for loading the chat list on mount 
+     */
     const fetchSessionList = async (userId: string | undefined) => {
+        // setLoading(true)
         if (userId === undefined) {
             return console.error('authentication failed')
         }
         const res = await api.get(`session/${userId}`)
         setSessionList(res.data.data)
+        console.log(res.data)
     }
-
     useEffect(() => {
         fetchSessionList(userData?.userId)
+        // setLoading(false)
     }, [])
 
+
+    /**
+     * this is to navigate bw different chats
+     */
     const navigator = useNavigate()
     const handleSessionChatLoad = async (sessionId: string) => {
         setIsTemporary(false)
         setLatestSession(sessionId)
-
+        console.log(sessionId)
         const res = await api.get(`/chat/${sessionId}`)
         if (!res) throw new Error(`error fetching chat session id ${sessionId} is not valid.`)
+        console.log(res.data.data)
         setResponses(res.data.data)
-
         navigator('/')
     }
 

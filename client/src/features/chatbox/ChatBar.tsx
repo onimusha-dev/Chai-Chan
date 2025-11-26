@@ -19,27 +19,52 @@ const ChatBar = () => {
     } = useUiContext();
 
     const { responses, latestSession, setLatestSession, setLatestResponse, setResponses } = useDataContext()
-    const {userData} = useUserContext()
+    const { userData } = useUserContext()
     const { isThinking } = useUiContext()
 
     const sendPrompt = async () => {
         if (!prompt.trim()) return;
         const collection = 'Collection 1';
-        
+
         try {
             setIsThinking(true);
-            
+
             if (!latestSession || latestSession === '') {
                 const res = await api.post(`/session/${userData?.userId}`)
-                
+
                 console.log(res.data.data)
                 if (!res) throw new Error(`error fetching chat session id ${userData?.userId} is not valid.`)
 
-                setResponses(res.data.data)
-                setLatestSession(res.data.data.id)
-                console.log(res.data.data.id)
+                // setResponses(res.data.data)
+                setLatestSession(res.data.data.sessionId)
+                console.log(res.data.data.sessionId)
+
                 console.log('data loaded, ' + latestSession)
+
+                const res2 = await api.post('chat', {
+                    model,
+                    prompt,
+                    collection,
+                    reasoning: isReasoning,
+                    isTemporary,
+                    sessionId: res.data.data.sessionId,
+                });
+                console.log(res2.data);
+                const newObject = {
+                    id: res2.data.id,
+                    prompt: prompt,
+                    response: res2.data.data.response,
+                    reasoning: res2.data.data.reasoning,
+                    timeTaken: res2.data.data.timeTaken,
+                };
+console.log(newObject)
+                const newResponses = [...responses, newObject];
+
+                setResponses(newResponses);
+                setLatestResponse(newObject.id);
+                return;
             }
+            console.log('data loaded, ' + latestSession)
 
             const res = await api.post('chat', {
                 model,
@@ -51,11 +76,11 @@ const ChatBar = () => {
             });
             console.log(res.data);
             const newObject = {
-                id: res.data.response.id,
+                id: res.data.data.id,
                 prompt: prompt,
-                response: res.data.response.response,
-                reasoning: res.data.response.reasoning,
-                timeTaken: res.data.response.timeTaken,
+                response: res.data.data.response,
+                reasoning: res.data.datareasoning,
+                timeTaken: res.data.data.timeTaken,
             };
 
             const newResponses = [...responses, newObject];
@@ -109,7 +134,7 @@ const ChatBar = () => {
 
                         <button
                             onClick={sendPrompt}
-                            className={`${isThinking ? 'opacity-50' : '' }
+                            className={`${isThinking ? 'opacity-50' : ''}
                             ${prompt.trim() === '' && 'opacity-25'} bg-white text-background
                             cursor-pointer flex size-10 items-center justify-center p-1 rounded-full  transition-colors duration-150 ease-in-out`}
                         >
