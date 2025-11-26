@@ -18,6 +18,7 @@ userRouter
     .post('/refresh', authController.resetRefreshToken)
     .post('/otp-verify', validator(otpVerifySchema), otpVerify)
     .post('/reset-password', validator(resetPasswordSchema), authMiddleware, authController.resetPassword)
+    .post('/me', authController.authMe)
 
 // validator(signUpSchema),
 // validator(loginSchema),

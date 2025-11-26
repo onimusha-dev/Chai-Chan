@@ -3,7 +3,7 @@ import { asyncHandler } from "../../utils/asyncHandler";
 import { env } from "../../config/env";
 import { SignUpInput } from "../../validation/schema/auth/create";
 import { sendOtpMailService } from "../../service/auth/otp.service";
-import { loginService, logoutService, refreshTokenService, resetPasswordService, signUpService } from "../../service/auth/auth.service";
+import { getAuthenticatedUser, loginService, logoutService, refreshTokenService, resetPasswordService, signUpService } from "../../service/auth/auth.service";
 import { IUserDocument } from "../../models/auth/user.model";
 import { LoginInput } from "../../validation/schema/auth/login";
 
@@ -64,6 +64,32 @@ const logout = asyncHandler(async (req: Request<{}, {}, string>, res: Response, 
         .clearCookie('accessToken')
         .send("user logged out successfully")
 })
+
+export interface AuthenticatedRequest extends Request {
+    user?: IUserDocument;
+}
+
+const authMe = asyncHandler(
+    async (req: AuthenticatedRequest, res: Response): Promise<Response> => {
+
+        const token =
+            req.cookies.accessToken ||
+            req.header('Authorization')?.replace('Bearer ', '');
+
+        const user = await getAuthenticatedUser(token);
+
+        if (!user) {
+            return res.status(401).json({ auth: false });
+        }
+
+        return res.status(200).json({
+            id: user._id,
+            username: user.username,
+            email: user.email,
+            auth: true
+        });
+    }
+);
 
 // @NOTE: Password reset controller
 
@@ -129,6 +155,7 @@ export default {
     signUp,
     login,
     logout,
+    authMe,
     resetRefreshToken,
     resetPassword
 

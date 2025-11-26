@@ -57,7 +57,7 @@ const createRefreshToken = (user: IUserDocument): string => {
     )
 }
 
-// @NOTE: user account related part
+/* @NOTE: user account related part   */
 
 export const signUpService = async (
     data: SignUpInput
@@ -84,7 +84,7 @@ export const loginService = async (
     // @TODO: this needs some optimisation as db needs to look for both field 
     // even if only one is valid, planning to modify this input in the zod schema 
     // then add some conditions here
-
+console.log(`${data.emailOrUsername}   ${data.password}`)
     const isUser = await User.findOne(
         { $or: ([{ email: data.emailOrUsername }, { username: data.emailOrUsername }]) }
     );
@@ -115,7 +115,19 @@ export const logoutService = async (accessToken: string): Promise<void> => {
     return;
 }
 
-// @NOTE: Refresh token reset service
+export const getAuthenticatedUser = async (token?: string) => {
+    if (!token) return null;
+
+    try {
+        const decoded = jwt.verify(token, env.accessTokenCode) as { id: string };
+        const user = await User.findById(decoded.id);
+        return user || null;
+    } catch {
+        return null;
+    }
+};
+
+/* @NOTE: Refresh token reset service   */
 
 export const resetPasswordService = async (data: ResetPasswordInput & { userId: string }): Promise<void> => {
 
