@@ -31,6 +31,9 @@ interface IChat {
     // //  this is the current session selected
     latestSession: string 
     setLatestSession: (session: string) => void
+
+    currentPlayingAudio: string
+    setCurrentPlayingAudio: (currentPlayingAudio: string) => void
 }
 
 // null to start, same as you had
@@ -53,6 +56,8 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     const [latestResponse, setLatestResponse] = useState('#');
     const [sessionList, setSessionList] = useState<SessionItem[]>([])
     const [latestSession, setLatestSession] = useState('')
+    const [currentPlayingAudio, setCurrentPlayingAudio] = useState('susie sings')
+
     return (
         <DataContext.Provider
             value={{
@@ -60,10 +65,12 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
                 latestResponse,
                 sessionList,
                 latestSession,
+                currentPlayingAudio,
                 setResponses,
                 setLatestResponse,
                 setSessionList,
-                setLatestSession
+                setLatestSession,
+                setCurrentPlayingAudio
             }}
         >
             {children}

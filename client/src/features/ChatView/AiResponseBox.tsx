@@ -14,7 +14,6 @@ const AiResponseBox = ({
 }) => {
     const [isExpanded, setIsExpanded] = useState(true);
     const timeTakenInSeconds = timeTaken / 1_000_000_000;
-    console.log(reasoning);
     const handleExpanded = () => {
         setIsExpanded(!isExpanded);
     };

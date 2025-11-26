@@ -38,6 +38,8 @@ interface IChat {
     isTemporary: boolean;
     setIsTemporary: (isTemporary: boolean) => void;
 
+    isAudioPlaying: boolean
+    setIsAudioPlaying: (isAudioPlaying: boolean) => void
 }
 
 // null to start, same as you had
@@ -60,6 +62,7 @@ export const UiProvider = ({ children }: { children: ReactNode }) => {
     const [model, setModel] = useState<Models>('qwen3:0.6b');
     const [isReasoning, setIsReasoning] = useState(false);
     const [isTemporary, setIsTemporary] = useState(false);
+    const [isAudioPlaying, setIsAudioPlaying] = useState(false);
 
     return (
         <UiContext.Provider
@@ -68,10 +71,12 @@ export const UiProvider = ({ children }: { children: ReactNode }) => {
                 model,
                 isReasoning,
                 isTemporary,
+                isAudioPlaying,
                 setIsThinking,
                 setModel,
                 setIsReasoning,
                 setIsTemporary,
+                setIsAudioPlaying
             }}
         >
             {children}

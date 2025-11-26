@@ -6,6 +6,7 @@ import { ChevronDown, Ellipsis, } from 'lucide-react'; //Ellipsis
 import { useUiContext } from '@/context/UiContext';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { Button } from '../ui/button';
+import { useNavigate } from 'react-router-dom';
 
 const AppSidebarBody = () => {
     const { sessionList, setSessionList, setResponses } = useDataContext();
@@ -24,13 +25,14 @@ const AppSidebarBody = () => {
         fetchSessionList(userId)
     }, [])
 
+    const navigator = useNavigate()
     const handleSessionChatLoad = async (id: string) => {
         console.log(id)
         setIsTemporary(false)
         const res = await api.get(`/chat/${id}`)
 
         if (!res) throw new Error(`error fetching chat session id ${id} is not valid.`)
-
+        navigator('/')
         setResponses(res.data.data)
         console.log('data loaded,')
     }
@@ -40,8 +42,8 @@ const AppSidebarBody = () => {
             <SidebarGroup>
                 <SidebarGroupLabel className='text-sm opacity-75 px-0'
                 >
-                    <Button className='w-full justify-start bg-transparent text-foreground px-2 hover:bg-transparent' 
-                    onClick={() => setIsSessionListOpen(!isSessionListOpen)}>
+                    <Button className='w-full justify-start bg-transparent text-foreground px-2 hover:bg-transparent'
+                        onClick={() => setIsSessionListOpen(!isSessionListOpen)}>
                         <h1>Your Chats</h1>
                         <div className={`${!isSessionListOpen && '-rotate-90'} size-8 flex justify-center items-center`}
                         >
@@ -65,11 +67,13 @@ const AppSidebarBody = () => {
                                     onClick={() => handleSessionChatLoad(s.id)}
                                     asChild
                                 >
-                                    <div className="w-full">
+                                    <div className="w-full group/chat">
                                         <span className="py-4 w-full text-nowrap overflow-hidden mask-[linear-gradient(to_right,black_75%,transparent_100%)]"
                                         >
                                             {s.name}
                                         </span>
+
+                                        {/*  calling for option menu */}
                                         <SessionOptionsMenu id={s.id} />
                                     </div>
                                 </SidebarMenuButton>
@@ -96,7 +100,7 @@ const SessionOptionsMenu = (id: { id: string }) => {
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <SidebarMenuAction
-                    className="size-7 flex items-center justify-center rounded-full opacity-0 group-hover:opacity-30 hover:opacity-100 focus-visible:opacity-75 focus-visible:hover:bg-white/10 focus-visible:bg-white/10 hover:bg-white/10"
+                    className="size-7 flex items-center justify-center rounded-full opacity-0 group-hover/chat:opacity-30 hover:opacity-100 focus-visible:opacity-75 focus-visible:hover:bg-white/10 focus-visible:bg-white/10 hover:bg-white/10"
                 >
                     <Ellipsis size={16} />
                 </SidebarMenuAction>

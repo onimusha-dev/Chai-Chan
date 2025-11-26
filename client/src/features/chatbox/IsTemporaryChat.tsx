@@ -7,15 +7,18 @@ import {
 } from "@/components/ui/tooltip"
 import { useDataContext } from '@/context/DataContext'
 import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const IsTemporaryChat = () => {
     const { isTemporary, setIsTemporary } = useUiContext()
     const { setResponses } = useDataContext()
+    const navigator = useNavigate()
 
 
     const handleToggle = () => {
         setIsTemporary(!isTemporary)
         setResponses([])
+        navigator('/')
     }
 
     useEffect(() => {
@@ -33,13 +36,13 @@ const IsTemporaryChat = () => {
         window.addEventListener("keydown", handleShortcut)
         return () => window.removeEventListener("keydown", handleShortcut)
     }, [isTemporary])
-    
+
     return (
         <Tooltip>
             <TooltipTrigger asChild>
                 <button
                     className={`${isTemporary && "text-red-500"}
-                                    z-65 cursor-pointer flex items-center hover:bg-accent size-10 justify-center p-1 rounded-full transition-colors duration-150 ease-in-out`}
+                                   absolute right-5 z-65 cursor-pointer flex items-center hover:bg-accent size-10 justify-center p-1 rounded-full transition-colors duration-150 ease-in-out`}
                     onClick={handleToggle}
                 >
                     {

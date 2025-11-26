@@ -1,6 +1,8 @@
 import AppHeader from "@/components/AppHeader"
 import AppSidebar from "@/components/app-sidebar/AppSidebar"
 import { SidebarInset } from "@/components/ui/sidebar"
+import { Toaster } from "@/components/ui/sonner"
+// import AudioPlayingpPopupNotifier from "@/features/ChatView/ResponseOptions/AudioPlayingpPopupNotifier"
 import { Outlet } from "react-router-dom"
 
 const MainLayout = () => {
@@ -11,6 +13,8 @@ const MainLayout = () => {
                 <Outlet />
                 <AppHeader />
             </SidebarInset>
+            <Toaster />
+            {/* <AudioPlayingpPopupNotifier /> */}
         </>
     )
 }

@@ -1,6 +1,6 @@
 import { useUiContext } from '@/context/UiContext';
 import AiResponseBox from './AiResponseBox';
-import CopyChatText from './CopyChatText';
+import CopyChatText from './ResponseOptions/ResponseOptions';
 import { Card, CardContent } from '../../components/ui/card';
 import { Brain } from 'lucide-react';
 import UserPromptBox from './UserPromptBox';
@@ -43,7 +43,7 @@ const ChatView = () => {
 };
 
 const EmptyChatPreview = () => {
-    const { isTemporary } = useUiContext();
+    const { isTemporary, isThinking } = useUiContext();
     return (
         <div className="h-full w-full flex">
             <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center select-none">
@@ -59,7 +59,7 @@ const EmptyChatPreview = () => {
                             for up to 0 days.
                         </p>
                     </div>
-                ) : (
+                ) : !isThinking && (
                     <img
                         className="size-40"
                         src="https://res.cloudinary.com/dltj8bim0/image/upload/v1761060580/logo_kukwt0.png"

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Brain, MoveUp, Send, Square } from 'lucide-react';
+import { Brain, MoveUp, Square } from 'lucide-react';
 import { Card, CardContent } from '../../components/ui/card';
 import api from '@/api/api';
 import { useUiContext } from '@/context/UiContext';
