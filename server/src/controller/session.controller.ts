@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import {
     createOllamaSession,
+    deleteOllamaSession,
     getSessionByUserId,
     updateOllamaSession,
 } from '../service/session.service';
@@ -73,3 +74,25 @@ console.log(session)
         console.log(err);
     }
 };
+
+export const deleteSession = async (
+    req: Request<{ userId: string }>,
+    res: Response,
+    next: NextFunction,
+) => {
+    try {
+        const { userId } = req.params;
+        if (!userId) throw new Error('sessionId is missing!');
+
+        const session = await deleteOllamaSession(userId);
+
+        return res.status(200).send({
+            status: 200,
+            data: session,
+        });
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+

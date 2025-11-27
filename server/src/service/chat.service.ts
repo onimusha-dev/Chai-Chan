@@ -12,6 +12,7 @@ export const askOllama = async (
     sessionId: string,
 ) => {
     try {
+        console.log(prompt, model, collection, reasoning, isTemporary, sessionId)
         const response = await ollama.chat({
             model: model,
             messages: [

@@ -49,3 +49,18 @@ export const updateOllamaSession = async (sessionId: string, name: string) => {
         console.log(err);
     }
 };
+
+export const deleteOllamaSession = async (sessionId: string) => {
+    try {
+        const deletedSession = await ChatSession.findByIdAndDelete({ _id: sessionId });
+        console.log(deletedSession);
+
+        if (!deletedSession) throw new Error('error deleting session');
+
+        return deletedSession;
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+ 

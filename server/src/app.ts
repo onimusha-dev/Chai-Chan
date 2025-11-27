@@ -3,7 +3,7 @@ import cookieParser from "cookie-parser";
 import cors from 'cors'
 import { chatOllama, getAllChat } from "./controller/chat.controller";
 import { createMemory, getMemory } from "./controller/memory.controller";
-import { createSession, updateSession, getSession } from "./controller/session.controller";
+import { createSession, updateSession, getSession, deleteSession } from "./controller/session.controller";
 import router from "./router";
 import { authMiddleware } from "./middleware/auth.middleare";
 const app = express();
@@ -41,7 +41,7 @@ app.get('/memory/:userId', getMemory)
 app.post('/session/:userId', createSession);
 app.get('/session/:userId', getSession)
 app.put('/session/:sessionId', updateSession)
-
+app.delete('/session/:userId', deleteSession)
 
 export default app;
  
