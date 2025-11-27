@@ -5,21 +5,38 @@ import {
     TooltipContent,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { useDataContext } from '@/context/DataContext'
+import { useDataContext, type SessionItem } from '@/context/DataContext'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const IsTemporaryChat = () => {
     const { isTemporary, setIsTemporary } = useUiContext()
-    const { setLatestSession, setResponses } = useDataContext()
+    const { sessionList, setLatestSession, setSessionList, setResponses } = useDataContext()
     const navigator = useNavigate()
 
 
     const handleToggle = () => {
-        setIsTemporary(!isTemporary)
-        setLatestSession('')
-        setResponses([])
-        navigator('/')
+        if (isTemporary) {
+            /**
+             * the type needs to be fixed although it's working
+             */
+            setSessionList((prev: SessionItem[]) => {
+                if (!Array.isArray(prev)) return [];
+                return prev.slice(0, -1);
+            });
+
+            setIsTemporary(!isTemporary)
+            setLatestSession('')
+            setResponses([])
+            navigator('/')
+        }
+        else {
+            setIsTemporary(true)
+            setLatestSession('temporory-session')
+            setResponses([])
+            setSessionList([...sessionList, { name: "Temporary Chat", sessionId: 'temporory-session', createdAt: Date.toString() }])
+            navigator('/')
+        }
     }
 
     useEffect(() => {

@@ -18,7 +18,7 @@ const ChatBar = () => {
         setIsReasoning,
     } = useUiContext();
 
-    const { responses, latestSession, setLatestSession, setLatestResponse, setResponses } = useDataContext()
+    const { responses, sessionList, latestSession, setLatestSession, setSessionList, setLatestResponse, setResponses } = useDataContext()
     const { userData } = useUserContext()
     const { isThinking } = useUiContext()
 
@@ -29,17 +29,15 @@ const ChatBar = () => {
         try {
             setIsThinking(true);
 
+            /*
+            * this is for the first prompt as latest session will be empty
+            */
             if (!latestSession || latestSession === '') {
                 const res = await api.post(`/session/${userData?.userId}`)
 
-                console.log(res.data.data)
                 if (!res) throw new Error(`error fetching chat session id ${userData?.userId} is not valid.`)
-
-                // setResponses(res.data.data)
                 setLatestSession(res.data.data.sessionId)
-                console.log(res.data.data.sessionId)
-
-                console.log('data loaded, ' + latestSession)
+                setSessionList([...sessionList, res.data.data])
 
                 const res2 = await api.post('chat', {
                     model,
@@ -49,51 +47,86 @@ const ChatBar = () => {
                     isTemporary,
                     sessionId: res.data.data.sessionId,
                 });
-                console.log(res2.data);
                 const newObject = {
-                    id: res2.data.id,
+                    id: res2.data.data.id,
                     prompt: prompt,
                     response: res2.data.data.response,
                     reasoning: res2.data.data.reasoning,
                     timeTaken: res2.data.data.timeTaken,
                 };
-console.log(newObject)
+                const newResponses = [...responses, newObject];
+                
+                setResponses(newResponses);
+                setLatestResponse(newObject.id);
+                setSessionList([...sessionList, res.data.data])
+                return;
+            }
+
+            /**
+             * this is for temporary session this is made by frontend no backend enterveson is needed
+             * no api call is done as well
+             * and the latestSession or temparory latestSession is 
+             * set to exactly  'temporory-session'   
+             */
+            else if (latestSession === 'temporory-session') {
+
+                const res = await api.post('chat', {
+                    model,
+                    prompt,
+                    collection,
+                    reasoning: isReasoning,
+                    isTemporary: true,
+                    sessionId: latestSession,
+                });
+                const newObject = {
+                    id: res.data.data.id,
+                    prompt: prompt,
+                    response: res.data.data.response,
+                    reasoning: res.data.data.reasoning,
+                    timeTaken: res.data.data.timeTaken,
+                };
                 const newResponses = [...responses, newObject];
 
                 setResponses(newResponses);
                 setLatestResponse(newObject.id);
                 return;
             }
-            console.log('data loaded, ' + latestSession)
 
-            const res = await api.post('chat', {
-                model,
-                prompt,
-                collection,
-                reasoning: isReasoning,
-                isTemporary,
-                sessionId: latestSession,
-            });
-            console.log(res.data);
-            const newObject = {
-                id: res.data.data.id,
-                prompt: prompt,
-                response: res.data.data.response,
-                reasoning: res.data.datareasoning,
-                timeTaken: res.data.data.timeTaken,
-            };
+            // /**
+            //  * this is for any prompt after first session is set
+            //  */
+            else {
+                const res = await api.post('chat', {
+                    model,
+                    prompt,
+                    collection,
+                    reasoning: isReasoning,
+                    isTemporary,
+                    sessionId: latestSession,
+                });
+                const newObject = {
+                    id: res.data.data.id,
+                    prompt: prompt,
+                    response: res.data.data.response,
+                    reasoning: res.data.datareasoning,
+                    timeTaken: res.data.data.timeTaken,
+                };
 
-            const newResponses = [...responses, newObject];
-
-            setResponses(newResponses);
-            setLatestResponse(newObject.id);
+                const newResponses = [...responses, newObject];
+                
+                setLatestSession(latestSession);  //  this is the error
+                // setLatestResponse('')
+                setResponses(newResponses);
+                setLatestResponse(newObject.id);
+                return;
+            }
         } catch (err) {
             console.error('Error:', err);
         } finally {
             setPrompt('');
             setIsThinking(false);
         }
-    };
+    }
 
     return (
         <div className="flex flex-col absolute left-0 bottom-0 w-full z-70 px-5 pb-15 pt-1 bg-background ">

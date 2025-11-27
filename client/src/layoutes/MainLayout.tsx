@@ -8,7 +8,7 @@ import { Navigate, Outlet } from "react-router-dom"
 
 const MainLayout = () => {
     const { userData, isLoading } = useUserContext()
-
+console.log(userData)
     if(isLoading) {
         return(
             <div className="w-screen h-screen flex items-center justify-center">
@@ -17,7 +17,7 @@ const MainLayout = () => {
         )
     }
 
-    if(userData?.auth === false) {
+    if(userData === null || userData?.auth === false) {
         // const navigator = useNavigate()
         return <Navigate to={'/auth'} replace/>
     }

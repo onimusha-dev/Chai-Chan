@@ -106,8 +106,12 @@ const SessionOptionsMenu = (sessionId: { sessionId: string }) => {
         console.log(sessionId.sessionId + "   edit")
     }
 
-    const handleDeleteSessionName = () => {
+    const handleDeleteSessionName = async () => {
         console.log(sessionId.sessionId + "   delete")
+        const res = api.delete(`/session/${sessionId.sessionId }`)
+
+        if (!res) throw Error('session delete failed')
+        return
     }
 
     return (

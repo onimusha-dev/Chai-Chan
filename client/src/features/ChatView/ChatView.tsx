@@ -9,7 +9,7 @@ import { useDataContext } from '@/context/DataContext';
 const ChatView = () => {
     const { isThinking } = useUiContext();
     const { responses } = useDataContext()
-    console.log(responses)
+    // console.log(responses)
     return (
         <div className="flex flex-col overflow-y-auto w-full h-full px-24 pt-20 pb-48 ">
             {responses.length === 0 && <EmptyChatPreview />}

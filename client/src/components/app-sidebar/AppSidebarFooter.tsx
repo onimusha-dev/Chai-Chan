@@ -2,7 +2,7 @@ import { SidebarFooter, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { ChevronUp, LogOut, Send, Settings, User2 } from 'lucide-react';
 import api from '@/api/api';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 
 
@@ -10,14 +10,12 @@ const AppSidebarFooter = () => {
 
 
 
-
-    const naviator = useNavigate()
     
     const handleLogout = async () => {
         const res = await api.post('/auth/logout')
         if (!res) throw Error('error logging out')
 
-        naviator('/')
+        return <Navigate to={'/auth'} replace/>
     }
 
     return (

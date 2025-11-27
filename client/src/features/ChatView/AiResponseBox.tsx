@@ -13,7 +13,7 @@ const AiResponseBox = ({
     timeTaken: number;
 }) => {
 
-    console.log(response, reasoning,timeTaken)
+    // console.log(response, reasoning,timeTaken)
 
     const [isExpanded, setIsExpanded] = useState(true);
     const timeTakenInSeconds = timeTaken / 1_000_000_000;

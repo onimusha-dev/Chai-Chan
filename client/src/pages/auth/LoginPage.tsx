@@ -1,6 +1,6 @@
 import api from '@/api/api';
 import { useState, type ChangeEvent, type FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 type LoginForm = {
   emailOrUsername: string;
@@ -13,7 +13,6 @@ export default function LoginPage() {
     password: ''
   });
   
-  const navigator = useNavigate()
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [step, setStep] = useState<'login' | 'otp'>('login');
   const [otp, setOtp] = useState('');
@@ -57,7 +56,7 @@ export default function LoginPage() {
       });
 
       console.log('OTP verified:', res.data);
-      navigator('/')
+      <Navigate to={'/auth/login'} replace />
       // Continue your flow here — dashboard, redirect, confetti, etc.
     } catch (err) {
       console.error('OTP verification failed:', err);
