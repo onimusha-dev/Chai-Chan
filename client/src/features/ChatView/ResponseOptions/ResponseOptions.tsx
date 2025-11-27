@@ -6,9 +6,11 @@ import {
 import { useUiContext } from "@/context/UiContext";
 import { Copy, Pause, Play } from "lucide-react"
 import { useState } from "react";
+import ResponseDetails from "./ResponseDetails";
+import type { PopoverStats } from "@/types/response";
 
 
-const CopyChatText = ({ text, mode }: { text: string, mode: "ai" | "user" }) => {
+const CopyChatText = ({ text, mode, meta }: { text: string, mode: "ai" | "user", meta: PopoverStats }) => {
 
     const copyToClipboard = async () => {
         try {
@@ -58,6 +60,21 @@ const CopyChatText = ({ text, mode }: { text: string, mode: "ai" | "user" }) => 
                     </TooltipTrigger>
                     <TooltipContent className="px-3">
                         <p className="text-xs select-none">{isPlaying ? 'Pause' : 'Play'}</p>
+                    </TooltipContent>
+                </Tooltip>
+            }
+
+            {/*  this is the tokens details and all */}
+            {
+                mode === 'ai' &&
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <div>
+                            <ResponseDetails meta={meta}/>
+                        </div>
+                    </TooltipTrigger>
+                    <TooltipContent className="px-3">
+                        <p className="text-xs select-none">info</p>
                     </TooltipContent>
                 </Tooltip>
             }

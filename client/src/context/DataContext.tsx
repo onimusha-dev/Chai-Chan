@@ -1,3 +1,4 @@
+import type { PopoverStats } from '@/types/response';
 import { createContext, useContext, useState, type ReactNode } from 'react';
 
 export interface ResponseItem {
@@ -6,6 +7,7 @@ export interface ResponseItem {
     reasoning: string;
     response: string;
     timeTaken: number;
+    meta: PopoverStats
 }
 
 export interface SessionItem {

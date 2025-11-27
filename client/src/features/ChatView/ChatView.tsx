@@ -18,7 +18,7 @@ const ChatView = () => {
                 <div key={index} className="w-full">
                     <div className="relative flex justify-end w-full mb-15">
                         <UserPromptBox prompt={item.prompt} />
-                        <CopyChatText text={item.prompt} mode="user" />
+                        <CopyChatText text={item.prompt} mode="user" meta={item.meta}/>
                     </div>
                     <div id={item.id} className="relative flex w-full mb-15">
                         <AiResponseBox
@@ -26,7 +26,7 @@ const ChatView = () => {
                             response={item.response}
                             timeTaken={item.timeTaken}
                         />
-                        <CopyChatText text={item.response} mode="ai" />
+                        <CopyChatText text={item.response} mode="ai" meta={item.meta}/>
                     </div>
                 </div>
             ))}
