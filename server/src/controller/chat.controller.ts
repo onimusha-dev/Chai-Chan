@@ -45,7 +45,7 @@ export const chatOllama = async (
         );
 
         if (!reply) throw Error('error on ollama controller!');
-        console.log(reply)
+
         return res.status(200).send({
             status: 200,
             data: reply,
@@ -66,7 +66,7 @@ export const getAllChat = async (
         if (!sessionId) throw new Error('sessionId is missing!');
 
         const chats = await getOllamaChatsById(sessionId);
-        console.log(chats)
+        
         if (!chats) throw new Error('error retreativing chats!')
 
         return res.status(200).send({

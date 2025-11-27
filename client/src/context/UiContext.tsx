@@ -7,7 +7,7 @@ import { createContext, useContext, useState, type ReactNode } from 'react';
 export type Models =
     // this is user model premium
     | 'gemma3:1b'
-    | 'llama3.2:1b-text-q2_K'
+    | 'deepseek-r1:1.5b'
 
     // this is use model free
     | 'qwen2.5:0.5b'
@@ -15,11 +15,12 @@ export type Models =
     // for coding specially
     | 'qwen2.5-coder:0.5b'
     | 'qwen2.5-coder:1.5b'
+    | 'deepseek-coder:1.3b'
 
     //  thinking specially
     | 'qwen3:0.6b'
     | 'qwen3-vl:2b'
-    | 'deepseek-r1:1.5b'
+    | 'qwen3:1.7b'
 
     // multi lingual models
     | 'sailor2:1b';

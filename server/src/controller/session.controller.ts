@@ -65,7 +65,7 @@ export const getSession = async (
         const session = await getSessionByUserId(userId);
 
         if (!session) throw new Error('error retreativing chats!');
-console.log(session)
+
         return res.status(200).send({
             status: 200,
             data: session,

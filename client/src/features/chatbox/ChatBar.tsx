@@ -47,6 +47,7 @@ const ChatBar = () => {
                     isTemporary,
                     sessionId: res.data.data.sessionId,
                 });
+                console.log(res2.data)
                 const newObject = {
                     id: res2.data.data.id,
                     prompt: prompt,
@@ -55,7 +56,7 @@ const ChatBar = () => {
                     timeTaken: res2.data.data.timeTaken,
                 };
                 const newResponses = [...responses, newObject];
-                
+
                 setResponses(newResponses);
                 setLatestResponse(newObject.id);
                 setSessionList([...sessionList, res.data.data])
@@ -104,16 +105,17 @@ const ChatBar = () => {
                     isTemporary,
                     sessionId: latestSession,
                 });
+                console.log(res.data)
                 const newObject = {
                     id: res.data.data.id,
                     prompt: prompt,
                     response: res.data.data.response,
-                    reasoning: res.data.datareasoning,
+                    reasoning: res.data.data.reasoning,
                     timeTaken: res.data.data.timeTaken,
                 };
 
                 const newResponses = [...responses, newObject];
-                
+
                 setLatestSession(latestSession);  //  this is the error
                 // setLatestResponse('')
                 setResponses(newResponses);
@@ -147,8 +149,12 @@ const ChatBar = () => {
 
                     <div className="flex ml-5 gap-3">
                         {/*  this is the btn for enabling thinking mode only available for specific models */}
-                        {(model === 'qwen3-vl:2b' ||
-                            model === 'qwen3:0.6b') && (
+                        {
+                            (
+                                model === 'qwen3-vl:2b' ||
+                                model === 'qwen3:0.6b'  ||
+                                model === 'qwen3:1.7b'
+                            ) && (
                                 <button
                                     className={`${isReasoning ? 'px-4 py-1 border border-violet-500/50 bg-violet-950/50 ' : 'size-10 p-1 hover:bg-accent '}
                             cursor-pointer flex items-center justify-center text-violet-500 rounded-full transition-colors duration-150 ease-in-out`}
@@ -163,8 +169,8 @@ const ChatBar = () => {
                                         )}
                                     </div>
                                 </button>
-                            )}
-
+                            )
+                        }
                         <button
                             onClick={sendPrompt}
                             className={`${isThinking ? 'opacity-50' : ''}

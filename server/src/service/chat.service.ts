@@ -64,7 +64,6 @@ export const getOllamaChatsById = async (sessionId: string) => {
 
     if (!chats) throw Error('error finding chats.');
 
-    console.log('getollamachatbyid')
     return chats.map(({ _id, prompt, response, reasoning, timeTaken }) => ({
         id: _id.toString(),
         prompt,

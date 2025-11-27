@@ -17,7 +17,7 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE']
 }))
 app.use((req, res, next) => {
-    console.log(`▶️  ▶️   ${req.method}  ${req.url}  ${req.ip}  ▶️  ▶️`)
+    console.log(`▶️  ▶️   ${req.method}  ${req.url}  ${req.ip}  `)
     next()
 })
 
