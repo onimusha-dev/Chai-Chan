@@ -1,6 +1,6 @@
 import { useUiContext } from '@/context/UiContext'
 import { SidebarTrigger, useSidebar } from './ui/sidebar'
-import IsTemporaryChat from '@/features/chatbox/IsTemporaryChat'
+import IsTemporaryChat from '@/features/chatbox/components/IsTemporaryChat'
 import { StartNewChatToggle } from '@/features/ChatView/StartNewChat'
 import { Cat } from 'lucide-react'
 import { NavLink } from 'react-router-dom'

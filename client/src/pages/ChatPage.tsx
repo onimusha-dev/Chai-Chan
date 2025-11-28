@@ -10,10 +10,10 @@ const ChatPage = () => {
 
                 {/* here the data from llm will be shown */}
                 <ChatView />
+                {/* chat bar */}
+                <ChatBar />
             </div>
 
-            {/* chat bar */}
-            <ChatBar />
         </div>
     )
 }

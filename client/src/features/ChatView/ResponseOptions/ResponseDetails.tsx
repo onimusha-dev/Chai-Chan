@@ -1,6 +1,6 @@
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import type { PopoverStats } from '@/types/response'
-import { ArrowBigDownDash, ArrowBigUpDash, ArrowDownUp, AudioLines, Info } from 'lucide-react'
+import { ArrowBigDownDash, ArrowBigUpDash, Info } from 'lucide-react'
 
 const ResponseDetails = ({ meta }: { meta: PopoverStats }) => {
   return (
@@ -10,7 +10,7 @@ const ResponseDetails = ({ meta }: { meta: PopoverStats }) => {
       >
         <Info size={18} />
       </PopoverTrigger>
-      <PopoverContent className='mb-15 shadow-2xl'>
+      <PopoverContent className='mb-15 shadow-2xl z-70'>
         <div className="flex pb-3 gap-2 justify-between">
 
           {/*  this is the tokens count */}

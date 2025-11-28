@@ -11,7 +11,7 @@ const ChatView = () => {
     const { responses } = useDataContext()
     // console.log(responses)
     return (
-        <div className="flex flex-col overflow-y-auto w-full h-full px-24 pt-20 pb-48 ">
+        <div className="flex flex-col overflow-y-auto w-full h-full px-24 pt-20 pb-10">
             {responses.length === 0 && <EmptyChatPreview />}
 
             {responses.map((item, index) => (
@@ -47,7 +47,7 @@ const EmptyChatPreview = () => {
     const { isTemporary, isThinking } = useUiContext();
     return (
         <div className="h-full w-full flex">
-            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center select-none">
+            <div className="absolut top-0 left-0 w-full h-full flex items-center justify-center select-none">
                 {isTemporary ? (
                     <div className="flex flex-col items-center gap-3">
                         <h1 className="text-[28px] leading-[34px] font-normal tracking-[0.38px]">

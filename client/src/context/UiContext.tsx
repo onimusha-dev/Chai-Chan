@@ -36,6 +36,9 @@ interface IChat {
     isReasoning: boolean;
     setIsReasoning: (isReasoning: boolean) => void;
 
+    isSearching: boolean;
+    setIsSearching: (isReasoning: boolean) => void;
+
     isTemporary: boolean;
     setIsTemporary: (isTemporary: boolean) => void;
 
@@ -64,6 +67,7 @@ export const UiProvider = ({ children }: { children: ReactNode }) => {
     const [isReasoning, setIsReasoning] = useState(false);
     const [isTemporary, setIsTemporary] = useState(false);
     const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+    const [isSearching, setIsSearching] = useState(false)
 
     return (
         <UiContext.Provider
@@ -71,11 +75,13 @@ export const UiProvider = ({ children }: { children: ReactNode }) => {
                 isThinking,
                 model,
                 isReasoning,
+                isSearching,
                 isTemporary,
                 isAudioPlaying,
                 setIsThinking,
                 setModel,
                 setIsReasoning,
+                setIsSearching,
                 setIsTemporary,
                 setIsAudioPlaying
             }}
