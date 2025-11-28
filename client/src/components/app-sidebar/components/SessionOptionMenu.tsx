@@ -9,6 +9,8 @@ export const SessionOptionsMenu = ({ sessionId, setIsEditing }: { sessionId: str
         setIsEditing(sessionId)
     }
     const handleDeleteSessionName = async () => {
+        if (sessionId === 'temporory-session') return
+        
         const res = api.delete(`/session/${sessionId}`)
         if (!res) throw Error('session delete failed')
         return

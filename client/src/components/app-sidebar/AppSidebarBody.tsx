@@ -1,7 +1,7 @@
 import { SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '../ui/sidebar'
 import { useEffect, useRef, useState } from 'react';
 import api from '@/api/api';
-import { useDataContext } from '@/context/DataContext';
+import { useDataContext, type SessionItem } from '@/context/DataContext';
 import { ChevronDown } from 'lucide-react';
 import { useUiContext } from '@/context/UiContext';
 import { Button } from '../ui/button';
@@ -39,14 +39,23 @@ const AppSidebarBody = () => {
      */
     const navigator = useNavigate()
     const handleSessionChatLoad = async (sessionId: string) => {
-        setIsTemporary(false)
-        setLatestSession(sessionId)
-        console.log(sessionId)
-        const res = await api.get(`/chat/${sessionId}`)
-        if (!res) throw new Error(`error fetching chat session id ${sessionId} is not valid.`)
-        console.log(res.data.data)
-        setResponses(res.data.data)
-        navigator('/')
+        if (sessionId !== 'temporory-session') {
+            setIsTemporary(false)
+            setLatestSession(sessionId)
+            if (sessionList[sessionList.length - 1].sessionId === 'temporory-session') {
+                setSessionList((prev: SessionItem[]) => {
+                    if (!Array.isArray(prev)) return [];
+                    return prev.slice(0, -1);
+                });
+            }
+            const res = await api.get(`/chat/${sessionId}`)
+            if (!res) throw new Error(`error fetching chat session id ${sessionId} is not valid.`)
+
+            setResponses(res.data.data)
+            navigator('/')
+            return;
+        }
+        else return;
     }
     const [isEditing, setIsEditing] = useState('')
 
@@ -87,7 +96,8 @@ const AppSidebarBody = () => {
                                         <SessionNameComponent name={s.name} sessionId={s.sessionId} isEditing={isEditing} setIsEditing={setIsEditing} />
                                         {/*  calling for option menu */}
                                         {
-                                            isEditing !== s.sessionId && <SessionOptionsMenu sessionId={s.sessionId} setIsEditing={setIsEditing} />
+                                            (isEditing !== s.sessionId && s.sessionId !== 'temporory-session')
+                                            && <SessionOptionsMenu sessionId={s.sessionId} setIsEditing={setIsEditing} />
                                         }
                                     </div>
                                 </SidebarMenuButton>

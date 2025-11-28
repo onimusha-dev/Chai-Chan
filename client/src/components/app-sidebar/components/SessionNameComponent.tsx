@@ -32,25 +32,27 @@ export const SessionNameComponent = (
     }
 
     return (
-        isEditing === sessionId ? (
-            <div className={`${isEditing !== sessionId && 'mask-[linear-gradient(to_right,black_75%,transparent_100%)]'} py-4 w-full text-nowrap overflow-hidden`}>
-                <input ref={inputRef}
-                    className='bg-blue-600/25 h-6 w-full outline-none px-3'
-                    onChange={e => setIsEditingName(e.target.value)}
-                    value={isEditingName}
-                    onKeyDown={(e) => {
-                        e.stopPropagation()
-                        if (e.key === "Enter") {
-                            hnadleSubmit();
-                        }
-                    }}
-                />
-            </div>
-        ) : (
-            <span className={`py-4 w-full text-nowrap overflow-hidden mask-[linear-gradient(to_right,black_75%,transparent_100%)]`}
-            >
-                {isEditingName}
-            </span>
-        )
+        (isEditing === sessionId && sessionId !== 'temporory-session')
+            ? (
+                <div className={`${isEditing !== sessionId && 'mask-[linear-gradient(to_right,black_75%,transparent_100%)]'} py-4 w-full text-nowrap overflow-hidden`}>
+                    <input ref={inputRef}
+                        className='bg-blue-600/25 h-6 w-full outline-none px-3'
+                        onChange={e => setIsEditingName(e.target.value)}
+                        value={isEditingName}
+                        onKeyDown={(e) => {
+                            e.stopPropagation()
+                            if (e.key === "Enter") {
+                                hnadleSubmit();
+                            }
+                        }}
+                    />
+                </div>
+            )
+            : (
+                <span className={`py-4 w-full text-nowrap overflow-hidden mask-[linear-gradient(to_right,black_75%,transparent_100%)]`}
+                >
+                    {isEditingName}
+                </span>
+            )
     )
 }
