@@ -37,7 +37,7 @@ const AppSidebarHeader = () => {
                     <SidebarMenuItem>
                         <StartNewChatBar />
                     </SidebarMenuItem>
-                    {projects.map((project, id) => (
+                    {/* {projects.map((project, id) => (
                         <SidebarMenuItem key={id}>
                             <SidebarMenuButton asChild>
                                 <NavLink
@@ -49,7 +49,7 @@ const AppSidebarHeader = () => {
                                 </NavLink>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
-                    ))}
+                    ))} */}
                 </SidebarMenu>
             </SidebarGroup>
         </SidebarHeader>

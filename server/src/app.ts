@@ -35,13 +35,11 @@ app.post('/chat', authMiddleware, chatOllama)
 app.get('/chat/:sessionId', getAllChat)
 
 
-app.post('/memory', createMemory)
+app.post('/memory:userId', createMemory)
+// app.put('/memory:userId', createMemory)
 app.get('/memory/:userId', getMemory)
 
-app.post('/session/:userId', createSession);
-app.get('/session/:userId', getSession)
-app.put('/session/:sessionId', updateSession)
-app.delete('/session/:userId', deleteSession)
+
 
 export default app;
  

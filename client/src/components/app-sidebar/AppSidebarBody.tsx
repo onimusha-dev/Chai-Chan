@@ -26,7 +26,6 @@ const AppSidebarBody = () => {
         }
         const res = await api.get(`session/${userId}`)
         setSessionList(res.data.data)
-        console.log(res.data)
     }
     useEffect(() => {
         fetchSessionList(userData?.userId)
@@ -77,9 +76,9 @@ const AppSidebarBody = () => {
                 {/*   Chat sessions   */}
                 {isSessionListOpen &&
                     <SidebarMenu>
-                        {sessionList?.map((s, index) => (
+                        {sessionList?.map((s) => (
                             <SidebarMenuItem
-                                key={index}>
+                                key={s.sessionId}>
                                 <SidebarMenuButton role='button' tabIndex={0}
                                     className={`${s.sessionId === latestSession && 'bg-accent'}
                                 cursor-pointer py-5 focus-visible:outline-2 focus:outline-none focus-visible:ring-2 focus-visible:bg-accent`}

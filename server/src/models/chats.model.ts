@@ -21,9 +21,9 @@ const chatEntrySchema = new Schema(
             ref: 'ChatSession',
             required: false,
         },
-        prompt: { type: String, required: true },
-        reasoning: { type: String, required: false },
-        response: { type: String, required: true },
+        prompt: { type: String, trim: true, required: true },
+        reasoning: { type: String, trim: true, required: false },
+        response: { type: String, trim: true, required: true },
         timeTaken: { type: Number, required: true },
         
         meta: {
@@ -32,8 +32,6 @@ const chatEntrySchema = new Schema(
             load_duration: { type: Number, default: 0 },        // model load / warmup
             prompt_eval_duration: { type: Number, default: 0 }, // prompt token evaluation
             eval_duration: { type: Number, default: 0 },        // output token generation
-
-            // optional counts if you want them stored too
             prompt_eval_count: { type: Number, default: 0 },
             eval_count: { type: Number, default: 0 },
         },

@@ -2,17 +2,26 @@ import api from '@/api/api';
 import { Ellipsis, PencilLine, Trash2, } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { SidebarMenuAction } from '@/components/ui/sidebar';
+import { useDataContext } from '@/context/DataContext';
 
 
 export const SessionOptionsMenu = ({ sessionId, setIsEditing }: { sessionId: string, setIsEditing: (isEditing: string) => void }) => {
-    const handleEditSessionName = () => {
+    const { sessionList, setSessionList } = useDataContext()
+    const handleUpdateSession = () => {
         setIsEditing(sessionId)
     }
-    const handleDeleteSessionName = async () => {
+    const handleDeleteSession = async () => {
         if (sessionId === 'temporory-session') return
-        
+
         const res = api.delete(`/session/${sessionId}`)
         if (!res) throw Error('session delete failed')
+
+        const updatedSessionList = sessionList.filter(
+            session => {
+                return session.sessionId !== sessionId
+            }
+        )
+        setSessionList(updatedSessionList)
         return
     }
 
@@ -27,13 +36,13 @@ export const SessionOptionsMenu = ({ sessionId, setIsEditing }: { sessionId: str
             </DropdownMenuTrigger>
             <DropdownMenuContent onClick={(e) => e.stopPropagation()} side="right" align="start" className='space-y-1'>
                 <DropdownMenuItem
-                    onClick={handleEditSessionName}
+                    onClick={handleUpdateSession}
                 >
                     <PencilLine size={22} />
                     <span>Rename</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                    onClick={handleDeleteSessionName}
+                    onClick={handleDeleteSession}
                 >
                     <Trash2 size={22} className='text-destructive' />
                     <span className='text-destructive'>Delete</span>

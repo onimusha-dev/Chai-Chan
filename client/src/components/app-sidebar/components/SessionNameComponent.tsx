@@ -26,7 +26,7 @@ export const SessionNameComponent = (
         if (isEditingName === name) return setIsEditing('')
 
         const res = await api.put(`/session/${sessionId}`, { name: isEditingName })
-        console.log(res.data)
+
         if (!res) throw new Error('renaming session failed!')
         setIsEditing('')
     }

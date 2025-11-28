@@ -26,7 +26,7 @@ export const createSession = async (
 
         return res.status(200).send({
             status: 200,
-            data: newSession, 
+            data: newSession,
         });
     } catch (err) {
         console.error('error in chat controller' + '\n' + err);
@@ -36,7 +36,7 @@ export const createSession = async (
 
 
 export const getSession = async (
-    req: Request<{ userId: string }>,
+    req: Request<{ userId: string }, {}, {}>,
     res: Response,
     next: NextFunction,
 ) => {
@@ -74,7 +74,7 @@ export const updateSession = async (
     } catch (err) {
         console.log(err);
     }
-}; 
+};
 
 export const deleteSession = async (
     req: Request<{ userId: string }>,

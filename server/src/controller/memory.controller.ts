@@ -2,23 +2,27 @@ import { Request, Response, NextFunction } from 'express';
 import {
     createOllamaMemory,
     getOllamaMemory,
-} from '../service/askMemory.service';
+} from '../service/memory.service';
 
 interface MemoryRequestBody {
-    memory: string;
-    userId?: string;
+    userName: string
+    modelName: string
+    rowMemory: string
+    modelPersona: string
 }
+
 export const createMemory = async (
-    req: Request<{}, {}, MemoryRequestBody>,
+    req: Request<{ userId: string }, {}, MemoryRequestBody>,
     res: Response,
     next: NextFunction,
 ) => {
     try {
-        const { memory, userId } = req.body;
+        const { rowMemory, modelName, modelPersona, userName } = req.body;
+        const { userId } = req.params;
 
-        if (!memory) throw Error('memory is empty');
+        if (!userId && (!rowMemory || !modelName || !userName || !modelPersona)) throw Error('memory is empty');
 
-        const newMemory = await createOllamaMemory(memory, userId);
+        const newMemory = await createOllamaMemory(userId, rowMemory, modelName, userName, modelPersona);
 
         return res.status(200).send({
             status: 200,
@@ -33,23 +37,20 @@ export const createMemory = async (
 };
 
 export const getMemory = async (
-    req: Request<{ id: string }, {}, {}>,
+    req: Request<{ userId: string }, {}, {}>,
     res: Response,
     next: NextFunction,
 ) => {
     try {
-        const { id } = req?.params;
+        const { userId } = req?.params;
 
-        if (!id) throw Error('user id missing.');
+        if (!userId) throw Error('user id missing.');
 
-        const memory = await getOllamaMemory(id);
+        const memory = await getOllamaMemory(userId);
 
         return res.status(200).send({
             status: 200,
-            data: {
-              length: memory?.length,
-              memory: memory,
-            }
+            data: memory
         });
     } catch (err) {
         console.log('error in the get memory controller. ' + err);

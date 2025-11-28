@@ -8,7 +8,6 @@ import { Navigate, Outlet } from "react-router-dom"
 
 const MainLayout = () => {
     const { userData, isLoading } = useUserContext()
-console.log(userData)
     if(isLoading) {
         return(
             <div className="w-screen h-screen flex items-center justify-center">

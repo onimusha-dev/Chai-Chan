@@ -46,8 +46,8 @@ const ChatView = () => {
 const EmptyChatPreview = () => {
     const { isTemporary, isThinking } = useUiContext();
     return (
-        <div className="h-full w-full flex">
-            <div className="w-full h-full flex items-center justify-center select-none">
+        <div className="h-full w-full flex select-none">
+            <div className="w-full h-full flex items-center justify-center">
                 {isTemporary ? (
                     <div className="flex flex-col items-center gap-3">
                         <h1 className="text-[28px] leading-[34px] font-normal tracking-[0.38px]">
@@ -80,7 +80,7 @@ const EmptyChatPreview = () => {
 const IsThinkingNotifier = () => {
     return (
         <div>
-            <Card className="py-3 shadow-none border-none bg-transparent">
+            <Card className="py-3 shadow-none border-none bg-transparent select-none">
                 <CardContent className="tx-3">
                     <div className="flex items-center justify-center gap-5">
                         <Brain size={24} />
