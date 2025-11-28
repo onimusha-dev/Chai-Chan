@@ -42,7 +42,7 @@ const CopyChatText = ({ text, mode, meta }: { text: string, mode: "ai" | "user",
         >
             <Tooltip delayDuration={150}>
                 <TooltipTrigger asChild>
-                    <button className={`flex cursor-pointer items-center justify-center size-8 z-50 rounded-lg opacity-30 hover:bg-accent hover:opacity-100 transition-all duration-150 ease-in-out`}
+                    <button className={`flex cursor-pointer items-center justify-center size-8 z-20 rounded-lg opacity-30 hover:bg-accent hover:opacity-100 transition-all duration-150 ease-in-out`}
                         onClick={copyToClipboard}
                     >
                         {
@@ -60,7 +60,7 @@ const CopyChatText = ({ text, mode, meta }: { text: string, mode: "ai" | "user",
                 mode === 'ai' &&
                 <Tooltip delayDuration={150}>
                     <TooltipTrigger asChild>
-                        <button className={`flex cursor-pointer items-center justify-center size-8 z-50 rounded-lg opacity-30 hover:bg-accent hover:opacity-100 transition-all duration-150 ease-in-out`}
+                        <button className={`flex cursor-pointer items-center justify-center size-8 z-20 rounded-lg opacity-30 hover:bg-accent hover:opacity-100 transition-all duration-150 ease-in-out`}
                             onClick={handlePlayAndPause}>
                             {
                                 isPlaying ? <Pause size={16} /> : <Play size={16} />

@@ -6,11 +6,11 @@ const ResponseDetails = ({ meta }: { meta: PopoverStats }) => {
   return (
     <Popover>
       <PopoverTrigger
-        className={`flex cursor-pointer items-center justify-center size-8 z-50 rounded-lg opacity-30 hover:bg-accent hover:opacity-100 transition-all duration-150 ease-in-out`}
+        className={`flex cursor-pointer items-center justify-center size-8 z-20 rounded-lg opacity-30 hover:bg-accent hover:opacity-100 transition-all duration-150 ease-in-out`}
       >
         <Info size={18} />
       </PopoverTrigger>
-      <PopoverContent className='mb-15 shadow-2xl z-70'>
+      <PopoverContent className='mb-18 shadow-md z-70'>
         <div className="flex pb-3 gap-2 justify-between">
 
           {/*  this is the tokens count */}

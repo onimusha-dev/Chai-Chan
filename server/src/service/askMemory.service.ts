@@ -19,14 +19,14 @@ export const createOllamaMemory = async (
                     
                 },
                 { role: 'user', content: `${rowMemory}` },
-            ],
+            ], 
             think: false
         });
         if (!response) throw new Error('error creating memory.   service');
         console.log(response);
         console.log(
             ' ====================++++++++++++++++++++++++++++++++=========================',
-        );
+        ); 
         /**
          * if memory exists then replace no need to create a new one
          */

@@ -7,6 +7,7 @@ import SchorllToNewChat from './components/SchorllToNewChat';
 import { useUserContext } from '@/context/AuthContext';
 import ChatBoxTools from './components/ChatBoxTools';
 import { MoveUp, Square } from 'lucide-react';
+import ModelPopOver from './components/ModelPopOver';
 
 const ChatBar = () => {
     const [prompt, setPrompt] = useState('');
@@ -132,22 +133,31 @@ const ChatBar = () => {
                         placeholder="What's on your mind?"
                         value={prompt}
                         onChange={e => setPrompt(e.target.value)}
-                        onKeyDown={e => e.key === 'Enter' && sendPrompt()}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter" && e.shiftKey) return;
+                            if (e.key === "Enter") {
+                                e.preventDefault(); 
+                                sendPrompt();   
+                            }
+                        }}
                     />
 
                     {/*  this is the options menu in the chat bar  */}
                     <div className="flex justify-between gap-3">
                         <ChatBoxTools />
-                        <button
-                            onClick={sendPrompt}
-                            className={`${isThinking ? 'opacity-50' : ''}
+                        <div className="flex gap-3">
+                            <ModelPopOver />
+                            <button
+                                onClick={sendPrompt}
+                                className={`${isThinking ? 'opacity-50' : ''}
                             ${prompt.trim() === '' && 'opacity-25'} bg-white text-background
                             cursor-pointer flex size-10 items-center justify-center p-1 rounded-full  transition-colors duration-150 ease-in-out`}
-                        >
-                            {
-                                isThinking ? <Square size={20} /> : <MoveUp size={22} />
-                            }
-                        </button>
+                            >
+                                {
+                                    isThinking ? <Square size={20} /> : <MoveUp size={22} />
+                                }
+                            </button>
+                        </div>
                     </div>
                 </CardContent>
             </Card>

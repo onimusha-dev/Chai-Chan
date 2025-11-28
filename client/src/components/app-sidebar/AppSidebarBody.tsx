@@ -1,13 +1,14 @@
-import { SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuAction, SidebarMenuButton, SidebarMenuItem } from '../ui/sidebar'
-import { useEffect, useState } from 'react';
+import { SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '../ui/sidebar'
+import { useEffect, useRef, useState } from 'react';
 import api from '@/api/api';
 import { useDataContext } from '@/context/DataContext';
-import { ChevronDown, Ellipsis, } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { useUiContext } from '@/context/UiContext';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { Button } from '../ui/button';
 import { useNavigate } from 'react-router-dom';
 import { useUserContext } from '@/context/AuthContext';
+import { SessionNameComponent } from './components/SessionNameComponent';
+import { SessionOptionsMenu } from './components/SessionOptionMenu';
 
 const AppSidebarBody = () => {
     const { sessionList, latestSession, setSessionList, setLatestSession, setResponses } = useDataContext();
@@ -47,6 +48,7 @@ const AppSidebarBody = () => {
         setResponses(res.data.data)
         navigator('/')
     }
+    const [isEditing, setIsEditing] = useState('')
 
     return (
         <SidebarContent className=''>
@@ -82,13 +84,11 @@ const AppSidebarBody = () => {
                                     asChild
                                 >
                                     <div className="w-full group/chat">
-                                        <span className="py-4 w-full text-nowrap overflow-hidden mask-[linear-gradient(to_right,black_75%,transparent_100%)]"
-                                        >
-                                            {s.name}
-                                        </span>
-
+                                        <SessionNameComponent name={s.name} sessionId={s.sessionId} isEditing={isEditing} setIsEditing={setIsEditing} />
                                         {/*  calling for option menu */}
-                                        <SessionOptionsMenu sessionId={s.sessionId} />
+                                        {
+                                            isEditing !== s.sessionId && <SessionOptionsMenu sessionId={s.sessionId} setIsEditing={setIsEditing} />
+                                        }
                                     </div>
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
@@ -99,46 +99,5 @@ const AppSidebarBody = () => {
         </SidebarContent>
     )
 }
-
-const SessionOptionsMenu = (sessionId: { sessionId: string }) => {
-
-    const handleEditSessionName = () => {
-        console.log(sessionId.sessionId + "   edit")
-    }
-
-    const handleDeleteSessionName = async () => {
-        console.log(sessionId.sessionId + "   delete")
-        const res = api.delete(`/session/${sessionId.sessionId }`)
-
-        if (!res) throw Error('session delete failed')
-        return
-    }
-
-    return (
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <SidebarMenuAction
-                    className="size-7 flex items-center justify-center rounded-full opacity-0 group-hover/chat:opacity-30 hover:opacity-100 focus-visible:opacity-75 focus-visible:hover:bg-white/10 focus-visible:bg-white/10 hover:bg-white/10"
-                >
-                    <Ellipsis size={16} />
-                </SidebarMenuAction>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent onClick={(e) => e.stopPropagation()} side="right" align="start">
-                <DropdownMenuItem
-                    onClick={handleEditSessionName}
-                >
-                    <span>Edit Project</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                    onClick={handleDeleteSessionName}
-                >
-                    <span className='text-destructive'>Delete</span>
-                </DropdownMenuItem>
-            </DropdownMenuContent>
-        </DropdownMenu>
-    )
-}
-
-
 
 export default AppSidebarBody

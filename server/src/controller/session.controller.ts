@@ -34,24 +34,6 @@ export const createSession = async (
     }
 };
 
-export const updateSession = async (
-    req: Request<{ sessionId: string }, {}, { name: string }>,
-    res: Response,
-    next: NextFunction,
-) => {
-    try {
-        const { name } = req.body;
-        const { sessionId } = req.params;
-
-        if (!name || !sessionId) throw new Error('fields r empty');
-
-        const session = await updateOllamaSession(sessionId, name);
-
-        res.status(200).send({ status: 200, data: session });
-    } catch (err) {
-        console.log(err);
-    }
-};
 
 export const getSession = async (
     req: Request<{ userId: string }>,
@@ -74,6 +56,25 @@ export const getSession = async (
         console.log(err);
     }
 };
+
+export const updateSession = async (
+    req: Request<{ sessionId: string }, {}, { name: string }>,
+    res: Response,
+    next: NextFunction,
+) => {
+    try {
+        const { name } = req.body;
+        const { sessionId } = req.params;
+
+        if (!name || !sessionId) throw new Error('fields are empty');
+
+        const session = await updateOllamaSession(sessionId, name);
+
+        res.status(200).send({ status: 200, data: session });
+    } catch (err) {
+        console.log(err);
+    }
+}; 
 
 export const deleteSession = async (
     req: Request<{ userId: string }>,

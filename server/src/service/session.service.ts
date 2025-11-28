@@ -35,13 +35,12 @@ export const getSessionByUserId = async (userId: string) => {
 };
 
 export const updateOllamaSession = async (sessionId: string, name: string) => {
-    try {
+    try {console.log(sessionId, '    ',  name)
         const newSession = await ChatSession.findOneAndUpdate(
-            { sessionId },
+            { _id: sessionId },
             { $set: { name: name } },
             { new: true },
         ).lean();
-
         if (!newSession) throw new Error('error updating session name');
 
         return { sessionId: newSession._id, name: newSession.name, createdAt: newSession.createdAt };

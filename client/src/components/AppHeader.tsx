@@ -11,7 +11,7 @@ const AppHeader = () => {
 
   const { model } = useUiContext()
   return (
-    <header className="absolute top-0 left-0 px-2 py-4 flex w-full justify-between z-60 bg-background">
+    <header className="absolute top-0 left-0 px-2 py-4 flex w-full justify-between z-40 bg-background">
 
       {/* this is for bigger screens */}
       {

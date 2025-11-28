@@ -4,18 +4,12 @@ import { ChevronUp, LogOut, Send, Settings, User2 } from 'lucide-react';
 import api from '@/api/api';
 import { Navigate } from 'react-router-dom';
 
-
-
 const AppSidebarFooter = () => {
-
-
-
-    
     const handleLogout = async () => {
         const res = await api.post('/auth/logout')
         if (!res) throw Error('error logging out')
 
-        return <Navigate to={'/auth'} replace/>
+        return <Navigate to={'/auth'} replace />
     }
 
     return (
