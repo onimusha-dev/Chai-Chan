@@ -77,15 +77,16 @@ export const updateSession = async (
 };
 
 export const deleteSession = async (
-    req: Request<{ userId: string }>,
+    req: Request<{ sessionId: string}>,
     res: Response,
     next: NextFunction,
 ) => {
     try {
-        const { userId } = req.params;
-        if (!userId) throw new Error('sessionId is missing!');
+        const { sessionId } = req.params;
+        console.log()
+        if (!sessionId) throw new Error('sessionId is missing!');
 
-        const session = await deleteOllamaSession(userId);
+        const session = await deleteOllamaSession(sessionId);
 
         return res.status(200).send({
             status: 200,

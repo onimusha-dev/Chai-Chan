@@ -5,11 +5,11 @@ import { authMiddleware } from '../middleware/auth.middleare';
 const sessionRouter = express.Router()
 
 sessionRouter.route('/:sessionId')
-    .put(authMiddleware, updateSession)
-    .delete(authMiddleware, deleteSession)
+    .put( updateSession)
+    .delete(deleteSession)
 
 sessionRouter.route('/:userId')
-    .get(authMiddleware, getSession)
-    .post(authMiddleware, createSession)
+    .get( getSession)
+    .post( createSession)
 
 export default sessionRouter
