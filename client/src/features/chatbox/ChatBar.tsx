@@ -4,7 +4,7 @@ import api from '@/api/api';
 import { useUiContext } from '@/context/UiContext';
 import { useDataContext } from "@/context/DataContext"
 import SchorllToNewChat from './components/SchorllToNewChat';
-import { useUserContext } from '@/context/AuthContext';
+import { useUserContext } from '@/context/UserContext';
 import ChatBoxTools from './components/ChatBoxTools';
 import { MoveUp, Square } from 'lucide-react';
 import ModelPopOver from './components/ModelPopOver';

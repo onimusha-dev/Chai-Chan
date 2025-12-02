@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 
-import { demoUserUsage } from "../../utils/demo"
+import { demoUserUsage } from "../utils/demo"
 import { Table, TableBody, TableCell, TableHead, TableRow } from "@/components/ui/table";
 
   export function Dashboard() {

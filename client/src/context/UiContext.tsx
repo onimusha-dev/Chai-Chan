@@ -44,6 +44,9 @@ interface IChat {
 
     isAudioPlaying: boolean
     setIsAudioPlaying: (isAudioPlaying: boolean) => void
+
+    isSettingsPopupOpen: boolean;
+    setIsSettingsPopupOpen: (isSettingsPopupOpen: boolean) => void;
 }
 
 // null to start, same as you had
@@ -68,6 +71,7 @@ export const UiProvider = ({ children }: { children: ReactNode }) => {
     const [isTemporary, setIsTemporary] = useState(false);
     const [isAudioPlaying, setIsAudioPlaying] = useState(false);
     const [isSearching, setIsSearching] = useState(false)
+    const [isSettingsPopupOpen, setIsSettingsPopupOpen] = useState(false);
 
     return (
         <UiContext.Provider
@@ -78,12 +82,14 @@ export const UiProvider = ({ children }: { children: ReactNode }) => {
                 isSearching,
                 isTemporary,
                 isAudioPlaying,
+                isSettingsPopupOpen,
                 setIsThinking,
                 setModel,
                 setIsReasoning,
                 setIsSearching,
                 setIsTemporary,
-                setIsAudioPlaying
+                setIsAudioPlaying,
+                setIsSettingsPopupOpen
             }}
         >
             {children}

@@ -12,7 +12,7 @@ export default function LoginPage() {
     emailOrUsername: '',
     password: ''
   });
-  
+
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [step, setStep] = useState<'login' | 'otp'>('login');
   const [otp, setOtp] = useState('');
@@ -54,9 +54,12 @@ export default function LoginPage() {
         sessionId,
         otp
       });
-
+      if (!res.data.success) {
+        console.error('OTP verification failed:', res.data.message);
+        return;
+      }
       console.log('OTP verified:', res.data);
-      <Navigate to={'/auth/login'} replace />
+      <Navigate to={'/'} replace />
       // Continue your flow here — dashboard, redirect, confetti, etc.
     } catch (err) {
       console.error('OTP verification failed:', err);

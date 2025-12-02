@@ -46,3 +46,7 @@ export const demoUserUsage = {
 
     updatedAt: "2025-11-28T14:22:51.492Z",
 };
+
+const models = Object.keys(demoUserUsage.models)
+console.log(models);
+export default models;

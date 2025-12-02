@@ -2,6 +2,8 @@ import ollama from 'ollama';
 import { ChatEntry } from '../models/chats.model';
 import { SelectModel } from '../types/ollama';
 import { MEMORY_BLOCK } from '../utils/constants';
+import { updateUsage } from './usageTracker.service';
+import { converter } from '../utils/dotConverterForMongoose';
 
 // export const askOllama = async (
 //     prompt: string,
@@ -76,6 +78,7 @@ import { MEMORY_BLOCK } from '../utils/constants';
 
 /*  this is chat gpt generated */
 export const askOllama = async (
+    userId: string,
     prompt: string,
     model: SelectModel,
     collection: string,
@@ -93,6 +96,12 @@ export const askOllama = async (
             think: reasoning,
         });
         console.log(response)
+
+        const encodedModel = converter.encodeKey(model);
+
+        updateUsage( userId, encodedModel, response.prompt_eval_count ?? 0, response.eval_count ?? 0)
+
+        //  retirning the created chat object and saving in the db if not temporary
         const meta = {
             model: model,
             total_duration: response.total_duration ?? 0,

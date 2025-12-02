@@ -1,6 +1,6 @@
 import api from "@/api/api"
 import { SidebarMenuButton } from "@/components/ui/sidebar"
-import { useUserContext } from "@/context/AuthContext"
+import { useUserContext } from "@/context/UserContext"
 import { useDataContext } from "@/context/DataContext"
 import { useUiContext } from "@/context/UiContext"
 import { SquarePen } from "lucide-react"

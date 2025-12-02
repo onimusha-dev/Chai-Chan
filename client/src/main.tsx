@@ -17,7 +17,7 @@ import AuthLayout from './layoutes/AuthLayout';
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
 import { DataProvider } from './context/DataContext';
-import { UserProvier } from './context/AuthContext';
+import { UserProvier } from './context/UserContext';
 
 const router = createBrowserRouter([
     {

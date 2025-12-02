@@ -2,10 +2,13 @@ import { SidebarFooter, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { ChevronUp, LogOut, Send, Settings, User2 } from 'lucide-react';
 import api from '@/api/api';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useUserContext } from '@/context/UserContext';
+import { useUiContext } from '@/context/UiContext';
+import { Navigate } from 'react-router-dom';
 
 const AppSidebarFooter = () => {
-    const navigate = useNavigate()
+    const {userData} = useUserContext()
+const { setIsSettingsPopupOpen } = useUiContext();
     const handleLogout = async () => {
         const res = await api.post('/auth/logout')
         if (!res) throw Error('error logging out')
@@ -22,7 +25,18 @@ const AppSidebarFooter = () => {
                             className='h-11 bg-accent rounded-2xl'
                         >
                             <SidebarMenuButton>
-                                <User2 /> Username
+                                <div className="pl-1 rounded-full">
+                                    {userData?.avatarUrl ? (
+                                        <img
+                                            src={userData.avatarUrl}
+                                            alt="User Avatar"
+                                            className="h-8 w-8 rounded-full object-cover"
+                                        />
+                                    ) : (
+                                        <User2 className="h-8 w-8 p-1 text-muted-foreground" />
+                                    )}
+                                </div> 
+                                <p className="text-sm">{userData?.username}</p>
                                 <ChevronUp className="ml-auto" />
                             </SidebarMenuButton>
                         </DropdownMenuTrigger>
@@ -31,7 +45,7 @@ const AppSidebarFooter = () => {
                             className="w-[--radix-popper-anchor-width] bg-accent/80 rounded-2xl mb-3"
                         >
                             <DropdownMenuItem
-                                onClick={() => navigate('/settings')}
+                                onClick={() => setIsSettingsPopupOpen(true)}
                                 className="mt-1 px-3 rounded-t-xl"
                             >
                                 <Settings size={28} />

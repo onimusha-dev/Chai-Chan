@@ -4,13 +4,10 @@ interface IModelUsage {
     model: string;
     prompt_eval_count: number;
     eval_count: number;
-    total_duration: number;
-    prompt_eval_duration: number;
-    eval_duration: number;
 }
 
 export interface IUserUsage extends Document {
-    user: Types.ObjectId;
+    userId: Types.ObjectId;
     totalTokens: number;
     models: Map<string, IModelUsage>;
     updatedAt: Date;
@@ -19,20 +16,15 @@ export interface IUserUsage extends Document {
 const ModelUsageSchema = new Schema<IModelUsage>(
     {
         model: { type: String, required: true },
-
         prompt_eval_count: { type: Number, default: 0 },
         eval_count: { type: Number, default: 0 },
-
-        total_duration: { type: Number, default: 0 },
-        prompt_eval_duration: { type: Number, default: 0 },
-        eval_duration: { type: Number, default: 0 },
     },
     { _id: false }
 );
 
 const UserUsageSchema = new Schema<IUserUsage>(
     {
-        user: {
+        userId: {
             type: Schema.Types.ObjectId,
             ref: "User",
             required: true,
@@ -52,17 +44,13 @@ const UserUsageSchema = new Schema<IUserUsage>(
     { timestamps: false }
 );
 
-UserUsageSchema.pre("save", function (next) {
+UserUsageSchema.pre("save", function (next) {    
+    this.totalTokens = Array.from(this.models.values()).reduce( (acc, usage) => {
+        return acc + usage.prompt_eval_count + usage.eval_count;
+    }, 0);
+
     this.updatedAt = new Date();
     next();
 });
 
 export const UserUsage = model<IUserUsage>("UserUsage", UserUsageSchema);
-
-
-// tokenWallet: {
-//     inputTokens: 50000,       // used for prompting any model
-//         outputTokens: 20000,      // required for PRO models + high-cost outputs
-//             purchasedTokens: 0,       // optional, if you want real transactions
-//                 freeTierTokens: 70000,    // optional, resets monthly
-// }

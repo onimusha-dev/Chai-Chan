@@ -1,22 +1,31 @@
-import X from "@/features/settings/components/X";
-import Dashboard from "@/features/settings/Dashboard";
+import { ModeToggle } from "@/components/theme/mode-toggle";
+import X from "@/pages/X";
+import Dashboard from "@/pages/Dashboard";
 
 const SettingsPage = () => {
 
 	return (
-		<div className="h-full w-full flex flex-col items-center py-10 px-24 pt-20 pb-10">
-			<h1 className="text-3xl font-semibold mb-8 select-none">Settings</h1>
-			<X />
+<>
+			<div className="flex justify-center gap-10 pt-20 pb-10">
+				<X />
+				<X />
 
 
 
 
-{/* <Dashboard /> */}
 
 
 
 
-		</div>
+			</div>
+ 
+{/* <div className="border p-6 rounded-xl bg-muted/40 flex items-center justify-between">
+	<h2 className="text-xl font-medium select-none">Theme</h2>
+	<ModeToggle />
+</div> */}
+				{/* <Dashboard /> */}
+
+</>
 	);
 };
 

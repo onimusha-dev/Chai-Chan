@@ -6,7 +6,7 @@ import { ChevronDown } from 'lucide-react';
 import { useUiContext } from '@/context/UiContext';
 import { Button } from '../ui/button';
 import { useNavigate } from 'react-router-dom';
-import { useUserContext } from '@/context/AuthContext';
+import { useUserContext } from '@/context/UserContext';
 import { SessionNameComponent } from './components/SessionNameComponent';
 import { SessionOptionsMenu } from './components/SessionOptionMenu';
 

@@ -1,5 +1,4 @@
-import { ModeToggle } from "@/components/theme/mode-toggle";
-import { useUserContext } from "@/context/AuthContext";
+import { useUserContext } from "@/context/UserContext";
 const X = () => {
     const { userData } = useUserContext();
     return (
@@ -23,12 +22,6 @@ const X = () => {
                         {userData?.auth ? "Yes" : "No"}
                     </p>
                 </div>
-            </div>
-
-            {/* Theme */}
-            <div className="border p-6 rounded-xl bg-muted/40 flex items-center justify-between">
-                <h2 className="text-xl font-medium select-none">Theme</h2>
-                <ModeToggle />
             </div>
         </div>
     )

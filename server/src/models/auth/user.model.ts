@@ -8,6 +8,12 @@ export interface IUser {
   password: string;
   refreshToken: string;
   termsAccept: boolean;
+  tokenWallet?: {
+    inputTokens: number;
+    outputTokens: number;
+    purchasedTokens: number;
+    freeTierTokens: number;
+  }
 }
 
 export interface IUserDocument extends IUser, Document {
@@ -39,6 +45,13 @@ const userSchema = new Schema<IUserDocument, Model<IUserDocument>>(
     refreshToken: { type: String, default: '' },
 
     termsAccept: { type: Boolean, default: false },
+
+    tokenWallet: {
+      inputTokens: { type: Number, default: 50000 },
+      outputTokens: { type: Number, default: 20000 },
+      purchasedTokens: { type: Number, default: 0 },
+      freeTierTokens: { type: Number, default: 70000 },
+    }
   },
   { timestamps: true }
 );
