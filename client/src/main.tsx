@@ -11,12 +11,13 @@ import { SidebarProvider } from './components/ui/sidebar';
 import { ThemeProvider } from './components/theme/theme-provider';
 import { UiProvider } from './context/UiContext';
 import ChatPage from './pages/ChatPage';
-import { MemoryProvider } from './context/MemoryContext';
+// import { MemoryProvider } from './context/MemoryContext';
 import SettingsPage from './pages/SettingsPage';
 import AuthLayout from './layoutes/AuthLayout';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
+import LoginPage from './pages/auth/LoginPage';
+import RegisterPage from './pages/auth/RegisterPage';
 import { DataProvider } from './context/DataContext';
+import { UserProvier } from './context/UserContext';
 
 const router = createBrowserRouter([
     {
@@ -42,13 +43,15 @@ createRoot(document.getElementById('root')!).render(
     // <StrictMode>
     <ThemeProvider>
         <SidebarProvider>
-            <MemoryProvider>
+            <UserProvier>
+            {/* <MemoryProvider> */}
                 <DataProvider>
                 <UiProvider>
                     <RouterProvider router={router} />
                 </UiProvider>
                 </DataProvider>
-            </MemoryProvider>
+            {/* </MemoryProvider> */}
+            </UserProvier>
         </SidebarProvider>
     </ThemeProvider>,
     // </StrictMode>,

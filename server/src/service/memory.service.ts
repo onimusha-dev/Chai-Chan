@@ -1,32 +1,17 @@
 import ollama from 'ollama';
 import { Memory } from '../models/memory.model';
-import { SYSTEM_SUMMERISER_PROMPT } from '../utils/constsmts';
+import { SYSTEM_SUMMERISER_PROMPT } from '../utils/constants';
 
 //  this is storing the memory of the user
 export const createOllamaMemory = async (
+    userId: string,
+    userName: string,
+    modelName: string,
     rowMemory: string,
-    userId: string = '6923377f389a4f64febf04b5',
+    modelPersona: string
 ) => {
     try {
-        const isMemoryExits = await Memory.findOne({ user: userId });
-
-        const response = await ollama.chat({
-            model: 'gemma3:270m',
-            messages: [
-                {
-                    role: 'system',
-                    content: SYSTEM_SUMMERISER_PROMPT,
-                    
-                },
-                { role: 'user', content: `${rowMemory}` },
-            ],
-            think: false
-        });
-        if (!response) throw new Error('error creating memory.   service');
-        console.log(response);
-        console.log(
-            ' ====================++++++++++++++++++++++++++++++++=========================',
-        );
+        const isMemoryExits = await Memory.findOne({ userId });
         /**
          * if memory exists then replace no need to create a new one
          */
@@ -34,35 +19,30 @@ export const createOllamaMemory = async (
             const newUpdatedMemory = await Memory.findOneAndUpdate(
                 { userId },
                 {
-                    $set: {
-                        rawMemory: response.message.content,
-                        summarisedMemory: response.message.content,
-                    },
+                    $set: {},
                 },
                 { new: true },
             ).lean();
             if (!newUpdatedMemory) throw new Error('error creating memeory.');
-            console.log(newUpdatedMemory.summarisedMemory);
+            console.log(newUpdatedMemory.vectorMemory);
             return newUpdatedMemory.rawMemory;
-        } else {
-            /**
+        }/**
              * if memory doesnot exists then create and send back to user
              */
+        else {
             const newMemory = new Memory({
                 userId,
                 rawMemory: rowMemory,
-                summarisedMemory: response.message.content,
             });
 
             const newCreatedMemory = await newMemory.save();
             if (!newMemory) throw new Error('error creating memory!');
 
             console.log(newMemory);
-            console.log(response);
             console.log(
                 ' ====================++++++++++++++++++++++++++++++++=========================',
             );
-            return newCreatedMemory.rawMemory;
+            return ''
         }
     } catch (err) {
         console.log(err);
@@ -74,9 +54,9 @@ export const getOllamaMemory = async (userId: string) => {
     try {
         const memory = await Memory.findOne({ userId }).lean();
 
-        if (!memory) return '';
+        if (!memory) throw new Error('memory didnot found');
 
-        return memory ? memory.rawMemory : '';
+        return memory;
     } catch (err) {
         console.log(err);
     }

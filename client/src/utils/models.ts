@@ -13,10 +13,12 @@ export const modelList = [
     // for coding specially
     { model: 'qwen2.5-coder:0.5b', name: 'qwen2.5-coder:0.5b', reasoning: false } as const,
     { model: 'qwen2.5-coder:1.5b', name: 'qwen2.5-coder:1.5b', reasoning: false } as const,
+    { model: 'deepseek-coder:1.3b', name: 'deepseek-coder:1.3b', reasoning: false} as const,
 
     //  thinking specially
     { model: 'qwen3:0.6b', name: 'qwen3:0.6b', reasoning: true } as const,
     { model: 'qwen3-vl:2b', name: 'qwen3-vl:2b', reasoning: true } as const,
+    { model: 'qwen3:1.7b', name: 'qwen3:1.7b', reasoning: true} as const,
 
     // multi lingual models
     { model: 'sailor2:1b', name: 'sailor2:1b', reasoning: false } as const,

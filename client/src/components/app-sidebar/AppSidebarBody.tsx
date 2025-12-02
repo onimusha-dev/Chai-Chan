@@ -1,64 +1,104 @@
 import { SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '../ui/sidebar'
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import api from '@/api/api';
-import { useDataContext } from '@/context/DataContext';
-import { ChevronDown, } from 'lucide-react'; //Ellipsis
+import { useDataContext, type SessionItem } from '@/context/DataContext';
+import { ChevronDown } from 'lucide-react';
 import { useUiContext } from '@/context/UiContext';
+import { Button } from '../ui/button';
+import { useNavigate } from 'react-router-dom';
+import { useUserContext } from '@/context/UserContext';
+import { SessionNameComponent } from './components/SessionNameComponent';
+import { SessionOptionsMenu } from './components/SessionOptionMenu';
 
 const AppSidebarBody = () => {
-    const { sessionList, setSessionList, setResponses } = useDataContext();
+    const { sessionList, latestSession, setSessionList, setLatestSession, setResponses } = useDataContext();
+    const { userData } = useUserContext()
     const { setIsTemporary } = useUiContext()
-
     const [isSessionListOpen, setIsSessionListOpen] = useState(true)
-    // const [loading, setLoading] = useState(false);
 
-    const fetchSessionList = async (userId: string) => {
+    /**
+     *  this is for loading the chat list on mount 
+     */
+    const fetchSessionList = async (userId: string | undefined) => {
+        // setLoading(true)
+        if (userId === undefined) {
+            return console.error('authentication failed')
+        }
         const res = await api.get(`session/${userId}`)
         setSessionList(res.data.data)
-        console.log(res.data.data)
-        
     }
-    
     useEffect(() => {
-        const userId = false ? '69244fbc79b4f9eeece3d5b0' : '69240455d024275caf22cf3c'
-        fetchSessionList(userId)
+        fetchSessionList(userData?.userId)
+        // setLoading(false)
     }, [])
-    
-    const handleChatLoad = async (id: string) => {
-        console.log(id)
-        setIsTemporary(false)
-        const res = await api.get(`/chat/${id}`)
 
-        if (!res) throw new Error(`error fetching chat session id ${id} is not valid.`)
 
-        setResponses(res.data.data)
-        console.log('data loaded,')
+    /**
+     * this is to navigate bw different chats
+     */
+    const navigator = useNavigate()
+    const handleSessionChatLoad = async (sessionId: string) => {
+        if (sessionId !== 'temporory-session') {
+            setIsTemporary(false)
+            setLatestSession(sessionId)
+            if (sessionList[sessionList.length - 1].sessionId === 'temporory-session') {
+                setSessionList((prev: SessionItem[]) => {
+                    if (!Array.isArray(prev)) return [];
+                    return prev.slice(0, -1);
+                });
+            }
+            const res = await api.get(`/chat/${sessionId}`)
+            if (!res) throw new Error(`error fetching chat session id ${sessionId} is not valid.`)
+
+            setResponses(res.data.data)
+            navigator('/')
+            return;
+        }
+        else return;
     }
+    const [isEditing, setIsEditing] = useState('')
 
     return (
         <SidebarContent className=''>
             <SidebarGroup>
-                <SidebarGroupLabel
-                    onClick={() => setIsSessionListOpen(!isSessionListOpen)}
-                    className='text-sm opacity-75'
+                <SidebarGroupLabel className='text-sm opacity-75 px-0'
                 >
-                    <h1>Your Chats</h1>
-                    <div
-                        className={`${!isSessionListOpen && '-rotate-90'} size-8 flex justify-center items-center`}
-                    >
-                        <ChevronDown size={20} />
-                    </div>
+                    <Button className='w-full justify-start bg-transparent text-foreground px-2 hover:bg-transparent'
+                        onClick={() => setIsSessionListOpen(!isSessionListOpen)}>
+                        <h1>Your Chats</h1>
+                        <div className={`${!isSessionListOpen && '-rotate-90'} size-8 flex justify-center items-center`}
+                        >
+                            <ChevronDown size={20} />
+                        </div>
+                    </Button>
                 </SidebarGroupLabel>
 
+                {/*   Chat sessions   */}
                 {isSessionListOpen &&
                     <SidebarMenu>
-                        {sessionList?.map((s, id) => (
+                        {sessionList?.map((s) => (
                             <SidebarMenuItem
-                                onClick={() => handleChatLoad(s.id)}
-                                className='' key={id}>
-                                <SidebarMenuButton className='cursor-pointer py-5'
-                                    asChild>
-                                    <h1 className="py-4 text-nowrap">{s.name}</h1>
+                                key={s.sessionId}>
+                                <SidebarMenuButton role='button' tabIndex={0}
+                                    className={`${s.sessionId === latestSession && 'bg-accent'}
+                                cursor-pointer py-5 focus-visible:outline-2 focus:outline-none focus-visible:ring-2 focus-visible:bg-accent`}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter' || e.key === ' ') {
+                                            console.log(s.sessionId)
+                                            handleSessionChatLoad(s.sessionId)
+                                        }
+                                    }}
+                                    onClick={() => handleSessionChatLoad(s.sessionId)}
+                                    asChild
+                                >
+                                    <div className="w-full group/chat">
+                                        <SessionNameComponent name={s.name} sessionId={s.sessionId} isEditing={isEditing} setIsEditing={setIsEditing} />
+                                        {/*  calling for option menu */}
+                                        {
+                                            (isEditing !== s.sessionId && s.sessionId !== 'temporory-session')
+                                            && <SessionOptionsMenu sessionId={s.sessionId} setIsEditing={setIsEditing} />
+                                        }
+                                    </div>
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                         ))}
@@ -68,14 +108,5 @@ const AppSidebarBody = () => {
         </SidebarContent>
     )
 }
+
 export default AppSidebarBody
-
-
-// < div className = "absolute top-0 hover:bg-accent left-0 flex w-full h-full items-center justify-end  " >
-//         <h1 className="relative py-4 text-nowrap">{"name"}</h1>
-//         <div className="size-7 flex items-center justify-center rounded-full hover:bg-white/10"
-//             onClick={(e) => e.stopPropagation()}
-//         >
-//             <Ellipsis size={16} />
-//         </div>
-//     </div >

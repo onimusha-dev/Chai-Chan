@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import {
     createOllamaSession,
+    deleteOllamaSession,
     getSessionByUserId,
     updateOllamaSession,
 } from '../service/session.service';
@@ -25,7 +26,7 @@ export const createSession = async (
 
         return res.status(200).send({
             status: 200,
-            data: newSession, 
+            data: newSession,
         });
     } catch (err) {
         console.error('error in chat controller' + '\n' + err);
@@ -33,27 +34,9 @@ export const createSession = async (
     }
 };
 
-export const updateSession = async (
-    req: Request<{ sessionId: string }, {}, { name: string }>,
-    res: Response,
-    next: NextFunction,
-) => {
-    try {
-        const { name } = req.body;
-        const { sessionId } = req.params;
-
-        if (!name || !sessionId) throw new Error('fields r empty');
-
-        const session = await updateOllamaSession(sessionId, name);
-
-        res.status(200).send({ status: 200, data: session });
-    } catch (err) {
-        console.log(err);
-    }
-};
 
 export const getSession = async (
-    req: Request<{ userId: string }>,
+    req: Request<{ userId: string }, {}, {}>,
     res: Response,
     next: NextFunction,
 ) => {
@@ -73,3 +56,45 @@ export const getSession = async (
         console.log(err);
     }
 };
+
+export const updateSession = async (
+    req: Request<{ sessionId: string }, {}, { name: string }>,
+    res: Response,
+    next: NextFunction,
+) => {
+    try {
+        const { name } = req.body;
+        const { sessionId } = req.params;
+
+        if (!name || !sessionId) throw new Error('fields are empty');
+
+        const session = await updateOllamaSession(sessionId, name);
+
+        res.status(200).send({ status: 200, data: session });
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const deleteSession = async (
+    req: Request<{ sessionId: string}>,
+    res: Response,
+    next: NextFunction,
+) => {
+    try {
+        const { sessionId } = req.params;
+        console.log()
+        if (!sessionId) throw new Error('sessionId is missing!');
+
+        const session = await deleteOllamaSession(sessionId);
+
+        return res.status(200).send({
+            status: 200,
+            data: session,
+        });
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+

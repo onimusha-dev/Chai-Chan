@@ -37,19 +37,19 @@ const AppSidebarHeader = () => {
                     <SidebarMenuItem>
                         <StartNewChatBar />
                     </SidebarMenuItem>
-                    {projects.map((project, id) => (
+                    {/* {projects.map((project, id) => (
                         <SidebarMenuItem key={id}>
                             <SidebarMenuButton asChild>
                                 <NavLink
                                     draggable="false"
-                                    className={'py-5 cursor-pointer'}
+                                    className={'py-5 cursor-pointer focus-visible:bg-accent'}
                                     to={project.url}>
                                     <project.icon />
                                     <span>{project.name}</span>
                                 </NavLink>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
-                    ))}
+                    ))} */}
                 </SidebarMenu>
             </SidebarGroup>
         </SidebarHeader>

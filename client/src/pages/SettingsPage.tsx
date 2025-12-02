@@ -1,13 +1,32 @@
 import { ModeToggle } from "@/components/theme/mode-toggle";
+import X from "@/pages/X";
+import Dashboard from "@/pages/Dashboard";
 
 const SettingsPage = () => {
-	return (
-		<div className="h-full w-full flex flex-col items-center justify-center text-2xl font-bold select-none">
-			<p className="opacity-50">Comming soon...</p>
 
-			<div className="mt-5"><ModeToggle /></div>
-		</div>
+	return (
+<>
+			<div className="flex justify-center gap-10 pt-20 pb-10">
+				<X />
+				<X />
+
+
+
+
+
+
+
+
+			</div>
+ 
+{/* <div className="border p-6 rounded-xl bg-muted/40 flex items-center justify-between">
+	<h2 className="text-xl font-medium select-none">Theme</h2>
+	<ModeToggle />
+</div> */}
+				{/* <Dashboard /> */}
+
+</>
 	);
 };
 
-export default SettingsPage
+export default SettingsPage;

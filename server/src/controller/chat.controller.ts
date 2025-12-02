@@ -7,7 +7,7 @@ interface ChatRequestBody {
     model: SelectModel;
     collection: string;
     reasoning: boolean;
-    isTemporary: boolean; 
+    isTemporary: boolean;
     sessionId: string;
 }
 
@@ -17,25 +17,13 @@ export const chatOllama = async (
     next: NextFunction,
 ) => {
     try {
-        const {
-            prompt, 
-            model,
-            collection,
-            reasoning = false,
-            isTemporary = false,
-            sessionId,
-        } = req.body;
+        const { prompt, model, collection, reasoning = false, isTemporary = false, sessionId, } = req.body;
 
-        if (
-            !prompt ||
-            !model ||
-            !collection ||
-            !sessionId ||
-            typeof reasoning !== 'boolean'
-        )
+        if (!prompt || !model || !collection || !sessionId || typeof reasoning !== 'boolean')
             throw Error('Inputs are not provided!');
-
+        console.log(req.user.id)
         const reply = await askOllama(
+            req.user.id,
             prompt,
             model,
             collection,
@@ -48,7 +36,7 @@ export const chatOllama = async (
 
         return res.status(200).send({
             status: 200,
-            response: reply,
+            data: reply,
         });
     } catch (err) {
         console.error('error in chat controller' + '\n' + err);
@@ -66,7 +54,7 @@ export const getAllChat = async (
         if (!sessionId) throw new Error('sessionId is missing!');
 
         const chats = await getOllamaChatsById(sessionId);
-        console.log(chats)
+
         if (!chats) throw new Error('error retreativing chats!')
 
         return res.status(200).send({

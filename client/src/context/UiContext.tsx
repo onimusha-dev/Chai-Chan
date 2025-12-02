@@ -7,7 +7,7 @@ import { createContext, useContext, useState, type ReactNode } from 'react';
 export type Models =
     // this is user model premium
     | 'gemma3:1b'
-    | 'llama3.2:1b-text-q2_K'
+    | 'deepseek-r1:1.5b'
 
     // this is use model free
     | 'qwen2.5:0.5b'
@@ -15,11 +15,12 @@ export type Models =
     // for coding specially
     | 'qwen2.5-coder:0.5b'
     | 'qwen2.5-coder:1.5b'
+    | 'deepseek-coder:1.3b'
 
     //  thinking specially
     | 'qwen3:0.6b'
     | 'qwen3-vl:2b'
-    | 'deepseek-r1:1.5b'
+    | 'qwen3:1.7b'
 
     // multi lingual models
     | 'sailor2:1b';
@@ -35,9 +36,17 @@ interface IChat {
     isReasoning: boolean;
     setIsReasoning: (isReasoning: boolean) => void;
 
+    isSearching: boolean;
+    setIsSearching: (isReasoning: boolean) => void;
+
     isTemporary: boolean;
     setIsTemporary: (isTemporary: boolean) => void;
 
+    isAudioPlaying: boolean
+    setIsAudioPlaying: (isAudioPlaying: boolean) => void
+
+    isSettingsPopupOpen: boolean;
+    setIsSettingsPopupOpen: (isSettingsPopupOpen: boolean) => void;
 }
 
 // null to start, same as you had
@@ -60,6 +69,9 @@ export const UiProvider = ({ children }: { children: ReactNode }) => {
     const [model, setModel] = useState<Models>('qwen3:0.6b');
     const [isReasoning, setIsReasoning] = useState(false);
     const [isTemporary, setIsTemporary] = useState(false);
+    const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+    const [isSearching, setIsSearching] = useState(false)
+    const [isSettingsPopupOpen, setIsSettingsPopupOpen] = useState(false);
 
     return (
         <UiContext.Provider
@@ -67,11 +79,17 @@ export const UiProvider = ({ children }: { children: ReactNode }) => {
                 isThinking,
                 model,
                 isReasoning,
+                isSearching,
                 isTemporary,
+                isAudioPlaying,
+                isSettingsPopupOpen,
                 setIsThinking,
                 setModel,
                 setIsReasoning,
+                setIsSearching,
                 setIsTemporary,
+                setIsAudioPlaying,
+                setIsSettingsPopupOpen
             }}
         >
             {children}
