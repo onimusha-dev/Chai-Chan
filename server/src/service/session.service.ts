@@ -35,7 +35,7 @@ export const getSessionByUserId = async (userId: string) => {
 };
 
 export const updateOllamaSession = async (sessionId: string, name: string) => {
-    try {console.log(sessionId, '    ',  name)
+    try {
         const newSession = await ChatSession.findOneAndUpdate(
             { _id: sessionId },
             { $set: { name: name } },
@@ -52,7 +52,7 @@ export const updateOllamaSession = async (sessionId: string, name: string) => {
 export const deleteOllamaSession = async (sessionId: string) => {
     try {
         const deletedSession = await ChatSession.findByIdAndDelete({ _id: sessionId });
-        
+
         if (!deletedSession) throw new Error('error deleting session');
 
         return deletedSession;
@@ -61,4 +61,13 @@ export const deleteOllamaSession = async (sessionId: string) => {
     }
 };
 
- 
+export const deleteAllOllamaSessionsByUserId = async (userId: string) => {
+    try {
+        console.log('Deleting all sessions for userId:', userId);
+        const deletedSessions = await ChatSession.deleteMany({ userId });
+        console.log(deletedSessions);
+        return deletedSessions;
+    } catch (err) {
+        console.log(err);
+    }
+}

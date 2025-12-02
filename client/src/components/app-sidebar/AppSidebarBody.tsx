@@ -84,7 +84,6 @@ const AppSidebarBody = () => {
                                 cursor-pointer py-5 focus-visible:outline-2 focus:outline-none focus-visible:ring-2 focus-visible:bg-accent`}
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter' || e.key === ' ') {
-                                            console.log(s.sessionId)
                                             handleSessionChatLoad(s.sessionId)
                                         }
                                     }}

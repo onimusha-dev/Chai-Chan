@@ -47,10 +47,10 @@ const userSchema = new Schema<IUserDocument, Model<IUserDocument>>(
     termsAccept: { type: Boolean, default: false },
 
     tokenWallet: {
-      inputTokens: { type: Number, default: 50000 },
-      outputTokens: { type: Number, default: 20000 },
+      inputTokens: { type: Number, default: 2000 },
+      outputTokens: { type: Number, default: 3000 },
       purchasedTokens: { type: Number, default: 0 },
-      freeTierTokens: { type: Number, default: 70000 },
+      freeTierTokens: { type: Number, default: 5000 },
     }
   },
   { timestamps: true }

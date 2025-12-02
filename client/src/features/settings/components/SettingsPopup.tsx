@@ -51,14 +51,14 @@ const SettingsPopup = () => {
     };
 
     return (
-        <div className='fixed top-0 left-0 w-screen h-screen flex items-center justify-center z-80'
+        <div className='fixed top-0 left-0 w-screen h-screen flex items-center justify-center z-60'
         >
             {/*  this is to close the settings popup when clicking outside of it */}
-            <div className="absolute top-0 left-0 w-full h-full backdrop-blur-xs backdrop-brightness-75 z-80"
+            <div className="absolute top-0 left-0 w-full h-full backdrop-blur-xs backdrop-brightness-75 z-60"
                 onClick={() => setIsSettingsPopupOpen(false)}
             ></div>
 
-            <Card className="relative z-80 w-2/3 h-1/2 pt-0 gap-0">
+            <Card className="relative z-60 w-2/3 h-1/2 pt-0 gap-0">
                 <div className="flex justify-between w-full h-18 py-5 px-3">
                     <h1 className="text-xl items-center flex ml-3 select-none">Settings</h1>
                     <button className="ml-2 rounded-full p-1 hover:bg-accent/50 size-8 flex items-center justify-center transition-colors"

@@ -16,13 +16,13 @@ const About = () => {
                 <div className="justify-between items-center flex border- py-3">
                     Terms of Use
                     <a target="_blank" href="https://cdn.deepseek.com/policies/en-US/deepseek-terms-of-use.html?locale=en_US"
-                        className="bg-accent/5 hover:bg-accent rounded-full border-accent border py-2 px-5 transition-all duration-300 ease-in-out cursor-pointer"
+                        className="bg-accent/5 select-none hover:bg-accent rounded-full border-accent border py-2 px-5 transition-all duration-300 ease-in-out cursor-pointer"
                     >View</a>
                 </div>
                 <div className="justify-between items-center flex border- py-3">
                     Privacy Policy
                     <a target="_blank" href="https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html?locale=en_US"
-                        className="bg-accent/5 hover:bg-accent rounded-full border-accent border py-2 px-5 transition-all duration-300 ease-in-out cursor-pointer"
+                        className="bg-accent/5 select-none hover:bg-accent rounded-full border-accent border py-2 px-5 transition-all duration-300 ease-in-out cursor-pointer"
                     >View</a>
                 </div>
             </div>

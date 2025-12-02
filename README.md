@@ -1,52 +1,37 @@
-hello susie
+# Chai-Chan — A Web Ollama Client
 
-➜  server git:(dev/main) ✗ node index.js
-(node:61653) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/musa/Coding/project_1/server/index.js is not specified and it doesn't parse as CommonJS.
-Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
-To eliminate this warning, add "type": "module" to /home/musa/Coding/project_1/server/package.json.
-(Use `node --trace-warnings ...` to show where the warning was created)
-This image is a **flowchart titled "BINARY SEARCH ON ANSWER: The Ultimate Interview Filter"**, designed to explain the process of binary search on an answer (with a focus on interview preparation) and highlight key concepts. The diagram is divided into three distinct sections, each with labeled components and visual elements:  
+Chai-Chan is a web-based client for running local AI models through Ollama. I built it after getting tired of the lack of good Linux-friendly interfaces and the fact that most existing tools didn’t support multi-user setups or proper chat history. This project aims to fix that by giving teams and individual users a clean, fast, browser-based way to work with local models.
 
----
 
-### **1. Left Section: Traditional Binary Search (O(log n))**  
-- **Visual**: A vertical list labeled *"Search Space: Sorted Array"* with numbered elements (1–11). The number **7** is highlighted (in a blue circle) to represent the "midpoint" of the search range.  
-- **Process Flow**: Arrows indicate the standard binary search steps:  
-  - Start at the *low* bound (1) → compute the *mid* (7) → check if the mid is valid.  
-  - If valid → search *lower* half; if invalid → search *upper* half.  
-- **Label**: *"TRADITIONAL BINARY SEARCH (O(log n))"* identifies this as the standard approach to solving binary search problems.  
+## What It Does
+- Web UI for sending messages to local Ollama models
+- Multi-user system with JWT auth and isolated chat histories
+- Session management with autosave to MongoDB
+- Model switching, custom system prompts, and optional Gemini API support
+- Usage analytics (token counts, model stats)
+- Works locally or on a shared network so multiple users can share one Ollama instance
 
----
+## Tech Stack
+**Frontend:** React + TypeScript, Vite, Tailwind, shadcn/ui, React Router, Recharts  
+**Backend:** Node.js (Express 5), TypeScript, MongoDB/Mongoose, Zod validation, JWT auth, Bcrypt  
+Everything is written with a focus on clean structure, type safety, and predictable behavior.
 
-### **2. Middle Section: Binary Search on Answer (O(log n))**  
-- **Visual**: A gradient bar labeled *"MONOTONIC ANSWER RANGE (Search Space)"* (from *low* to *high*), with a central *mid* point.  
-- **Process Flow**:  
-  - **"isValid(mid)?"** is the critical decision point:  
-    - If `isValid(mid)` = **TRUE (Feasible)** → *Try Smaller Value* (move left half).  
-    - If `isValid(mid)` = **FALSE (Infeasible)** → *Try Larger Value* (move right half).  
-  - An additional step *"Greedy Check in O(n)"* appears below the decision point.  
-- **Color Coding**:  
-  - **Green** for *TRUE* (feasible): Indicates a valid answer, leading to a smaller search space.  
-  - **Orange** for *FALSE* (infeasible): Indicates an invalid answer, leading to a larger search space.  
-- **Label**: *"BINOMIAL SEARCH ON ANSWER (O(log n))"* (note: "binomial" appears to be a typo for "binary," as binary search is the standard term here).  
+## Architecture
+The client talks to an Express server that handles auth, sessions, model requests, and analytics. The server connects to MongoDB for storing chats and user data, and forwards model prompts to the local Ollama instance (or Gemini if configured). The whole thing is designed to be simple to deploy on any machine (mac, windows, linux).
 
----
+## Why I Built It
+I wanted a real project that would push my full-stack skills beyond tutorials. Over the past ~10 months I learned how to build production-style systems: API design, authentication, component design, error handling, logging, and general project structure. Chai-Chan has been my way of turning that learning into something usable.
 
-### **3. Right Section: Mastering Problems & Core Skills**  
-- **Visual**: A list of common problems, and **core skills** needed for implementing binary search on an answer.  
-- **Label**: *"MASTER THESE PROBLEMS: ["*  
-- **Bullet Points**:  
-  - *"Allocate minimum pages"*  
-  - *"Aggressive cows"*  
-  - *"Koko eating bananas"*  
-  - *"Minimum days to ship packages"*  
-- **Additional Note**: *"Core Skill: Designing isValid(mid). Tests Critical Thinking!"* (with a lightbulb icon).  
+## Setup
+- Node.js 18+, pnpm, MongoDB, Ollama
+- `pnpm install` in both client and server folders
+- `pnpm dev` to run each side
+- Ollama must be running (`ollama serve`)
 
----
+Environment variables:  
+`MONGODB_URI`, `OLLAMA_URL`, `GOOGLE_API_KEY` (optional), `JWT_SECRET`, `PORT`
 
-### **Key Takeaways**  
-- The diagram contrasts **traditional binary search** (left) with the **process of “binary search on answer”** (middle), emphasizing how the algorithm dynamically adjusts based on whether the mid is valid.  
-- It highlights **problem types** that are "mastered" (e.g., allocation, shipping, etc.) and the **core skill** of designing the `isValid(mid)` function, which is crucial for solving binary search problems in interviews.  
-- The structure is designed to teach **interview readiness** by illustrating the logical flow of binary search on an answer, from the sorted array to the critical decision point (`isValid(mid)`).  
+## Future Plans
+WebSocket support for live streaming, plugin system, improve existing codebase, better collaboration features, Docker images, and multi-language support.
 
-This flowchart serves as a practical guide for understanding and applying binary search in problem-solving contexts, with a focus on interview preparation.%  
+**Repo:** https://github.com/onimusha-dev/Chai-Chan  

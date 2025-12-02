@@ -42,7 +42,6 @@ export const UserProvier = ({ children }: { children: ReactNode }) => {
         setIsloading(true)
         try {
             const res = await api.post('auth/me');
-            console.log(res.data)
             setUserData(res.data);
         }
         catch (err) {

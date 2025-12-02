@@ -1,15 +1,18 @@
 import express from 'express'
-import { createSession, deleteSession, getSession, updateSession } from '../controller/session.controller';
+import { createSession, deleteAllSessionsByUserId, deleteSession, getSession, updateSession } from '../controller/session.controller';
 import { authMiddleware } from '../middleware/auth.middleare';
 
 const sessionRouter = express.Router()
 
+sessionRouter.delete('/delete-all-chats', authMiddleware, deleteAllSessionsByUserId)
+
 sessionRouter.route('/:sessionId')
-    .put( updateSession)
-    .delete(deleteSession)
+    .put(authMiddleware, updateSession)
+    .delete(authMiddleware, deleteSession)
 
 sessionRouter.route('/:userId')
-    .get( getSession)
-    .post( createSession)
+    .get(authMiddleware, getSession)
+    .post(authMiddleware, createSession)
+
 
 export default sessionRouter

@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import {
     createOllamaSession,
+    deleteAllOllamaSessionsByUserId,
     deleteOllamaSession,
     getSessionByUserId,
     updateOllamaSession,
@@ -77,13 +78,12 @@ export const updateSession = async (
 };
 
 export const deleteSession = async (
-    req: Request<{ sessionId: string}>,
+    req: Request<{ sessionId: string }>,
     res: Response,
     next: NextFunction,
 ) => {
     try {
         const { sessionId } = req.params;
-        console.log()
         if (!sessionId) throw new Error('sessionId is missing!');
 
         const session = await deleteOllamaSession(sessionId);
@@ -97,4 +97,20 @@ export const deleteSession = async (
     }
 };
 
-
+export const deleteAllSessionsByUserId = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+    try {
+        const userId = req.user.id.toString();
+        if (!userId) throw new Error('userId is missing!');
+        const sessions = await deleteAllOllamaSessionsByUserId(userId);
+        return res.status(200).send({
+            status: 200,
+            data: sessions,
+        });
+    } catch (err) {
+        console.log(err);
+    }
+}
