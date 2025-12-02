@@ -3,7 +3,8 @@
 Chai-Chan is a web-based client for running local AI models through Ollama. I built it after getting tired of the lack of good Linux-friendly interfaces and the fact that most existing tools didn’t support multi-user setups or proper chat history. This project aims to fix that by giving teams and individual users a clean, fast, browser-based way to work with local models.
 
 <div style="display: flex; overflow-x: auto; gap: 8px; padding: 8px;">
-    <img src="./metadata/images/overview.png" height="300"/>
+    <img src="./metadata/images/chat-info.png" height="400"/>
+    <!-- <img src="./metadata/images/overview.png" height="300"/> -->
     <img src="./metadata/images/profile.png" height="300"/>
 </div>
 
@@ -20,15 +21,16 @@ Chai-Chan is a web-based client for running local AI models through Ollama. I bu
 ### In-App Screenshots
 
 <div style="display: flex; overflow-x: auto; gap: 8px; padding: 8px;">
+    <!-- <img src="./metadata/images/chat-info.png" height="300" width='400'/> -->
     <img src="./metadata/images/usage.png" height="300"/>
-    <img src="./metadata/images/chat-info.png" height="300"/>
-    <img src="./metadata/images/thinking.png" height="300"/>
     <img src="./metadata/images/tempchat.png" height="300"/>
-    <img src="./metadata/images/theming.png" height="300"/>
-    <img src="./metadata/images/copy.png" height="300"/>
-    <img src="./metadata/images/about.png" height="300"/>
+    <!-- <img src="./metadata/images/thinking.png" height="300"/> -->
 </div>
-
+<div style="display: flex; overflow-x: auto; gap: 8px; padding: 8px;">
+    <img src="./metadata/images/about.png" height="300"/>    
+    <!-- <img src="./metadata/images/copy.png" height="300"/> -->
+    <img src="./metadata/images/theming.png" height="300"/>
+</div>
 <br>
 
 
