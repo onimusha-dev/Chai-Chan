@@ -8,7 +8,6 @@ export const getUsageByUserId = async (
     next: NextFunction,
 ) => {
     try {
-        console.log('User ID:', req.user!._id.toString());
         const usage = await getOllamaUsageByUserId(req.user!._id.toString());
 
         if (!usage && usage !== null) throw new Error('error retreativing chats!');

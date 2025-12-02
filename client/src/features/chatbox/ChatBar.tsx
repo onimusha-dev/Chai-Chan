@@ -41,7 +41,6 @@ const ChatBar = () => {
                     isTemporary,
                     sessionId: res.data.data.sessionId,
                 });
-                console.log(res2.data)
                 const newObject = {
                     id: res2.data.data.id,
                     prompt: prompt,
@@ -51,7 +50,6 @@ const ChatBar = () => {
                     meta: res2.data.data.meta
                 };
                 const newResponses = [...responses, newObject];
-
                 setResponses(newResponses);
                 setLatestResponse(newObject.id);
                 setSessionList([...sessionList, res.data.data])
@@ -83,7 +81,6 @@ const ChatBar = () => {
                     meta: res.data.data.meta
                 };
                 const newResponses = [...responses, newObject];
-
                 setResponses(newResponses);
                 setLatestResponse(newObject.id);
                 return;
@@ -110,7 +107,6 @@ const ChatBar = () => {
                     meta: res.data.data.meta
                 };
                 const newResponses = [...responses, newObject];
-
                 setLatestSession(latestSession);  //  this is the error
                 setResponses(newResponses);
                 setLatestResponse(newObject.id);

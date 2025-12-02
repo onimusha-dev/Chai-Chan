@@ -101,7 +101,7 @@ const ModelUsage = () => {
                             tickLine={false}
                             tickMargin={10}
                             axisLine={false}
-                            tickFormatter={(value) => value.split(":")[0]}
+                            tickFormatter={(value) => value}
                         />
                         <ChartTooltip content={<CustomTooltip />} />
                         <Bar

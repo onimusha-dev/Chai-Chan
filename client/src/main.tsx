@@ -12,7 +12,6 @@ import { ThemeProvider } from './components/theme/theme-provider';
 import { UiProvider } from './context/UiContext';
 import ChatPage from './pages/ChatPage';
 // import { MemoryProvider } from './context/MemoryContext';
-import SettingsPage from './pages/SettingsPage';
 import AuthLayout from './layoutes/AuthLayout';
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
@@ -25,7 +24,6 @@ const router = createBrowserRouter([
         element: <MainLayout />,
         children: [
             { index: true, element: <ChatPage /> },
-            { path: 'Settings', element: <SettingsPage /> },
         ],
     },
     {
