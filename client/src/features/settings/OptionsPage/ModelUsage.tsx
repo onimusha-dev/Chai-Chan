@@ -1,10 +1,36 @@
 import api from "@/api/api";
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
 import { Spinner } from "@/components/ui/spinner";
 import { useUserContext } from "@/context/UserContext";
 import { ArrowBigDownDash, ArrowBigUpDash } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+
+// Custom Tooltip Component
+const CustomTooltip = (props: any) => {
+    const { active, payload } = props;
+
+    if (active && payload && payload.length) {
+        const data = payload[0].payload;
+        return (
+            <div className="bg-background border border-border rounded-lg p-3 shadow-lg">
+                <p className="font-semibold text-sm mb-2">{data.model}</p>
+                <div className="flex items-center gap-2 text-xs mb-1">
+                    <ArrowBigDownDash size={14} className='text-green-600' />
+                    <span className="opacity-70">Input:</span>
+                    <span className="font-medium">{data.input}</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs">
+                    <ArrowBigUpDash size={14} className='text-red-600' />
+                    <span className="opacity-70">Output:</span>
+                    <span className="font-medium">{data.output}</span>
+                </div>
+            </div>
+        );
+    }
+
+    return null;
+};
 
 const ModelUsage = () => {
     const { usageData, usageDataValidity, setUsageData, setUsageDataValidity } = useUserContext()
@@ -67,7 +93,7 @@ const ModelUsage = () => {
     return (
         <div className="relative px-3 w-full h-full flex flex-col select-none">
             <div className="h-full w-full overflow-x-auto">
-                <ChartContainer className="w-full" config={chartConfig}>
+                <ChartContainer className="w-full h-full" config={chartConfig}>
                     <BarChart accessibilityLayer data={chartData}>
                         <CartesianGrid vertical={false} />
                         <XAxis
@@ -75,25 +101,26 @@ const ModelUsage = () => {
                             tickLine={false}
                             tickMargin={10}
                             axisLine={false}
-                            tickFormatter={(value) => value}
+                            tickFormatter={(value) => value.split(":")[0]}
                         />
-                        <ChartTooltip content={<ChartTooltipContent hideLabel />} />
+                        <ChartTooltip content={<CustomTooltip />} />
                         <Bar
                             dataKey="input"
                             stackId="a"
-                            fill="#16a34a"
+                            fill="#16a34a75"
                             radius={[0, 0, 4, 4]}
                         />
                         <Bar
                             dataKey="output"
                             stackId="a"
-                            fill="#dc2626"
+                            fill="#dc262675"
                             radius={[4, 4, 0, 0]}
                         />
                     </BarChart>
                 </ChartContainer>
             </div>
-            <div className="flex items-center justify-center gap-5">
+
+            <div className="flex items-center justify-center gap-5 pt-3">
                 <div className="flex items-center gap-2 justify-between text-xs font-medium">
                     <span><ArrowBigDownDash size={18} className='text-green-600' /> </span>
                     <span className="opacity-70">Input</span>
@@ -123,4 +150,5 @@ const ModelUsage = () => {
 }
 
 export default ModelUsage
+
 
