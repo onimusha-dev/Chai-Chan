@@ -1,23 +1,21 @@
 import { Request, Response, NextFunction } from 'express';
-import { getUsageByUserId } from '../service/usageTracker.service';
+import { getOllamaUsageByUserId } from '../service/usageTracker.service';
 
 
-export const getOllamaUsageByUserId = async (
+export const getUsageByUserId = async (
     req: Request<{ userId: string }, {}, {}>,
     res: Response,
     next: NextFunction,
 ) => {
     try {
-        const { userId } = req.params;
-        if (!userId) throw new Error('sessionId is missing!');
+        console.log('User ID:', req.user!._id.toString());
+        const usage = await getOllamaUsageByUserId(req.user!._id.toString());
 
-        const session = await getUsageByUserId(userId);
-
-        if (!session) throw new Error('error retreativing chats!');
+        if (!usage && usage !== null) throw new Error('error retreativing chats!');
 
         return res.status(200).send({
             status: 200,
-            data: session,
+            data: usage,
         });
     } catch (err) {
         console.log(err);

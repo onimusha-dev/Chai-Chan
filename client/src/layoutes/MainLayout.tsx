@@ -7,6 +7,7 @@ import { useUiContext } from "@/context/UiContext"
 import SettingsPopup from "@/features/settings/components/SettingsPopup"
 // import AudioPlayingpPopupNotifier from "@/features/ChatView/ResponseOptions/AudioPlayingpPopupNotifier"
 import { Navigate, Outlet } from "react-router-dom"
+import { Spinner } from "@/components/ui/spinner"
 
 const MainLayout = () => {
     const { userData, isLoading } = useUserContext()
@@ -14,7 +15,7 @@ const MainLayout = () => {
     if(isLoading) {
         return(
             <div className="w-screen h-screen flex items-center justify-center">
-                loading...
+               <Spinner />
             </div>
         )
     }

@@ -28,15 +28,14 @@ export const updateUsage = async (userId: string, model: string, promptEvalCount
     }
 }
 
-export const getUsageByUserId = async (userId: string) => {
+export const getOllamaUsageByUserId = async (userId: string) => {
     try {
-        const userUsage = await UserUsage.findOne({ userId: userId });
+        const userUsage = await UserUsage.findOne({ userId: userId }).lean();
 
         if (!userUsage) {
             return null;
         }
-
-        return userUsage;
+        return {totalTokens: userUsage.totalTokens, models: userUsage.models}
     } catch (err) {
         console.error('Error retrieving usage:', err);
         return null;

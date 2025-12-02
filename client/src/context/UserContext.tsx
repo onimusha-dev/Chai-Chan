@@ -15,7 +15,8 @@ interface IUser {
     setIsloading: (isLoading: boolean) => void
     usageData: any
     setUsageData: (usageData: any) => void
-    fetchUsageData: (userId: string) => Promise<any>
+    usageDataValidity: number
+    setUsageDataValidity: (usageDataValidity: number) => void
 }
 
 const UserContext = createContext<IUser | null>(null)
@@ -35,12 +36,13 @@ export const UserProvier = ({ children }: { children: ReactNode }) => {
     const [userData, setUserData] = useState<UserData | null>(null)
     const [isLoading, setIsloading] = useState(true)
     const [usageData, setUsageData] = useState<any>(null)
+    const [usageDataValidity, setUsageDataValidity] = useState<number>(0)
 
     const fetchUserData = async () => {
         setIsloading(true)
         try {
             const res = await api.post('auth/me');
-            // console.log(res.data)
+            console.log(res.data)
             setUserData(res.data);
         }
         catch (err) {
@@ -53,28 +55,16 @@ export const UserProvier = ({ children }: { children: ReactNode }) => {
     useLayoutEffect(() => {
         ; (
             async function () {
-                setInterval(() => {
-                    fetchUserData()
-                }, 300_000);
+                fetchUserData()
             }
         )()
-    }, [usageData, setUserData]);
-
-    const fetchUsageData = async (userId: string): Promise<any> => {
-        try {
-            const res = await api.post(`usage/${userId}`);
-            console.log(res.data)
-            setUsageData(res.data);
-            return res.data;
-        }
-        catch (err) {
-            console.log(err)
-            return null
-        }
-    }
+        setInterval(() => {
+            fetchUserData()
+        }, 300_000);
+    }, [setUserData]);
 
     return (
-        <UserContext.Provider value={{ userData, isLoading, setUserData, usageData, fetchUsageData, setUsageData, setIsloading }}>
+        <UserContext.Provider value={{ userData, isLoading, setUserData, usageData, setUsageData, usageDataValidity, setUsageDataValidity, setIsloading }}>
             {children}
         </UserContext.Provider>
     )

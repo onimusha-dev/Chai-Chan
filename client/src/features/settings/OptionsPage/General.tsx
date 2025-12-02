@@ -31,7 +31,7 @@ const General = () => {
             </div>
             <div className="flex mt-5 justify-between">
                 <h3 className="select-none">Language</h3>
-                <NativeSelect className='rounded-full border-0'>
+                <NativeSelect className='rounded-full border-0 px-5'>
                     <NativeSelectOption value="english">English</NativeSelectOption>
                     <NativeSelectOption value="japanese">Japanese</NativeSelectOption>
                     <NativeSelectOption value="chinese">Chinese</NativeSelectOption>

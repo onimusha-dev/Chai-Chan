@@ -1,87 +1,124 @@
-// import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart";
-// import { demoUserUsage } from "@/utils/demo"
-// import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
-
-import { useUserContext } from "@/context/UserContext"
-import { useEffect } from "react"
-
-// const chartConfig = {
-//     desktop: {
-//         label: "Input",
-//         color: "var(--chart-1)",
-//     },
-//     mobile: {
-//         label: "Output",
-//         color: "var(--chart-2)",
-//     },
-// } satisfies ChartConfig
-
-
-// const chartData = [
-//     { month: "January", desktop: 186, mobile: 80 },
-//     { month: "February", desktop: 305, mobile: 200 },
-//     { month: "March", desktop: 237, mobile: 120 },
-//     { month: "April", desktop: 73, mobile: 190 },
-//     { month: "May", desktop: 209, mobile: 130 },
-//     { month: "June", desktop: 214, mobile: 140 },
-// ]
-
-// const ModelUsage = () => {
-
-//     const demo = Object.keys(demoUserUsage.models);
-
-
-
-//     return (
-//         <div className="px-3">
-
-//             <ChartContainer config={chartConfig}>
-
-
-
-//                 <BarChart accessibilityLayer data={chartData}>
-//                     <CartesianGrid vertical={false} />
-//                     <XAxis
-//                         dataKey="month"
-//                         tickLine={false}
-//                         tickMargin={10}
-//                         axisLine={false}
-//                         tickFormatter={(value) => value.slice(0, 3)}
-//                     />
-//                     <ChartTooltip content={<ChartTooltipContent hideLabel />} />
-//                     <ChartLegend content={<ChartLegendContent />} />
-//                     <Bar
-//                         dataKey="desktop"
-//                         stackId="a"
-//                         fill="var(--color-desktop)"
-//                         radius={[0, 0, 4, 4]}
-//                     />
-//                     <Bar
-//                         dataKey="mobile"
-//                         stackId="a"
-//                         fill="var(--color-mobile)"
-//                         radius={[4, 4, 0, 0]}
-//                     />
-//                 </BarChart>
-
-//             </ChartContainer>
-//         </div>
-//     )
-// }
-
-// export default ModelUsage
-
-
+import api from "@/api/api";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { Spinner } from "@/components/ui/spinner";
+import { useUserContext } from "@/context/UserContext";
+import { ArrowBigDownDash, ArrowBigUpDash } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
 const ModelUsage = () => {
-    const { fetchUsageData } = useUserContext()
+    const { usageData, usageDataValidity, setUsageData, setUsageDataValidity } = useUserContext()
+    const [isLoading, setIsLoading] = useState(false);
+    const fetchUsageData = async (): Promise<any> => {
+        try {
+            const res = await api.get(`/usage`);
+            if (!res) throw new Error("No data")
+            setUsageData(res.data.data);
+            return res.data;
+        }
+        catch (err) {
+            console.log(err)
+            return null
+        }
+    }
+    useEffect(() => {
+        if (usageData !== null && Date.now() < usageDataValidity) {
+            return
+        }
+        else {
+            ; (async function () {
+                setIsLoading(true)
+                await fetchUsageData()
+                setUsageDataValidity(Date.now() + 60_000)
+                setIsLoading(false)
+            })();
+        }
+    }, [usageDataValidity])
 
     useEffect(() => {
-        fetchUsageData("userId123")
+        const interval = setInterval(() => {
+            setUsageDataValidity(Date.now())
+        }, 59_999);
+        return () => clearInterval(interval);
     }, [])
 
+    if (isLoading && usageData === null) {
+        return <div className="absolute top-0 left-0 flex justify-center z-80 items-center h-full w-full">
+            <Spinner />
+        </div>
+    }
+    const chartConfig = {
+        input: {
+            label: "Input",
+            color: "#16a34a",
+        },
+        output: {
+            label: "Output",
+            color: "#dc2626"
+        }
+    }
+    let chartData = Object.values(usageData?.models || {})
+    chartData = chartData.map(({ eval_count, prompt_eval_count, model }: any) => ({
+        input: prompt_eval_count,
+        output: eval_count,
+        model: model
+    }))
+
     return (
-        <div>ModelUsage</div>
+        <div className="relative px-3 w-full h-full flex flex-col select-none">
+            <div className="h-full w-full overflow-x-auto">
+                <ChartContainer className="w-full" config={chartConfig}>
+                    <BarChart accessibilityLayer data={chartData}>
+                        <CartesianGrid vertical={false} />
+                        <XAxis
+                            dataKey="model"
+                            tickLine={false}
+                            tickMargin={10}
+                            axisLine={false}
+                            tickFormatter={(value) => value}
+                        />
+                        <ChartTooltip content={<ChartTooltipContent hideLabel />} />
+                        <Bar
+                            dataKey="input"
+                            stackId="a"
+                            fill="#16a34a"
+                            radius={[0, 0, 4, 4]}
+                        />
+                        <Bar
+                            dataKey="output"
+                            stackId="a"
+                            fill="#dc2626"
+                            radius={[4, 4, 0, 0]}
+                        />
+                    </BarChart>
+                </ChartContainer>
+            </div>
+            <div className="flex items-center justify-center gap-5">
+                <div className="flex items-center gap-2 justify-between text-xs font-medium">
+                    <span><ArrowBigDownDash size={18} className='text-green-600' /> </span>
+                    <span className="opacity-70">Input</span>
+                </div>
+                <div className="flex items-center gap-2 justify-between text-xs font-medium">
+                    <span><ArrowBigUpDash size={18} className='text-red-600' /> </span>
+                    <span className="opacity-70">Output</span>
+                </div>
+            </div>
+            <div className="flex items-center justify-between pt-3">
+                <p className="text-sm">
+                    <span className="opacity-75">Total Tokens: </span>
+                    <span>{usageData?.totalTokens}</span>
+                </p>
+
+                <div className="flex gap-3 items-center justify-center">
+                    <p className="opacity-75 text-sm">Models Used: </p>
+                    <select className="bg-accent text-center py-3 text-sm px-5 rounded-full appearance-none">
+                        {chartData.map((model: any, index) => (
+                            <option key={index}>{model.model}</option>
+                        ))}
+                    </select>
+                </div>
+            </div>
+        </div>
     )
 }
 

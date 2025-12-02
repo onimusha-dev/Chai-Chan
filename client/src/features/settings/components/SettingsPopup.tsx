@@ -58,7 +58,7 @@ const SettingsPopup = () => {
                 onClick={() => setIsSettingsPopupOpen(false)}
             ></div>
 
-            <Card className="z-80 w-2/3 h-1/2 pt-0 gap-0">
+            <Card className="relative z-80 w-2/3 h-1/2 pt-0 gap-0">
                 <div className="flex justify-between w-full h-18 py-5 px-3">
                     <h1 className="text-xl items-center flex ml-3 select-none">Settings</h1>
                     <button className="ml-2 rounded-full p-1 hover:bg-accent/50 size-8 flex items-center justify-center transition-colors"
