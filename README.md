@@ -2,6 +2,10 @@
 
 Chai-Chan is a web-based client for running local AI models through Ollama. I built it after getting tired of the lack of good Linux-friendly interfaces and the fact that most existing tools didn’t support multi-user setups or proper chat history. This project aims to fix that by giving teams and individual users a clean, fast, browser-based way to work with local models.
 
+<div style="display: flex; overflow-x: auto; gap: 8px; padding: 8px;">
+    <img src="./metadata/images/overview.png" height="300"/>
+    <img src="./metadata/images/profile.png" height="300"/>
+</div>
 
 ## What It Does
 - Web UI for sending messages to local Ollama models
@@ -10,6 +14,23 @@ Chai-Chan is a web-based client for running local AI models through Ollama. I bu
 - Model switching, custom system prompts, and optional Gemini API support
 - Usage analytics (token counts, model stats)
 - Works locally or on a shared network so multiple users can share one Ollama instance
+
+
+
+### In-App Screenshots
+
+<div style="display: flex; overflow-x: auto; gap: 8px; padding: 8px;">
+    <img src="./metadata/images/usage.png" height="300"/>
+    <img src="./metadata/images/chat-info.png" height="300"/>
+    <img src="./metadata/images/thinking.png" height="300"/>
+    <img src="./metadata/images/tempchat.png" height="300"/>
+    <img src="./metadata/images/theming.png" height="300"/>
+    <img src="./metadata/images/copy.png" height="300"/>
+    <img src="./metadata/images/about.png" height="300"/>
+</div>
+
+<br>
+
 
 ## Tech Stack
 **Frontend:** React + TypeScript, Vite, Tailwind, shadcn/ui, React Router, Recharts  
