@@ -20,7 +20,7 @@ const ChatBoxTools = () => {
           //     true
           // ) && (
           <button
-            className={`${isSearching ? 'px-4 py-1 border border-violet-500/50 bg-violet-950/50 ' : 'size-10 p-1 hover:bg-accent '}
+            className={`${isSearching ? 'px-4 py-1 border border-violet-500 dark:border-violet-500/50 bg-violet-950/15 dark:bg-violet-950/50 ' : 'size-10 p-1 hover:bg-accent '}
                             cursor-pointer flex items-center justify-center text-violet-500 rounded-full transition-colors duration-150 ease-in-out`}
             onClick={() => setIsSearching(!isSearching)}
           >
@@ -44,7 +44,7 @@ const ChatBoxTools = () => {
             model === 'qwen3:1.7b'
           ) && (
             <button
-              className={`${isReasoning ? 'px-4 py-1 border border-violet-500/50 bg-violet-950/50 ' : 'size-10 p-1 hover:bg-accent '}
+              className={`${isReasoning ? 'px-4 py-1 border border-violet-500 dark:border-violet-500/50 bg-violet-950/15 dark:bg-violet-950/50 ' : 'size-10 p-1 hover:bg-accent '}
                             cursor-pointer flex items-center justify-center text-violet-500 rounded-full transition-colors duration-150 ease-in-out`}
               onClick={() => setIsReasoning(!isReasoning)}
             >

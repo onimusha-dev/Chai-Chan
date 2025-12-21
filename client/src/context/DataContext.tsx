@@ -1,5 +1,5 @@
 import type { PopoverStats } from '@/types/response';
-import { createContext, useContext, useState, type ReactNode } from 'react';
+import { createContext, useContext, useState, type ReactNode, type Dispatch, type SetStateAction } from 'react';
 
 export interface ResponseItem {
     id: string;
@@ -19,23 +19,23 @@ export interface SessionItem {
 
 interface IChat {
     responses: ResponseItem[];
-    setResponses: (r: ResponseItem[]) => void;
+    setResponses: Dispatch<SetStateAction<ResponseItem[]>>;
 
     // this is the most rescent reply from the model
     // useed to auto scroll to bottom of the page
     latestResponse: string;
-    setLatestResponse: (latestResponse: string) => void;
+    setLatestResponse: Dispatch<SetStateAction<string>>;
 
     //  this is the whole session data
     sessionList: SessionItem[]
-    setSessionList: (s: SessionItem[]) => void
+    setSessionList: Dispatch<SetStateAction<SessionItem[]>>
 
     // //  this is the current session selected
-    latestSession: string 
-    setLatestSession: (session: string) => void
+    latestSession: string
+    setLatestSession: Dispatch<SetStateAction<string>>
 
     currentPlayingAudio: string
-    setCurrentPlayingAudio: (currentPlayingAudio: string) => void
+    setCurrentPlayingAudio: Dispatch<SetStateAction<string>>
 }
 
 // null to start, same as you had
