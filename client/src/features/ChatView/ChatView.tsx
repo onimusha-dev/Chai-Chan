@@ -54,7 +54,7 @@ const EmptyChatPreview = () => {
                         </h1>
                         <p className="opacity-50 text-token-text-secondary max-w-[24rem] text-center text-base leading-6 font-normal tracking-[-0.32px] text-balance">
                             This chat won't appear in history, use or update
-                            SastaGPT's memory, or be used to train our models.
+                            Chai's memory, or be used to train our models.
                             For safety purposes, we may keep a copy of this chat
                             for up to 0 days.
                         </p>

@@ -11,7 +11,7 @@ import {
 const ModelPopOver = () => {
     return (
         <Dialog>
-            <DialogTrigger className={`border border-green-500/50 bg-green-950/50 size-10 hover:bg-accent cursor-pointer flex items-center justify-center text-green-500 rounded-full transition-colors duration-150 ease-in-out`}
+            <DialogTrigger className={`border border-green-500/50 dark:border-green-500/50 bg-green-950/10 dark:bg-green-950/50 size-10 hover:bg-accent cursor-pointer flex items-center justify-center text-green-500 rounded-full transition-colors duration-150 ease-in-out`}
             >
                 <Bot size={22} />
             </DialogTrigger>
