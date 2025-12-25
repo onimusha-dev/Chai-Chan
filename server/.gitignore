@@ -1,6 +1,7 @@
 .env
 *.env*
 !example*
+*docker-compose.yaml
 
 node_modules
 */node_modules/*gstgs
